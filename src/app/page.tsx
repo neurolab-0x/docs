@@ -1,65 +1,158 @@
-import Image from 'next/image'
+import Link from "next/link"
+import { ArrowRight, Brain, Mic, Activity, Zap } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { SiteHeader } from "@/components/site-header"
 
 export default function Home() {
   return (
-    <div className='flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black'>
-      <main className='flex min-h-screen w-full max-w-3xl flex-col items-center justify-between bg-white px-16 py-32 sm:items-start dark:bg-black'>
-        <Image
-          className='dark:invert'
-          src='/next.svg'
-          alt='Next.js logo'
-          width={100}
-          height={20}
-          priority
-        />
-        <div className='flex flex-col items-center gap-6 text-center sm:items-start sm:text-left'>
-          <h1 className='max-w-xs text-3xl leading-10 font-semibold tracking-tight text-black dark:text-zinc-50'>
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className='max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400'>
-            Looking for a starting point or more instructions? Head over to{' '}
-            <a
-              href='https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-              className='font-medium text-zinc-950 dark:text-zinc-50'
-            >
-              Templates
-            </a>{' '}
-            or the{' '}
-            <a
-              href='https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-              className='font-medium text-zinc-950 dark:text-zinc-50'
-            >
-              Learning
-            </a>{' '}
-            center.
+    <div className="flex min-h-screen flex-col">
+      <SiteHeader />
+      <main className="flex-1">
+        {/* Hero Section */}
+        <section className="container flex flex-col items-center gap-4 pb-8 pt-6 md:py-10">
+          <div className="flex max-w-[980px] flex-col items-center gap-2 text-center">
+            <h1 className="text-3xl font-bold leading-tight tracking-tighter md:text-6xl lg:leading-[1.1]">
+              NeuroLab Documentation
+            </h1>
+            <p className="max-w-[750px] text-lg text-muted-foreground sm:text-xl">
+              Comprehensive documentation for the EEG & Voice Mental State Analysis Platform.
+              Build powerful neurotechnology applications with multimodal AI.
+            </p>
+          </div>
+          <div className="flex gap-4">
+            <Link href="/docs">
+              <Button size="lg">
+                Get Started
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+            <Link href="/docs/api">
+              <Button variant="outline" size="lg">
+                API Reference
+              </Button>
+            </Link>
+          </div>
+        </section>
+
+        {/* Features Section */}
+        <section className="container py-8 md:py-12 lg:py-24">
+          <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-2 lg:grid-cols-4">
+            <div className="relative overflow-hidden rounded-lg border bg-background p-6">
+              <div className="flex h-[180px] flex-col justify-between">
+                <Brain className="h-12 w-12" />
+                <div className="space-y-2">
+                  <h3 className="font-bold">EEG Analysis</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Real-time brain signal processing with advanced ML models
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="relative overflow-hidden rounded-lg border bg-background p-6">
+              <div className="flex h-[180px] flex-col justify-between">
+                <Mic className="h-12 w-12" />
+                <div className="space-y-2">
+                  <h3 className="font-bold">Voice Emotion</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Audio emotion detection mapped to mental states
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="relative overflow-hidden rounded-lg border bg-background p-6">
+              <div className="flex h-[180px] flex-col justify-between">
+                <Activity className="h-12 w-12" />
+                <div className="space-y-2">
+                  <h3 className="font-bold">Multimodal</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Combine EEG and voice for comprehensive analysis
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="relative overflow-hidden rounded-lg border bg-background p-6">
+              <div className="flex h-[180px] flex-col justify-between">
+                <Zap className="h-12 w-12" />
+                <div className="space-y-2">
+                  <h3 className="font-bold">Real-time</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Stream and analyze data in real-time via WebSocket
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Quick Links Section */}
+        <section className="container py-8 md:py-12 lg:py-24">
+          <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
+            <h2 className="font-bold text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
+              Quick Links
+            </h2>
+            <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
+              Jump right into what you need
+            </p>
+          </div>
+          <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3 mt-8">
+            <Link href="/docs/quick-start" className="group relative overflow-hidden rounded-lg border bg-background p-6 hover:bg-accent">
+              <div className="space-y-2">
+                <h3 className="font-bold">Quick Start</h3>
+                <p className="text-sm text-muted-foreground">
+                  Get up and running in minutes
+                </p>
+              </div>
+            </Link>
+            <Link href="/docs/installation/docker" className="group relative overflow-hidden rounded-lg border bg-background p-6 hover:bg-accent">
+              <div className="space-y-2">
+                <h3 className="font-bold">Docker Setup</h3>
+                <p className="text-sm text-muted-foreground">
+                  Deploy with Docker Compose
+                </p>
+              </div>
+            </Link>
+            <Link href="/docs/api/ai-service" className="group relative overflow-hidden rounded-lg border bg-background p-6 hover:bg-accent">
+              <div className="space-y-2">
+                <h3 className="font-bold">AI API</h3>
+                <p className="text-sm text-muted-foreground">
+                  Explore the AI service endpoints
+                </p>
+              </div>
+            </Link>
+            <Link href="/docs/guides/streaming" className="group relative overflow-hidden rounded-lg border bg-background p-6 hover:bg-accent">
+              <div className="space-y-2">
+                <h3 className="font-bold">Real-time Streaming</h3>
+                <p className="text-sm text-muted-foreground">
+                  Stream EEG data in real-time
+                </p>
+              </div>
+            </Link>
+            <Link href="/docs/concepts/mental-states" className="group relative overflow-hidden rounded-lg border bg-background p-6 hover:bg-accent">
+              <div className="space-y-2">
+                <h3 className="font-bold">Mental States</h3>
+                <p className="text-sm text-muted-foreground">
+                  Understand the classification system
+                </p>
+              </div>
+            </Link>
+            <Link href="/docs/guides/training" className="group relative overflow-hidden rounded-lg border bg-background p-6 hover:bg-accent">
+              <div className="space-y-2">
+                <h3 className="font-bold">Model Training</h3>
+                <p className="text-sm text-muted-foreground">
+                  Train custom ML models
+                </p>
+              </div>
+            </Link>
+          </div>
+        </section>
+      </main>
+      <footer className="border-t py-6 md:py-0">
+        <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
+          <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
+            Built for NeuroLab. Documentation powered by Next.js.
           </p>
         </div>
-        <div className='flex flex-col gap-4 text-base font-medium sm:flex-row'>
-          <a
-            className='bg-foreground text-background flex h-12 w-full items-center justify-center gap-2 rounded-full px-5 transition-colors hover:bg-[#383838] md:w-[158px] dark:hover:bg-[#ccc]'
-            href='https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <Image
-              className='dark:invert'
-              src='/vercel.svg'
-              alt='Vercel logomark'
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className='flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] md:w-[158px] dark:border-white/[.145] dark:hover:bg-[#1a1a1a]'
-            href='https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </footer>
     </div>
   )
 }
