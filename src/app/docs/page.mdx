@@ -1,0 +1,131 @@
+export const metadata = {
+  title: 'Introduction - NeuroLab Documentation',
+  description: 'Welcome to the NeuroLab documentation. Learn how to build powerful neurotechnology applications.',
+}
+
+# Introduction
+
+Welcome to the NeuroLab documentation. NeuroLab is a sophisticated multimodal analysis platform that combines EEG (Electroencephalogram) data processing with voice emotion detection to provide comprehensive mental state classification.
+
+## What is NeuroLab?
+
+NeuroLab is a production-grade healthcare/neurotechnology platform designed for:
+
+- **Mental health monitoring** - Track and analyze mental states in real-time
+- **Neurofeedback applications** - Provide biofeedback based on brain activity
+- **Brain-computer interfaces** - Build BCI applications with ML-powered analysis
+- **Clinical decision support** - Assist healthcare professionals with data-driven insights
+- **Research applications** - Collect and analyze EEG and voice data for studies
+
+## Key Features
+
+### Real-time EEG Processing
+Stream and analyze EEG data in real-time with advanced signal processing and machine learning models.
+
+### Voice Emotion Detection
+Analyze audio recordings to detect emotions and map them to mental states using TensorFlow-based models.
+
+### Multimodal Analysis
+Combine EEG and voice data for comprehensive mental state assessment with higher accuracy.
+
+### Mental State Classification
+Identify three primary mental states:
+- **Relaxed** (State 0) - Calm, neutral emotional states
+- **Focused** (State 1) - Alert, positive, engaged states
+- **Stressed** (State 2) - Anxious, fearful, negative states
+
+### Model Interpretability
+Understand model predictions with SHAP and LIME explanations for transparency and trust.
+
+### Clinical Features
+Complete clinical workflow support including appointments, patient management, session tracking, and billing.
+
+## Architecture Overview
+
+NeuroLab uses a three-tier microservices architecture:
+
+```
+Frontend (React/Next.js)
+    ↓
+Backend API (Express.js/Node.js)
+    ↓
+AI Service (FastAPI/Python)
+    ↓
+Databases (MongoDB, Redis, InfluxDB)
+```
+
+### Technology Stack
+
+**AI/ML Service:**
+- FastAPI for REST API
+- TensorFlow/Keras for deep learning
+- MNE for EEG signal processing
+- librosa for audio processing
+- SHAP/LIME for interpretability
+
+**Backend API:**
+- Express.js for REST API
+- MongoDB for data storage
+- Redis for caching
+- Socket.io for real-time communication
+- MQTT for IoT device integration
+
+**Frontend:**
+- React 18 with TypeScript
+- Next.js 16 for e-commerce
+- Tailwind CSS for styling
+- shadcn/ui components
+
+## Getting Started
+
+Ready to dive in? Check out these resources:
+
+- [Quick Start](/docs/quick-start) - Get up and running in minutes
+- [Architecture](/docs/architecture) - Understand the system design
+- [Installation](/docs/installation/docker) - Deploy with Docker
+- [API Reference](/docs/api) - Explore the API endpoints
+
+## Use Cases
+
+### Healthcare Providers
+Monitor patient mental states during therapy sessions, track progress over time, and generate comprehensive reports.
+
+### Researchers
+Collect EEG and voice data, train custom models, and analyze results with built-in statistical tools.
+
+### Developers
+Integrate NeuroLab into your applications using REST APIs, WebSocket streaming, or MQTT for IoT devices.
+
+### Wellness Applications
+Build meditation apps, focus trainers, or stress management tools with real-time biofeedback.
+
+## Support
+
+Need help? Here's how to get support:
+- Check the [documentation](/docs)
+- Review [API examples](/docs/guides)
+- Open an issue on [GitHub](https://github.com/neurolab)
+- Contact the team
+
+## Next Steps
+
+<div className='not-prose mt-6 grid gap-4 sm:grid-cols-2'>
+  <a
+    href='/docs/quick-start'
+    className='hover:bg-accent block rounded-lg border p-6 transition-colors'
+  >
+    <h3 className='mb-2 font-bold'>Quick Start →</h3>
+    <p className='text-muted-foreground text-sm'>
+      Install and run NeuroLab in minutes
+    </p>
+  </a>
+  <a
+    href='/docs/architecture'
+    className='hover:bg-accent block rounded-lg border p-6 transition-colors'
+  >
+    <h3 className='mb-2 font-bold'>Architecture →</h3>
+    <p className='text-muted-foreground text-sm'>
+      Learn about the system design
+    </p>
+  </a>
+</div>

@@ -124,4 +124,12 @@
   body {
     @apply bg-background text-foreground;
   }
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight font-bold;
+  }
+  .prose h1 { @apply mb-8; }
+  .prose h2 { @apply mt-12 mb-4; }
+  .prose h3 { @apply mt-8 mb-3; }
+  .prose p { @apply mb-4; }
+  .prose ul, .prose ol { @apply mb-6; }
 }
