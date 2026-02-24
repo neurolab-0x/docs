@@ -8,8 +8,10 @@ export const metadata: Metadata = {
 
 export default function DocsPage() {
   return (
-    <div className='prose prose-zinc dark:prose-invert max-w-none'>
-      <h1>Introduction</h1>
+    <div className='prose prose-neutral dark:prose-invert max-w-none'>
+      <h1 className='mb-8 scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl'>
+        Introduction
+      </h1>
 
       <p>
         Welcome to the NeuroLab documentation. NeuroLab is a sophisticated
