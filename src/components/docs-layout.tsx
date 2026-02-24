@@ -19,11 +19,22 @@ export function DocsLayout({ children }: DocsLayoutProps) {
           <main className='relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]'>
             <div className='mx-auto w-full max-w-3xl min-w-0'>{children}</div>
             <aside className='hidden text-sm xl:block'>
-              <div className='sticky top-18 -mt-10 pt-4'>
-                <div className='space-y-2'>
-                  <p className='font-medium'>On This Page</p>
-                  <hr className='my-2' />
-                  {/* Table of contents will be generated here */}
+              <div className='sticky top-20 -mt-10 pt-4'>
+                <div className='space-y-4'>
+                  <p className='text-[11px] font-bold tracking-tight uppercase opacity-70'>
+                    On This Page
+                  </p>
+                  <div className='border-border/40 relative border-l pl-4'>
+                    <div className='text-primary border-primary -ml-[17px] border-l-2 py-1 pl-4 font-medium'>
+                      Overview
+                    </div>
+                    <div className='text-muted-foreground hover:text-foreground cursor-pointer py-1 transition-colors'>
+                      What is NeuroLab?
+                    </div>
+                    <div className='text-muted-foreground hover:text-foreground cursor-pointer py-1 transition-colors'>
+                      Key Features
+                    </div>
+                  </div>
                 </div>
               </div>
             </aside>
