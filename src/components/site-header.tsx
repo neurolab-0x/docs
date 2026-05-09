@@ -13,18 +13,18 @@ export function SiteHeader() {
 
   return (
     <header className='bg-background/60 border-border/40 hover:border-border/80 sticky top-0 z-50 w-full border-b backdrop-blur-md transition-all duration-300 ease-in-out'>
-      <div className='container flex h-14 items-center'>
+      <div className='container flex h-16 items-center'>
         <MobileNav />
         <div className='mr-4 hidden md:flex'>
           <Link
             href='/'
-            className='mr-6 flex items-center space-x-2 transition-opacity hover:opacity-80'
+            className='mr-8 flex items-center space-x-2 transition-opacity hover:opacity-80'
           >
             <span className='hidden text-lg font-extrabold tracking-tighter uppercase sm:inline-block'>
               NeuroLab
             </span>
           </Link>
-          <nav className='flex items-center space-x-6 text-sm font-medium'>
+          <nav className='flex items-center space-x-8 text-sm font-medium'>
             {docsConfig.mainNav.map((item) => (
               <Link
                 key={item.href}
