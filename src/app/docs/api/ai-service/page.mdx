@@ -1,0 +1,103 @@
+export const metadata = {
+  title: 'AI Service API - NeuroLab Documentation',
+  description: 'API Reference for the NeuroLab AI and Signal Processing service.',
+}
+
+# AI Service API
+
+The AI Service provides endpoints for EEG analysis, mental state classification, and voice processing.
+
+**Base URL**: `http://localhost:8000/api/v1`
+
+## Authentication
+
+All endpoints (except system health) require a Bearer Token in the Authorization header.
+
+```http
+Authorization: Bearer <your_token>
+```
+
+## EEG Analysis
+
+### Classify Mental State
+Classifies a brain activity segment into Relaxed, Focused, or Stressed.
+
+**Endpoint**: `POST /eeg/classify`
+
+**Request Body**:
+```json
+{
+  "data": [[...]], // Raw EEG signal array (channels x samples)
+  "sampling_rate": 256,
+  "channels": ["TP9", "AF7", "AF8", "TP10"]
+}
+```
+
+**Response**:
+```json
+{
+  "state": 1,
+  "label": "Focused",
+  "confidence": 0.94,
+  "features": {
+    "alpha_power": 0.45,
+    "beta_power": 0.12
+  }
+}
+```
+
+## Voice Analysis
+
+### Detect Emotion
+Analyzes an audio file to detect emotional markers.
+
+**Endpoint**: `POST /voice/analyze`
+
+**Request Body**: `multipart/form-data`
+- `file`: .wav or .mp3 file
+
+**Response**:
+```json
+{
+  "emotion": "Neutral",
+  "arousal": 0.34,
+  "valence": 0.56,
+  "intensity": 0.22
+}
+```
+
+## Training & Models
+
+### Get Model Status
+Check the current active model version and performance metrics.
+
+**Endpoint**: `GET /models/active`
+
+**Response**:
+```json
+{
+  "version": "2.4.1-stable",
+  "architecture": "DeepConvNet",
+  "accuracy": 0.89,
+  "trained_at": "2024-05-01T12:00:00Z"
+}
+```
+
+## System
+
+### Health Check
+Check if the AI service and its dependencies (Redis, Preprocessor) are alive.
+
+**Endpoint**: `GET /system/health`
+
+**Response**:
+```json
+{
+  "status": "healthy",
+  "version": "2.0.1",
+  "services": {
+    "redis": "connected",
+    "worker": "active"
+  }
+}
+```

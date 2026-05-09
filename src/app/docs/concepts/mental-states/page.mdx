@@ -1,0 +1,46 @@
+export const metadata = {
+  title: 'Mental States - NeuroLab Documentation',
+  description: 'Understanding the mental state classification system in NeuroLab.',
+}
+
+# Mental States
+
+NeuroLab's primary goal is to classify human brain activity and emotional markers into actionable mental states. The system currently recognizes three primary states.
+
+## Classification Schema
+
+| ID | State | Description | Physiological Indicators |
+| :--- | :--- | :--- | :--- |
+| **0** | **Relaxed** | Calm, neutral, or meditative states. | High Alpha power, low heart rate variability. |
+| **1** | **Focused** | High cognitive load, alert, or engaged. | Increased Beta power, Gamma spikes in frontal lobes. |
+| **2** | **Stressed** | Anxiety, fear, or high pressure. | High Beta/Gamma ratio, irregular audio pitch, elevated arousal. |
+
+## How it's Calculated
+
+The classification is a result of **Multimodal Fusion**:
+
+### 1. EEG Features
+We analyze signal power bands from frontal and temporal lobes:
+- **Alpha (8-13 Hz)**: Predominant during relaxation.
+- **Beta (13-30 Hz)**: Associated with active thinking and stress.
+- **Gamma (>30 Hz)**: High-level information processing.
+
+### 2. Voice Markers
+Using the **Librosa** library, we extract:
+- **Mel-frequency cepstral coefficients (MFCCs)**
+- **Spectral Centroid** (Brightness of sound)
+- **Zero Crossing Rate** (Noisiness/Urgency)
+
+## Clinical Significance
+
+- **Relaxed State**: Used to measure the effectiveness of meditation or therapy.
+- **Focused State**: Used in workplace productivity studies or ADHD monitoring.
+- **Stressed State**: Critical for early intervention in high-pressure environments or anxiety management.
+
+## Real-time Biofeedback
+
+The Platform provides real-time visual feedback. When a user enters a **Stressed** state, the system can trigger automated notifications or suggest breathing exercises based on the severity and duration of the state.
+
+---
+
+Next: [EEG Signal Processing](/docs/concepts/eeg-processing)
