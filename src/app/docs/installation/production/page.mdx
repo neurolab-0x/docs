@@ -1,0 +1,113 @@
+export const metadata = {
+  title: 'Production Deployment - NeuroLab Documentation',
+  description: 'Learn how to deploy the NeuroLab platform to production environments using Render, Vercel, and managed databases.',
+}
+
+# Production Deployment
+
+Deploying NeuroLab to production requires a distributed approach to ensure scalability, security, and reliability. We recommend using managed services to reduce operational overhead.
+
+## Deployment Architecture
+
+In a production environment, the services are typically distributed as follows:
+
+- **Backend API:** Render or Heroku (Node.js)
+- **AI Service:** Render (Web Service) or AWS EC2 (Python/FastAPI)
+- **Frontend (Platform & Docs):** Vercel or Netlify
+- **Databases:** MongoDB Atlas, InfluxDB Cloud, and Upstash (Redis)
+- **Object Storage:** AWS S3 or Google Cloud Storage (GCS)
+
+## 1. Database Setup
+
+Before deploying the services, set up your production databases:
+
+### MongoDB Atlas
+1. Create a cluster on [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
+2. Create a database user and whitelist the IP addresses of your deployment services.
+3. Obtain the `MONGODB_URI`.
+
+### InfluxDB Cloud
+1. Sign up for [InfluxDB Cloud](https://www.influxdata.com/products/influxdb-cloud/).
+2. Create an Organization and a Bucket named `eeg_data`.
+3. Generate an API Token with read/write access.
+
+### Redis (Upstash)
+1. Create a Redis database on [Upstash](https://upstash.com/).
+2. Obtain the `REDIS_URL`.
+
+## 2. Backend Deployment (Render)
+
+1. Connect your GitHub repository to [Render](https://render.com/).
+2. Create a new **Web Service** and select the `backend/` directory.
+3. Use the following settings:
+   - **Environment:** `Node`
+   - **Build Command:** `npm ci`
+   - **Start Command:** `npm start`
+4. Add your `.env` variables in the Render dashboard.
+
+## 3. AI Service Deployment
+
+The AI Service is memory-intensive. Ensure you select an instance with at least **4GB of RAM** (8GB+ recommended).
+
+1. Create a new **Web Service** on Render and select the `AI Service/backend` directory.
+2. Use the following settings:
+   - **Environment:** `Python`
+   - **Build Command:** `pip install -r requirements.txt -r requirements-ml.txt -r requirements-runtime.txt`
+   - **Start Command:** `uvicorn main:app --host 0.0.0.0 --port 8000`
+3. Configure the environment variables, ensuring `AI_API_URL` points to your production backend.
+
+## 4. Frontend Deployment (Vercel)
+
+Vercel is the recommended platform for the `platform` and `docs` sites.
+
+1. Connect your repository to [Vercel](https://vercel.com/).
+2. **For Docs:** Select the `docs/` directory.
+   - Vercel will automatically detect the Next.js project.
+3. **For Platform:** Select the `platform/` directory.
+   - Set the build command to `npm run build` and output directory to `dist`.
+4. Add the `NEXT_PUBLIC_API_URL` variable pointing to your production backend.
+
+## 5. Security & Optimization
+
+### SSL/TLS
+All services should be served over HTTPS. Render and Vercel handle SSL certificates automatically.
+
+### CORS Configuration
+In production, you must restrict allowed origins to your specific domains. Update the `ALLOWED_ORIGINS` variable in both Backend and AI Service.
+
+### Secret Management
+Never commit secrets to your repository. Use the secret management features provided by Render and Vercel.
+
+## 6. CI/CD with GitHub Actions
+
+NeuroLab includes GitHub Actions workflows to automate testing and container builds.
+
+- **Backend CI:** Runs on every PR to ensure tests pass.
+- **Docker Publish:** Automatically builds and pushes Docker images to GitHub Container Registry (GHCR) when a new release is created.
+
+---
+
+## Next Steps
+
+Now that your platform is deployed, you can explore the core concepts and API references:
+
+<div className='not-prose mt-6 grid gap-4 sm:grid-cols-2'>
+  <a
+    href='/docs/concepts/mental-states'
+    className='hover:bg-accent block rounded-lg border p-6 transition-colors'
+  >
+    <h3 className='mb-2 font-bold'>Mental States →</h3>
+    <p className='text-muted-foreground text-sm'>
+      Understand the classification system
+    </p>
+  </a>
+  <a
+    href='/docs/api'
+    className='hover:bg-accent block rounded-lg border p-6 transition-colors'
+  >
+    <h3 className='mb-2 font-bold'>API Reference →</h3>
+    <p className='text-muted-foreground text-sm'>
+      Explore the production API endpoints
+    </p>
+  </a>
+</div>
