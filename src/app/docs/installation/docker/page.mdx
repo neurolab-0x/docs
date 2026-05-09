@@ -1,0 +1,123 @@
+export const metadata = {
+  title: 'Docker Setup - NeuroLab Documentation',
+  description: 'Learn how to deploy the entire NeuroLab platform using Docker and Docker Compose.',
+}
+
+# Docker Setup
+
+Docker is the recommended way to deploy NeuroLab in both development and production environments. It ensures consistency across different systems and simplifies the management of multiple services and databases.
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+- **Docker Engine:** v24.0.0+
+- **Docker Compose:** v2.20.0+
+
+## Project Structure
+
+NeuroLab is a monorepo, and Docker configurations are available for individual services. For a complete deployment, we provide a centralized Docker Compose configuration.
+
+```bash
+neurolab/
+├── AI Service/      # AI/ML Microservice
+├── backend/         # Core API & Orchestrator
+├── docs/            # Documentation (this site)
+├── platform/        # Main Dashboard
+└── docker-compose.yml
+```
+
+## Quick Start (Full Stack)
+
+To start the entire NeuroLab stack (Backend, AI Service, and all Databases), navigate to the root directory and run:
+
+```bash
+docker compose up -d
+```
+
+This will pull the necessary images, build the local services, and start the following containers:
+
+| Container | Service | Port |
+| :--- | :--- | :--- |
+| `neurolab-backend` | Express.js API | `5000` |
+| `neurolab-ai` | FastAPI ML Service | `8000` |
+| `neurolab-mongodb` | User & Clinical Data | `27017` |
+| `neurolab-influxdb`| Time-series EEG Data | `8086` |
+| `neurolab-minio` | Object Storage | `9000/9001` |
+| `neurolab-redis` | Cache & Task Queue | `6379` |
+| `neurolab-mosquitto`| MQTT Broker | `1883` |
+
+## Configuration
+
+### Environment Variables
+Docker Compose uses `.env` files to configure services. Ensure you have `.env` files in both `/backend` and `/AI Service` directories.
+
+You can also create a root `.env` file to manage shared variables like database credentials.
+
+### Persistence
+The following volumes are used to ensure your data persists across container restarts:
+- `mongodb_data`: Persistent storage for MongoDB.
+- `influxdb_data`: Persistent storage for InfluxDB 2.x.
+- `minio_data`: Persistent storage for uploaded EEG and audio files.
+- `redis_data`: Persistent storage for task queues.
+
+## Service-Specific Docker
+
+### Running Only the AI Service
+If you only need the AI components for development:
+
+```bash
+cd "AI Service"/backend
+docker compose up -d
+```
+
+### Running Only the Backend
+If you are focusing on the core API and user management:
+
+```bash
+cd backend
+docker compose up -d
+```
+
+## Common Operations
+
+### Viewing Logs
+To monitor the logs of all services:
+```bash
+docker compose logs -f
+```
+
+To view logs for a specific service (e.g., the AI Service):
+```bash
+docker compose logs -f ai-service
+```
+
+### Stopping the Stack
+To stop and remove all containers while keeping your data:
+```bash
+docker compose down
+```
+
+To remove containers AND volumes (WARNING: This deletes your data):
+```bash
+docker compose down -v
+```
+
+### Rebuilding Images
+If you make changes to the source code and need to rebuild the images:
+```bash
+docker compose build
+docker compose up -d
+```
+
+## Troubleshooting
+
+### Port Conflicts
+If you receive an error like `bind: address already in use`, it means one of the ports (e.g., `5000` or `27017`) is already being used by a service running natively on your host. Stop the native service or change the port mapping in `docker-compose.yml`.
+
+### Database Connection Issues
+If the services start but cannot connect to the databases, ensure that:
+1. The containers are on the same network (`neurolab-network`).
+2. You are using the container name as the hostname (e.g., `mongodb` instead of `localhost`) in your environment variables.
+
+### Memory Constraints
+The AI Service requires significant memory to load deep learning models. If the container exits with code `137`, it is likely being killed by the OOM (Out Of Memory) killer. Increase the memory limit in your Docker Desktop/Engine settings.
