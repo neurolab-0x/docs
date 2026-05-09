@@ -100,20 +100,26 @@ const components = {
   ),
   hr: ({ ...props }) => <hr className='my-4 md:my-8' {...props} />,
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
-    <div className='my-6 w-full overflow-y-auto'>
-      <table className={cn('w-full', className)} {...props} />
+    <div className='my-6 w-full overflow-hidden rounded-lg border'>
+      <table className={cn('w-full border-collapse text-sm', className)} {...props} />
     </div>
+  ),
+  thead: ({ className, ...props }: React.HTMLAttributes<HTMLTableSectionElement>) => (
+    <thead className={cn('[&_tr]:border-b', className)} {...props} />
+  ),
+  tbody: ({ className, ...props }: React.HTMLAttributes<HTMLTableSectionElement>) => (
+    <tbody className={cn('[&_tr:last-child]:border-0', className)} {...props} />
   ),
   tr: ({ className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) => (
     <tr
-      className={cn('even:bg-muted m-0 border-t p-0', className)}
+      className={cn('border-b last:border-0 transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted', className)}
       {...props}
     />
   ),
   th: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
     <th
       className={cn(
-        'border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right',
+        'bg-muted/50 h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&[align=center]]:text-center [&[align=right]]:text-right',
         className,
       )}
       {...props}
@@ -122,7 +128,7 @@ const components = {
   td: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
     <td
       className={cn(
-        'border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right',
+        'p-4 align-middle [&:has([role=checkbox])]:pr-0 [&[align=center]]:text-center [&[align=right]]:text-right',
         className,
       )}
       {...props}

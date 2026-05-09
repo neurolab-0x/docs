@@ -1,0 +1,114 @@
+export const metadata = {
+  title: 'AI Service Setup - NeuroLab Documentation',
+  description: 'Step-by-step guide to installing and configuring the NeuroLab AI Service.',
+}
+
+# AI Service Setup
+
+The AI Service is the computational heart of NeuroLab, handling EEG signal processing, voice emotion detection, and machine learning inference. It is built with FastAPI and Python.
+
+## Prerequisites
+
+Ensure you have the following installed on your system:
+- **Python:** v3.12 or higher
+- **FFmpeg:** Required for audio processing
+- **Redis:** Required for background workers (training and chat)
+
+## Installation
+
+### 1. Clone the Repository
+If you haven't already, clone the NeuroLab monorepo:
+
+```bash
+git clone https://github.com/neurolab/neurolab.git
+cd neurolab/"AI Service"/backend
+```
+
+### 2. Set Up Virtual Environment
+We recommend using a virtual environment to manage dependencies:
+
+```bash
+# Using venv
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Or using uv (recommended for speed)
+uv venv
+source .venv/bin/activate
+```
+
+### 3. Install Dependencies
+The AI Service has several dependency groups. For a full installation:
+
+```bash
+pip install -r requirements.txt
+pip install -r requirements-ml.txt
+pip install -r requirements-voice.txt
+pip install -r requirements-runtime.txt
+```
+
+## Configuration
+
+### Environment Variables
+Copy the `.env.example` file to `.env` and configure the necessary variables:
+
+```bash
+cp .env.example .env
+```
+
+Key configuration options:
+
+| Variable | Description | Default |
+| :--- | :--- | :--- |
+| `API_PREFIX` | Versioned API path | `/api/v1` |
+| `REQUIRE_AUTH` | Enable API key authentication | `false` |
+| `API_BEARER_TOKEN` | Required token if auth is enabled | - |
+| `MONGODB_URI` | Connection string for MongoDB | `mongodb://localhost:27017` |
+| `REDIS_URL` | Redis URL for background jobs | `redis://localhost:6373` |
+| `OPENROUTER_API_KEY` | API key for LLM-based chat | - |
+
+## Running the Service
+
+### Development Mode
+Start the FastAPI server with auto-reload enabled:
+
+```bash
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
+
+### Running the Background Worker
+For tasks like model training and asynchronous chat processing, you must run the RQ worker:
+
+```bash
+python -m src.worker
+```
+
+## Verification
+
+Once the service is running, you can access the interactive API documentation:
+- **Swagger UI:** `http://localhost:8000/docs`
+- **ReDoc:** `http://localhost:8000/api/v1/redoc`
+
+### Test Request
+Verify the installation by sending a test request to the EEG analysis endpoint:
+
+```bash
+curl -X POST "http://localhost:8000/api/v1/eeg/analyze?model_type=original" \
+  -H "Content-Type: application/json" \
+  -d '{"alpha":10.5,"beta":15.2,"theta":6.3,"delta":2.1,"gamma":30.5}'
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**FFmpeg Not Found**
+If you see errors related to audio processing, ensure FFmpeg is in your system PATH.
+- **macOS:** `brew install ffmpeg`
+- **Ubuntu:** `sudo apt install ffmpeg`
+
+**Memory Errors**
+The AI models can be memory-intensive. If the service crashes during model loading, ensure you have at least 16GB of RAM available.
+
+**CUDA Errors**
+If you are using a GPU and encounter CUDA errors, verify that your CUDA version matches the requirements of your installed PyTorch/TensorFlow versions.

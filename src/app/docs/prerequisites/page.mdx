@@ -1,0 +1,94 @@
+export const metadata = {
+  title: 'Prerequisites - NeuroLab Documentation',
+  description: 'System requirements and dependencies for setting up the NeuroLab platform.',
+}
+
+# Prerequisites
+
+Before you begin setting up NeuroLab, ensure your development environment meets the following requirements. The platform is complex and requires several background services to function correctly.
+
+## Hardware Requirements
+
+### Development Environment
+- **CPU:** Quad-core processor (Intel i5/i7 or Apple M1/M2/M3 recommended)
+- **RAM:** 16GB minimum (32GB recommended for running AI models locally)
+- **Storage:** 20GB free space (SSD recommended)
+
+### Deployment (Production)
+- **CPU:** 4+ Cores
+- **RAM:** 16GB+
+- **GPU:** NVIDIA GPU with 8GB+ VRAM (Recommended for AI Service inference speed)
+
+## Software Dependencies
+
+### Core Runtimes
+- **Node.js:** v22.0.0 or higher
+- **Python:** v3.12 or higher
+- **Docker:** Engine v24.0.0+ and Compose v2.20.0+ (Optional but recommended)
+
+### Databases & Services
+- **MongoDB:** v7.0 or higher
+- **Redis:** v7.0 or higher
+- **MQTT Broker:** Mosquitto or Aedes (Included in backend)
+- **Minio:** Object storage for binary data (EEG/Audio)
+
+## Development Tools
+
+### All Services
+- **Git:** For version control
+- **VS Code:** Recommended editor (with Python and Tailwind extensions)
+- **Postman:** For API testing
+
+### AI Service
+- **uv:** Extremely fast Python package installer and resolver (recommended)
+- **FFmpeg:** For audio processing and voice emotion detection
+- **CUDA Toolkit:** If using NVIDIA GPU for acceleration (v12.x recommended)
+
+### Backend & Frontend
+- **npm / bun:** Package managers (v10+ for npm, v1.1+ for bun)
+- **Vercel CLI:** For frontend deployments (optional)
+
+## API Keys & Credentials
+
+You will need the following third-party credentials for full functionality:
+
+- **Flutterwave:** For processing payments and billing
+- **Mailgun:** For sending system notifications and emails
+- **Google Cloud:** For Calendar and OAuth integrations
+- **OpenRouter:** (Optional) If using LLM-based chat features
+
+## Knowledge Prerequisites
+
+To effectively work with NeuroLab, familiarity with the following technologies is helpful:
+
+- **Frontend:** React, Next.js, TypeScript, Tailwind CSS
+- **Backend:** Express.js, Mongoose, Socket.io, gRPC
+- **AI/ML:** FastAPI, TensorFlow, Signal Processing (EEG)
+- **DevOps:** Docker, CI/CD pipelines, Cloud infrastructure
+
+---
+
+## Next Steps
+
+Once your environment is ready, proceed to the installation guides:
+
+<div className='not-prose mt-6 grid gap-4 sm:grid-cols-2'>
+  <a
+    href='/docs/installation/ai-service'
+    className='hover:bg-accent block rounded-lg border p-6 transition-colors'
+  >
+    <h3 className='mb-2 font-bold'>AI Service Setup →</h3>
+    <p className='text-muted-foreground text-sm'>
+      Set up the Python environment and ML models
+    </p>
+  </a>
+  <a
+    href='/docs/installation/backend'
+    className='hover:bg-accent block rounded-lg border p-6 transition-colors'
+  >
+    <h3 className='mb-2 font-bold'>Backend Setup →</h3>
+    <p className='text-muted-foreground text-sm'>
+      Configure the Node.js API and databases
+    </p>
+  </a>
+</div>
