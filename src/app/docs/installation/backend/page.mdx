@@ -1,0 +1,106 @@
+export const metadata = {
+  title: 'Backend Setup - NeuroLab Documentation',
+  description: 'Step-by-step guide to installing and configuring the NeuroLab Express.js backend.',
+}
+
+# Backend Setup
+
+The Backend service provides the core API for NeuroLab, managing users, clinical data, billing, and orchestrating analysis sessions. It is built with Node.js and Express.
+
+## Prerequisites
+
+Ensure you have the following installed on your system:
+- **Node.js:** v22.0.0 or higher
+- **MongoDB:** v7.0 or higher
+- **Redis:** Required for session management (optional but recommended)
+
+## Installation
+
+### 1. Navigate to the Backend Directory
+From the root of the NeuroLab repository:
+
+```bash
+cd backend
+```
+
+### 2. Install Dependencies
+We recommend using `npm ci` for a clean installation of exact dependency versions:
+
+```bash
+npm ci
+```
+
+## Configuration
+
+### Environment Variables
+Create a `.env` file in the `backend/` directory by copying the example:
+
+```bash
+cp .env.example .env
+```
+
+#### Core Configuration
+
+| Variable | Description | Default |
+| :--- | :--- | :--- |
+| `NODE_ENV` | Environment mode | `development` |
+| `PORT` | API Port | `5000` |
+| `MONGODB_URI` | Connection string for MongoDB | - |
+| `ACCESS_TOKEN_SECRET` | Secret for JWT access tokens | - |
+| `REFRESH_TOKEN_SECRET` | Secret for JWT refresh tokens | - |
+
+#### Service Integration
+
+| Variable | Description | Default |
+| :--- | :--- | :--- |
+| `AI_API_URL` | URL of the AI Service | `http://localhost:8000` |
+| `AI_MODEL_TYPE` | Default model for analysis | `original` |
+| `FILE_STORAGE_TYPE` | Storage type (`local` or `minio`) | `local` |
+
+## Running the Service
+
+### Development Mode
+Start the backend with `nodemon` for auto-reloading:
+
+```bash
+npm run dev
+```
+
+### Production Mode
+Build and run the production server:
+
+```bash
+npm start
+```
+
+## Verification
+
+Once the service is running, you can access the health endpoint:
+- **URL:** `http://localhost:5000/`
+
+### API Documentation
+The backend automatically generates Swagger documentation:
+- **Swagger UI:** `http://localhost:5000/api-docs`
+
+### Database Connection
+Check the console output to ensure the connection to MongoDB is successful:
+```text
+✅ Database connected successfully
+✅ All services initialized successfully
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**MongoDB Connection Failure**
+Ensure your `MONGODB_URI` is correct and that the MongoDB service is running locally or accessible over the network.
+
+**Port Conflict**
+If port `5000` is already in use, you can change it by updating the `PORT` variable in your `.env` file.
+
+**Rate Limiting**
+The backend has rate limiting enabled. If you receive `429 Too Many Requests` during development, you can increase the limit in `server.js` or use a different IP.
+
+**File Upload Errors**
+If using `FILE_STORAGE_TYPE=local`, ensure the `temp` and `uploads` directories exist and are writable by the Node.js process.
