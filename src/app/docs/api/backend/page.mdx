@@ -1,0 +1,102 @@
+export const metadata = {
+  title: 'Backend API - NeuroLab Documentation',
+  description: 'API Reference for the NeuroLab Core Backend service.',
+}
+
+# Backend API
+
+The Core Backend orchestrates the platform, manages the database, and handles clinical operations.
+
+**Base URL**: `http://localhost:5000/api`
+
+## Authentication
+
+### User Login
+**Endpoint**: `POST /auth/login`
+
+**Request Body**:
+```json
+{
+  "email": "user@example.com",
+  "password": "yourpassword"
+}
+```
+
+**Response**:
+```json
+{
+  "token": "eyJhbG...",
+  "user": {
+    "id": "65f...",
+    "role": "USER",
+    "name": "John Doe"
+  }
+}
+```
+
+## Appointments
+
+### Book Appointment
+**Endpoint**: `POST /appointments`
+**Role**: `USER`
+
+**Request Body**:
+```json
+{
+  "doctorId": "65f...",
+  "date": "2024-06-15T10:00:00Z",
+  "type": "Consultation",
+  "notes": "Initial assessment"
+}
+```
+
+### Get My Appointments
+**Endpoint**: `GET /appointments/me`
+**Role**: `USER`, `DOCTOR`
+
+## Device Management (IoT)
+
+### Register Device
+**Endpoint**: `POST /devices`
+**Role**: `ADMIN`, `CLINIC`
+
+**Request Body**:
+```json
+{
+  "serialNumber": "NL-EEG-9921",
+  "type": "Headset",
+  "model": "BrainStream v2"
+}
+```
+
+## File Uploads
+
+### Upload Medical Data
+Uploads files to MinIO storage and generates a reference for analysis.
+
+**Endpoint**: `POST /uploads/clinical`
+**Type**: `multipart/form-data`
+
+## Clinical Reports
+
+### Generate Report
+Triggers the AI service to generate a comprehensive report for a session.
+
+**Endpoint**: `POST /reports/generate`
+**Request Body**:
+```json
+{
+  "sessionId": "65f...",
+  "template": "StandardClinical"
+}
+```
+
+## WebSocket Events
+
+The backend broadcasts real-time events via Socket.io.
+
+| Event | Direction | Description |
+| :--- | :--- | :--- |
+| `session:update` | Server -> Client | Real-time mental state updates. |
+| `notification:new` | Server -> Client | New system or clinical notification. |
+| `device:status` | Server -> Client | Online/Offline status of connected IoT devices. |

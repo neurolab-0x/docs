@@ -1,0 +1,82 @@
+export const metadata = {
+  title: 'Quick Start - NeuroLab Documentation',
+  description: 'Get NeuroLab up and running in your local environment.',
+}
+
+# Quick Start
+
+Get started with NeuroLab by setting up the development environment and running the core services.
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+- **Node.js** (v22.0.0 or later)
+- **Python** (3.10 or later)
+- **Docker** and Docker Compose
+- **MongoDB** (local or Atlas)
+- **Redis**
+
+## 1. Clone the Repository
+
+```bash
+git clone https://github.com/neurolab/neurolab.git
+cd neurolab
+```
+
+## 2. Setup the Main Backend
+
+The backend manages users, sessions, and clinical data.
+
+```bash
+cd backend
+npm install
+cp .env.example .env
+npm run dev
+```
+
+The backend will start on `http://localhost:5000`.
+
+## 3. Setup the AI Service
+
+The AI service handles the heavy lifting of signal processing.
+
+```bash
+cd "../AI Service/backend"
+python -m venv venv
+source venv/bin/activate # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+python main.py
+```
+
+The AI API will be available at `http://localhost:8000`.
+
+## 4. Launch the Platform
+
+The platform is the main user interface.
+
+```bash
+cd ../../platform
+npm install
+npm run dev
+```
+
+Visit `http://localhost:5173` to access the NeuroLab Platform.
+
+## 5. Verify the Installation
+
+1. Open the Platform in your browser.
+2. Navigate to the **Login** page.
+3. Check the browser console to ensure it's successfully communicating with the backend API.
+4. Check the Backend logs to confirm gRPC and MQTT services have initialized.
+
+## Common Issues
+
+### gRPC Connection Failure
+If the AI service cannot connect to the backend context server, ensure the `GRPC_PORT` (default 50051) is open and matching in both `.env` files.
+
+### MQTT Connection
+Ensure Mosquitto or the internal Aedes broker is running. The backend logs will indicate `✅ MQTT service initialized`.
+
+---
+
+Next: [Learn about the Architecture](/docs/architecture)
