@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NeuroLab Docs
 
-## Getting Started
+Documentation site for the NeuroLab platform, built with Next.js and MDX.
 
-First, run the development server:
+## Scope
+
+This app currently documents the parts of the platform that are implemented and actively maintained in this repository. The navigation is intentionally limited to pages that exist.
+
+Current coverage:
+- platform introduction and quick start
+- architecture overview
+- backend installation
+- AI service installation
+- Docker and production setup
+- core concepts for mental states and EEG processing
+- backend and AI API overview pages
+
+## Requirements
+
+- Node.js 22+
+- npm 10+
+
+## Local development
+
+```bash
+npm ci
+npm run dev
+```
+
+Open `http://localhost:3000`.
+
+## Scripts
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run lint
+npm run build
+npm run format
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `src/app/docs`: MDX documentation pages
+- `src/components`: layout and UI components
+- `src/config/docs.ts`: docs navigation config
+- `.github/workflows`: CI workflows for lint, build, and dependency review
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## CI
 
-## Learn More
+GitHub Actions validates this app with:
+- `npm ci`
+- `npm run lint`
+- `npm run build`
 
-To learn more about Next.js, take a look at the following resources:
+Workflow files:
+- `.github/workflows/docs-ci.yml`
+- `.github/workflows/dependency-review.yml`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Authoring rules
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Only add a route to `src/config/docs.ts` after the page exists.
+- Keep architecture claims aligned with the actual codebase.
+- Prefer removing placeholder UI over shipping non-functional features.
+- Update this README and `TASKS.md` when documentation scope changes materially.
