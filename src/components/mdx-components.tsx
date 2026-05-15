@@ -1,5 +1,4 @@
 import * as React from 'react'
-import Image from 'next/image'
 import { cn } from '@/lib/utils'
 
 const components = {
@@ -208,7 +207,7 @@ interface TabsProps {
   defaultValue?: string
 }
 
-function Tabs({ children, defaultValue }: TabsProps) {
+function Tabs({ children }: TabsProps) {
   return <div className='my-6 rounded-lg border'>{children}</div>
 }
 

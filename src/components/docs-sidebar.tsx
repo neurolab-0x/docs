@@ -2,8 +2,8 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { docsConfig, type NavItemWithChildren } from '@/config/docs'
 import { cn } from '@/lib/utils'
-import { docsConfig } from '@/config/docs'
 
 export function DocsSidebar() {
   const pathname = usePathname()
@@ -17,12 +17,9 @@ export function DocsSidebar() {
               <h4 className='text-foreground mb-1 rounded-md px-2 py-1 text-sm text-[10px] font-bold tracking-tight uppercase opacity-70'>
                 {section.title}
               </h4>
-              {section.items?.length && (
-                <DocsSidebarNavItems
-                  items={section.items}
-                  pathname={pathname}
-                />
-              )}
+              {section.items?.length ? (
+                <DocsSidebarNavItems items={section.items} pathname={pathname} />
+              ) : null}
             </div>
           ))}
         </div>
@@ -32,12 +29,12 @@ export function DocsSidebar() {
 }
 
 interface DocsSidebarNavItemsProps {
-  items: any[]
+  items: NavItemWithChildren[]
   pathname: string | null
 }
 
 function DocsSidebarNavItems({ items, pathname }: DocsSidebarNavItemsProps) {
-  return items?.length ? (
+  return items.length ? (
     <div className='grid grid-flow-row auto-rows-max text-sm'>
       {items.map((item, index) =>
         item.href ? (
@@ -55,11 +52,11 @@ function DocsSidebarNavItems({ items, pathname }: DocsSidebarNavItemsProps) {
             rel={item.external ? 'noreferrer' : ''}
           >
             {item.title}
-            {item.label && (
+            {item.label ? (
               <span className='ml-2 rounded-md bg-[#adfa1d] px-1.5 py-0.5 text-xs leading-none text-[#000000] no-underline group-hover:no-underline'>
                 {item.label}
               </span>
-            )}
+            ) : null}
           </Link>
         ) : (
           <span
@@ -70,11 +67,11 @@ function DocsSidebarNavItems({ items, pathname }: DocsSidebarNavItemsProps) {
             )}
           >
             {item.title}
-            {item.label && (
+            {item.label ? (
               <span className='bg-muted text-muted-foreground ml-2 rounded-md px-1.5 py-0.5 text-xs leading-none no-underline group-hover:no-underline'>
                 {item.label}
               </span>
-            )}
+            ) : null}
           </span>
         ),
       )}
