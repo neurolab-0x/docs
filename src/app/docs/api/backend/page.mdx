@@ -1,20 +1,53 @@
 export const metadata = {
   title: 'Backend API - NeuroLab Documentation',
-  description: 'API Reference for the NeuroLab Core Backend service.',
+  description: 'Current route overview for the NeuroLab Express backend.',
 }
 
 # Backend API
 
-The Core Backend orchestrates the platform, manages the database, and handles clinical operations.
+The NeuroLab backend is an Express service that owns authentication, user and doctor workflows, appointments, uploads, reports, billing, notifications, and chat orchestration.
 
-**Base URL**: `http://localhost:5000/api`
+This page is an overview of the current route surface. For the full request and response schema details, use the generated Swagger UI exposed by the backend itself.
+
+## Base URL
+
+- Local: `http://localhost:5000`
+- Swagger UI: `http://localhost:5000/api-docs`
+- OpenAPI JSON: `http://localhost:5000/api-docs.json`
+
+The backend root endpoint is:
+
+```http
+GET /
+```
+
+It returns a basic service status payload.
 
 ## Authentication
 
-### User Login
-**Endpoint**: `POST /auth/login`
+Authentication routes are mounted under:
 
-**Request Body**:
+```text
+/api/auth
+```
+
+Current auth routes include:
+
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `POST /api/auth/refresh`
+- `POST /api/auth/logout`
+- `GET /api/auth/verify-email/:token`
+- `POST /api/auth/request-password-reset`
+- `POST /api/auth/reset-password/:token`
+
+Example login request:
+
+```http
+POST /api/auth/login
+Content-Type: application/json
+```
+
 ```json
 {
   "email": "user@example.com",
@@ -22,81 +55,144 @@ The Core Backend orchestrates the platform, manages the database, and handles cl
 }
 ```
 
-**Response**:
+Example login response shape:
+
 ```json
 {
-  "token": "eyJhbG...",
+  "message": "Login successful",
+  "accessToken": "jwt-access-token",
+  "refreshToken": "jwt-refresh-token",
   "user": {
-    "id": "65f...",
-    "role": "USER",
-    "name": "John Doe"
+    "id": "user-id",
+    "fullName": "John Doe",
+    "username": "johndoe",
+    "email": "user@example.com",
+    "role": "USER"
   }
 }
 ```
 
+## Primary Route Groups
+
+The backend currently mounts the following route prefixes:
+
+- `/api/auth`
+- `/api/users`
+- `/api/admin`
+- `/api/doctors`
+- `/api/devices`
+- `/api/sessions`
+- `/api/analysis`
+- `/api/reviews`
+- `/api/uploads`
+- `/api/reports`
+- `/api/appointments`
+- `/api/calendar`
+- `/api/notifications`
+- `/api/clinics`
+- `/api/billing`
+- `/api/chat`
+
 ## Appointments
 
-### Book Appointment
-**Endpoint**: `POST /appointments`
-**Role**: `USER`
+Appointments are mounted under:
 
-**Request Body**:
-```json
-{
-  "doctorId": "65f...",
-  "date": "2024-06-15T10:00:00Z",
-  "type": "Consultation",
-  "notes": "Initial assessment"
-}
+```text
+/api/appointments
 ```
 
-### Get My Appointments
-**Endpoint**: `GET /appointments/me`
-**Role**: `USER`, `DOCTOR`
+Notable routes include:
 
-## Device Management (IoT)
+- `GET /api/appointments/`
+- `GET /api/appointments/doctors`
+- `GET /api/appointments/doctors/search`
+- `GET /api/appointments/doctor/me`
+- `GET /api/appointments/user/me`
 
-### Register Device
-**Endpoint**: `POST /devices`
-**Role**: `ADMIN`, `CLINIC`
+This area is broader than a single create/list pair. The backend supports patient, doctor, scheduling, and calendar-oriented appointment flows.
 
-**Request Body**:
-```json
-{
-  "serialNumber": "NL-EEG-9921",
-  "type": "Headset",
-  "model": "BrainStream v2"
-}
+## Uploads
+
+Uploads are mounted under:
+
+```text
+/api/uploads
 ```
 
-## File Uploads
+Current documented routes include:
 
-### Upload Medical Data
-Uploads files to MinIO storage and generates a reference for analysis.
+- `POST /api/uploads/upload`
+- `GET /api/uploads/`
+- `GET /api/uploads/:uploadId`
+- `GET /api/uploads/:uploadId/access`
+- `DELETE /api/uploads/:uploadId`
 
-**Endpoint**: `POST /uploads/clinical`
-**Type**: `multipart/form-data`
+The upload route uses `multipart/form-data` with a `file` field.
 
-## Clinical Reports
+## Reports
 
-### Generate Report
-Triggers the AI service to generate a comprehensive report for a session.
+Reports are mounted under:
 
-**Endpoint**: `POST /reports/generate`
-**Request Body**:
-```json
-{
-  "sessionId": "65f...",
-  "template": "StandardClinical"
-}
+```text
+/api/reports
 ```
 
-## WebSocket Events
+Current documented routes include:
 
-The backend broadcasts real-time events via Socket.io.
+- `POST /api/reports/`
+- `GET /api/reports/`
+- `GET /api/reports/:reportId`
+- `GET /api/reports/:reportId/access`
+- `GET /api/reports/:reportId/events`
 
-| Event | Direction | Description |
-| :--- | :--- | :--- |
-| `session:update` | Server -> Client | Real-time mental state updates. |
-| `notification:new` | Server -> Client | New system or clinical notification. |
-| `device:status` | Server -> Client | Online/Offline status of connected IoT devices. |
+Report generation is modeled as a queued workflow rather than a single synchronous `generate` endpoint.
+
+## Chat
+
+Chat is mounted under:
+
+```text
+/api/chat
+```
+
+The backend chat API is conversation-based and supports both synchronous and queued AI responses.
+
+Notable routes include:
+
+- `POST /api/chat/conversations`
+- `GET /api/chat/conversations`
+- `GET /api/chat/conversations/:id/messages`
+- `POST /api/chat/conversations/:id/messages`
+- `POST /api/chat/conversations/:id/messages/submit`
+- `PATCH /api/chat/conversations/:id`
+- `DELETE /api/chat/conversations/:id`
+- `POST /api/chat/conversations/:id/refresh-title`
+- `GET /api/chat/jobs/:jobId/status`
+- `GET /api/chat/jobs/:jobId/sse`
+
+Use the `submit` and `sse` endpoints when you want asynchronous AI processing with job status and event streaming.
+
+## Devices, Analysis, and Other Domains
+
+Additional route groups are active for:
+
+- users and profile management
+- admin operations
+- doctors and patient workflows
+- devices and device status
+- session tracking
+- analysis orchestration
+- reviews
+- notifications
+- clinics
+- billing
+- calendar integrations
+
+Those areas are part of the live backend surface even if they are not fully expanded on this page yet.
+
+## Notes
+
+- Global rate limiting is enabled.
+- Most application routes are mounted under `/api/*`.
+- Swagger is the best current source of truth for backend request and response schemas.
+- If this page and Swagger disagree, trust Swagger and the route files in `backend/routes`.
