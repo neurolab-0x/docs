@@ -1,96 +1,140 @@
+import {
+  ArchitectureCard,
+  ArchitectureGrid,
+  Callout,
+} from '@/components/mdx-components'
+
 export const metadata = {
   title: 'Architecture - NeuroLab Documentation',
-  description: 'Deep dive into the NeuroLab system architecture and component interactions.',
+  description: 'Documented runtime architecture for the current NeuroLab codebase.',
 }
 
 # Architecture
 
-NeuroLab is built on a modular, multi-service architecture designed for high-performance neural data processing, real-time feedback, and clinical management.
+NeuroLab currently spans a backend application, an AI service, client applications, and supporting infrastructure. This page focuses on the runtime shape that is visible in the repository today.
+
+<Callout
+  type='warning'
+  title='Source Of Truth'
+  icon='△'
+>
+  This page describes the current documented runtime. If architecture notes elsewhere in the repository disagree, trust the active service entrypoints and route files first.
+</Callout>
 
 ## System Overview
 
-The system consists of four primary layers that work together to provide multimodal analysis and healthcare services.
+The current repository is best understood as four operational layers:
 
-```mermaid
-graph TD
-    subgraph Frontend_Layer [Frontend Layer]
-        P[Platform - React]
-        W[Webapp - Next.js]
-        E[Ecommerce - Next.js]
-    end
+<ArchitectureGrid>
+  <ArchitectureCard
+    eyebrow='Client Layer'
+    title='User-Facing Applications'
+    stack='Vite and Next.js clients'
+    icon='network'
+  >
+    `platform/`, `webapp/`, `docs/`, and `ecommerce/` sit at the edge of the
+    system. They consume backend HTTP APIs and expose different product
+    surfaces: platform workflows, user-facing web experiences, and
+    documentation.
+  </ArchitectureCard>
 
-    subgraph Orchestration_Layer [Orchestration Layer]
-        B[Main Backend - Node.js]
-        M[MQTT Broker - Aedes]
-        G[gRPC Server]
-    end
+  <ArchitectureCard
+    eyebrow='Core Layer'
+    title='Backend API'
+    stack='Node.js + Express + MongoDB'
+    icon='backend'
+  >
+    The backend owns authentication, user and doctor workflows, appointments,
+    uploads, reports, notifications, billing, and chat orchestration. It also
+    exposes Swagger at `/api-docs` and acts as the main application boundary
+    for most clients.
+  </ArchitectureCard>
 
-    subgraph AI_ML_Layer [AI/ML Layer]
-        AB[AI Backend - FastAPI]
-        PR[Preprocessor - Python]
-        TS[Training System - Python]
-    end
+  <ArchitectureCard
+    eyebrow='Inference Layer'
+    title='AI Service'
+    stack='FastAPI + Python + optional RQ/Redis'
+    icon='ai'
+  >
+    The active AI runtime lives under `AI Service/backend`. It handles EEG
+    analysis, voice analysis, recommendations, reports, chat workflows, model
+    calibration, and optional streaming. Versioned routes are exposed under
+    `/api/v1/*`.
+  </ArchitectureCard>
 
-    subgraph Data_Layer [Data Layer]
-        DB[(MongoDB)]
-        S3[(MinIO Object Store)]
-        RD[(Redis)]
-    end
+  <ArchitectureCard
+    eyebrow='Infrastructure Layer'
+    title='Data And Messaging'
+    stack='MongoDB, Redis, object storage, MQTT, gRPC'
+    icon='data'
+  >
+    MongoDB is the primary application datastore. Redis supports queue-backed
+    workloads and background processing. MQTT and gRPC exist as integration
+    mechanisms for device and service-to-service communication in specific
+    flows.
+  </ArchitectureCard>
+</ArchitectureGrid>
 
-    P --> B
-    W --> B
-    E --> B
-    
-    B --> DB
-    B --> RD
-    B --> G
-    
-    AB --> G
-    AB --> S3
-    PR --> S3
-    TS --> S3
-    
-    B <--> AB
-    B <--> M
+## Current Service Boundaries
+
+### Backend Responsibilities
+
+- API surface for `/api/auth`, `/api/users`, `/api/admin`, `/api/doctors`,
+  `/api/devices`, `/api/sessions`, `/api/analysis`, `/api/uploads`,
+  `/api/reports`, `/api/appointments`, `/api/calendar`, `/api/notifications`,
+  `/api/clinics`, `/api/billing`, and `/api/chat`
+- auth and token issuance
+- application data persistence
+- appointment, billing, and workflow orchestration
+- chat conversation persistence and AI job reconciliation
+
+### AI Service Responsibilities
+
+- versioned FastAPI routing under `/api/v1`
+- EEG analysis endpoints
+- voice analysis endpoints
+- model calibration
+- report generation jobs
+- chat request processing, including queued background mode
+
+## Integration Patterns
+
+| Mechanism | Current Role | Notes |
+| :--- | :--- | :--- |
+| **HTTP/REST** | Primary application integration | Main client and service API surface |
+| **Swagger/OpenAPI** | Backend schema discovery | Exposed by the backend at `/api-docs` |
+| **Versioned FastAPI routes** | AI service contract | Canonical AI surface is `/api/v1/*` |
+| **Redis/RQ** | Background processing | Used for queued AI chat and report workflows |
+| **gRPC** | Targeted service-to-service context exchange | Present in current backend and AI chat/context paths |
+| **MQTT** | Device and notification integration | Present as an optional real-time integration mechanism |
+
+## Runtime Shape
+
+```text
+Client applications
+    -> Backend API (Express)
+    -> AI service (FastAPI) for analysis, reports, and chat
+    -> MongoDB / Redis / storage / optional messaging integrations
 ```
 
-## Component Details
+## Architectural Notes
 
-### 1. Main Backend (Node.js/Express)
-The "Brain" of the business logic. It orchestrates user sessions, manages clinical workflows, and acts as the gatekeeper for data access.
-- **Role**: API Gateway, User Auth, Billing, Scheduling.
-- **Integrations**: MongoDB, Redis, Flutterwave, MQTT.
-- **Internal Communication**: Hosts a gRPC server that AI services query to verify user context without hitting the main database directly for every inference.
+<Callout title='Important Distinction' icon='◆'>
+  The repository also contains older or alternate architectural traces. For
+  documentation work, treat `AI Service/backend` as the primary AI runtime
+  unless the goal is explicitly historical or comparative.
+</Callout>
 
-### 2. AI Backend (FastAPI)
-The "Inference Engine". It handles high-frequency data processing and machine learning predictions.
-- **Role**: EEG Analysis, Voice Classification, Mental State Mapping.
-- **Worker Process**: Uses Redis Queue (RQ) for asynchronous tasks like report generation or long-running signal analysis.
+### What is stable
 
-### 3. Preprocessor (Python)
-The "Data Engineering Factory". It prepares raw signals for analysis.
-- **Role**: Signal cleaning, artifact removal (EOG/EMG), feature engineering (Band Power, Entropy).
-- **Output**: Publishes `dataset_ref` packages used by the Training System.
+- backend route groups and Swagger exposure
+- AI service versioned API prefix
+- Vite-based `platform` and `webapp` clients
+- docs app as a separate Next.js application
 
-### 4. Training System (Python)
-The "Learning Layer". It evolves the models based on new data.
-- **Role**: Background model training, validation, and performance comparison.
-- **Artifacts**: Writes model weights and evaluation reports to MinIO.
+### What is integration-sensitive
 
-## Communication Protocols
-
-| Protocol | Usage | Description |
-| :--- | :--- | :--- |
-| **HTTP/REST** | Internal/External | Standard API interaction for UI and service-to-service calls. |
-| **gRPC** | Internal | Low-latency context lookups between AI services and the Main Backend. |
-| **MQTT** | IoT/Real-time | Bidirectional communication with EEG headsets and medical sensors. |
-| **WebSockets** | Real-time UI | Pushing real-time mental state updates and notifications to the Platform. |
-
-## Data Flow: Real-time Analysis
-
-1. **Ingestion**: EEG sensor data flows in via **MQTT** or **WebSocket**.
-2. **Buffering**: The Main Backend buffers raw data and triggers the **AI Backend**.
-3. **Preprocessing**: The **Preprocessor** cleans the signal and extracts relevant features.
-4. **Inference**: The **AI Backend** classifies the mental state (Relaxed, Focused, Stressed).
-5. **Feedback**: Results are sent back to the **Platform** via WebSocket for immediate biofeedback display.
-6. **Persistence**: Analyzed sessions and classification results are stored in **MongoDB** for historical tracking.
+- MQTT-dependent flows
+- gRPC-dependent context exchange
+- Redis-backed async jobs
+- deployment assumptions across the various frontend apps
