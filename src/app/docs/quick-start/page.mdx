@@ -60,8 +60,8 @@ export const metadata = {
   <ArchitectureGrid>
     <ArchitectureCard
       eyebrow='Core service'
-      title='Backend'
-      stack='Express, MongoDB, auth, workflows, chat orchestration'
+      title='Core Services'
+      stack='Orchestration workflows, client-facing API, platform services'
       icon='backend'
     >
       This is the main application API. Most clients talk to the backend first,
@@ -70,9 +70,9 @@ export const metadata = {
     </ArchitectureCard>
 
     <ArchitectureCard
-      eyebrow='Core service'
+      eyebrow='AI service'
       title='AI Service'
-      stack='FastAPI, analysis, reports, recommendations, chat'
+      stack='AI/ML orchestration workflows, analysis and inference engine, model serving layer'
       icon='ai'
     >
       The active AI runtime under `AI Service/backend` provides inference and
@@ -81,9 +81,9 @@ export const metadata = {
     </ArchitectureCard>
 
     <ArchitectureCard
-      eyebrow='Client'
-      title='Platform Or Webapp'
-      stack='Vite clients, API consumers, operational UI'
+      eyebrow='Clients'
+      title='Client Applications'
+      stack='Web applications, API consumers, operational UI/UX'
       icon='network'
     >
       Once the backend is running, you can use one of the client apps to
@@ -92,27 +92,28 @@ export const metadata = {
     </ArchitectureCard>
 
     <ArchitectureCard
-      eyebrow='Dependencies'
-      title='MongoDB And Redis'
-      stack='persistence and background jobs'
+      eyebrow='Data and Infrastructure'
+      title='Data and Infrastructure Layer'
+      stack='Data services, Object storage services, Message Queuing Systems, Deployment Orchestration'
       icon='data'
     >
-      MongoDB is the main datastore. Redis matters when you want queue-backed
-      or streaming behavior in AI workflows, especially async chat and report
-      processing.
+     The Data and Infrastructure exposes the main datastores, object storage, queuing systems, and deployment orchestration for the system.
     </ArchitectureCard>
   </ArchitectureGrid>
 </section>
 
 <section className='not-prose mt-16'>
   <div className='mb-6 max-w-3xl'>
-    <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>Startup order</div>
+    <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>Core Infrastructure</div>
     <h2 className='mt-2 text-3xl font-black tracking-tight text-zinc-950 sm:text-4xl dark:text-zinc-50'>
-      Bring the system up in this order
+      Runtime Components and Architecture
     </h2>
+    <div className='mt-3 text-[15px] leading-8 text-zinc-600 dark:text-zinc-300'>
+      These are the main components that make up the core runtime of the system.
+    </div>
   </div>
 
-  <Card className='gap-0 overflow-hidden rounded-3xl border-zinc-200 bg-white py-0 shadow-sm dark:border-zinc-800 dark:bg-zinc-950'>
+  <Card className='gap-0 overflow-hidden rounded-xl border-zinc-200 bg-white py-0 shadow-sm dark:border-zinc-800 dark:bg-zinc-950'>
     <Table className='text-sm'>
       <TableHeader>
         <TableRow className='border-zinc-200 dark:border-zinc-800'>
@@ -133,10 +134,10 @@ export const metadata = {
             1
           </TableCell>
           <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
-            MongoDB and, when needed, Redis
+            `Data and Infrastructure Layer`
           </TableCell>
-          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
-            These services back persistence and optional queue-driven features.
+          <TableCell className='px-5 py-4 text-sm text-zinc-700 dark:text-zinc-300'>
+            This is the foundation of the system, providing the necessary infrastructure to support the application.
           </TableCell>
         </TableRow>
         <TableRow className='border-zinc-200 dark:border-zinc-800'>
@@ -144,11 +145,10 @@ export const metadata = {
             2
           </TableCell>
           <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
-            `backend/`
+            `Core Service Layer`
           </TableCell>
           <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
-            This is the main application boundary and the first service most
-            clients depend on.
+            This is the main application boundary and the orchestrator of the system.
           </TableCell>
         </TableRow>
         <TableRow className='border-zinc-200 dark:border-zinc-800'>
@@ -156,11 +156,10 @@ export const metadata = {
             3
           </TableCell>
           <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
-            `AI Service/backend/`
+            `AI/ML Service Layer`
           </TableCell>
           <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
-            Required for analysis, recommendations, reports, and AI-backed chat
-            flows.
+            Required for AI/ML heavy tasks such as data processing, model training and other operations.
           </TableCell>
         </TableRow>
         <TableRow>
@@ -168,10 +167,10 @@ export const metadata = {
             4
           </TableCell>
           <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
-            `platform/` or `webapp/`
+            `Client Applications Layer`
           </TableCell>
           <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
-            Use a client app once the service layer is available and reachable.
+            Use a client app once the Core and/or AI/ML Service layer are available and reachable.
           </TableCell>
         </TableRow>
       </TableBody>
