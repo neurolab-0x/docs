@@ -12,6 +12,21 @@ import {
   Sparkles,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 import { cn } from '@/lib/utils'
 
 function extractTextContent(node: React.ReactNode): string {
@@ -27,7 +42,7 @@ function extractTextContent(node: React.ReactNode): string {
     return node.map(extractTextContent).join('')
   }
 
-  if (React.isValidElement(node)) {
+  if (React.isValidElement<{ children?: React.ReactNode }>(node)) {
     return extractTextContent(node.props.children)
   }
 
@@ -130,7 +145,7 @@ function Pre({
 }
 
 interface CalloutProps extends React.HTMLAttributes<HTMLDivElement> {
-  icon?: string
+  icon?: React.ReactNode
   children?: React.ReactNode
   title?: string
   type?: 'default' | 'warning' | 'danger' | 'success'
@@ -145,9 +160,9 @@ function Callout({
   ...props
 }: CalloutProps) {
   return (
-    <div
+    <Card
       className={cn(
-        'my-8 rounded-2xl border px-5 py-4 shadow-sm',
+        'my-8 gap-0 rounded-2xl px-0 py-0 shadow-sm',
         {
           'border-sky-200 bg-sky-50/70 dark:border-sky-900 dark:bg-sky-950/30':
             type === 'default',
@@ -162,22 +177,24 @@ function Callout({
       )}
       {...props}
     >
-      <div className='flex items-start gap-3'>
-        {icon ? (
-          <span className='mt-0.5 text-xl'>{icon}</span>
-        ) : (
-          <Sparkles className='mt-0.5 size-5 text-current opacity-80' />
-        )}
-        <div className='min-w-0 flex-1'>
-          {title ? (
-            <p className='mb-2 text-sm font-black tracking-[0.14em] uppercase'>
-              {title}
-            </p>
-          ) : null}
-          <div className='text-sm leading-7'>{children}</div>
+      <CardContent className='px-5 py-4'>
+        <div className='flex items-start gap-3'>
+          {icon ? (
+            <span className='mt-0.5 text-xl'>{icon}</span>
+          ) : (
+            <Sparkles className='mt-0.5 size-5 text-current opacity-80' />
+          )}
+          <div className='min-w-0 flex-1'>
+            {title ? (
+              <p className='mb-2 text-sm font-black tracking-[0.14em] uppercase'>
+                {title}
+              </p>
+            ) : null}
+            <div className='text-sm leading-7'>{children}</div>
+          </div>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   )
 }
 
@@ -189,9 +206,9 @@ interface CodeBlockProps {
 
 function CodeBlock({ children, title, language }: CodeBlockProps) {
   return (
-    <div className='my-8 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-950'>
+    <Card className='my-8 gap-0 overflow-hidden rounded-2xl border-zinc-200 bg-white py-0 shadow-sm dark:border-zinc-800 dark:bg-zinc-950'>
       {(title || language) && (
-        <div className='flex items-center justify-between border-b bg-zinc-50 px-4 py-3 dark:border-zinc-800 dark:bg-zinc-900'>
+        <CardHeader className='flex flex-row items-center justify-between border-b bg-zinc-50 px-4 py-3 dark:border-zinc-800 dark:bg-zinc-900'>
           <span className='text-sm font-bold text-zinc-900 dark:text-zinc-100'>
             {title || 'Code example'}
           </span>
@@ -200,10 +217,10 @@ function CodeBlock({ children, title, language }: CodeBlockProps) {
               {language}
             </span>
           ) : null}
-        </div>
+        </CardHeader>
       )}
       <Pre>{children}</Pre>
-    </div>
+    </Card>
   )
 }
 
@@ -213,9 +230,9 @@ interface TabsProps {
 
 function Tabs({ children }: TabsProps) {
   return (
-    <div className='my-8 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-950'>
+    <Card className='my-8 overflow-hidden rounded-2xl border-zinc-200 bg-white py-0 shadow-sm dark:border-zinc-800 dark:bg-zinc-950'>
       {children}
-    </div>
+    </Card>
   )
 }
 
@@ -251,14 +268,14 @@ function Endpoint({
     'bg-zinc-100 text-zinc-900 ring-zinc-200 dark:bg-zinc-900 dark:text-zinc-200 dark:ring-zinc-800'
 
   return (
-    <div
+    <Card
       className={cn(
-        'my-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-950',
+        'my-6 gap-0 overflow-hidden rounded-2xl border-zinc-200 bg-white py-0 shadow-sm dark:border-zinc-800 dark:bg-zinc-950',
         className,
       )}
       {...props}
     >
-      <div className='border-b border-zinc-200 bg-zinc-50 px-5 py-4 dark:border-zinc-800 dark:bg-zinc-900/70'>
+      <CardHeader className='border-b border-zinc-200 bg-zinc-50 px-5 py-4 dark:border-zinc-800 dark:bg-zinc-900/70'>
         <div className='mb-3 flex flex-wrap items-center gap-2'>
           <span
             className={cn(
@@ -280,13 +297,13 @@ function Endpoint({
           {status ? <span>Status {status}</span> : null}
           {title ? <span className='text-zinc-900 dark:text-zinc-100'>{title}</span> : null}
         </div>
-      </div>
+      </CardHeader>
       {children ? (
-        <div className='px-5 py-4 text-sm leading-7 text-zinc-700 dark:text-zinc-300'>
+        <CardContent className='px-5 py-4 text-sm leading-7 text-zinc-700 dark:text-zinc-300'>
           {children}
-        </div>
+        </CardContent>
       ) : null}
-    </div>
+    </Card>
   )
 }
 
@@ -305,7 +322,10 @@ function EndpointGroup({
 }: EndpointGroupProps) {
   return (
     <section
-      className={cn('my-10 rounded-3xl border border-zinc-200 bg-zinc-50/70 p-6 dark:border-zinc-800 dark:bg-zinc-900/30', className)}
+      className={cn(
+        'my-10 rounded-3xl border border-zinc-200 bg-zinc-50/70 p-6 dark:border-zinc-800 dark:bg-zinc-900/30',
+        className,
+      )}
       {...props}
     >
       <div className='mb-5'>
@@ -360,37 +380,37 @@ function ArchitectureCard({
     }[icon] || Server
 
   return (
-    <div
+    <Card
       className={cn(
-        'rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-950',
+        'gap-0 rounded-3xl border-zinc-200 bg-white py-0 shadow-sm dark:border-zinc-800 dark:bg-zinc-950',
         className,
       )}
       {...props}
     >
-      <div className='mb-5 flex items-start justify-between gap-4'>
-        <div>
+      <CardHeader className='mb-0 flex flex-row items-start justify-between gap-4 p-6 pb-0'>
+        <div className='min-w-0'>
           {eyebrow ? (
             <p className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
               {eyebrow}
             </p>
           ) : null}
-          <h3 className='mt-2 text-2xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
+          <CardTitle className='mt-2 text-2xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
             {title}
-          </h3>
+          </CardTitle>
           {stack ? (
-            <p className='mt-2 text-sm font-semibold text-zinc-600 dark:text-zinc-300'>
+            <CardDescription className='mt-2 text-sm font-semibold text-zinc-600 dark:text-zinc-300'>
               {stack}
-            </p>
+            </CardDescription>
           ) : null}
         </div>
         <div className='rounded-2xl border border-zinc-200 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-900'>
           <Icon className='size-5 text-zinc-700 dark:text-zinc-200' />
         </div>
-      </div>
-      <div className='text-sm leading-7 text-zinc-700 dark:text-zinc-300'>
+      </CardHeader>
+      <CardContent className='p-6 pt-5 text-sm leading-7 text-zinc-700 dark:text-zinc-300'>
         {children}
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   )
 }
 
@@ -513,39 +533,39 @@ const components = {
     <hr className='my-10 border-zinc-200 dark:border-zinc-800' {...props} />
   ),
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
-    <div className='my-8 w-full overflow-hidden rounded-2xl border border-zinc-200 shadow-sm dark:border-zinc-800'>
-      <table
-        className={cn('w-full border-collapse bg-white text-sm dark:bg-zinc-950', className)}
-        {...props}
-      />
-    </div>
+    <Card className='my-8 gap-0 overflow-hidden rounded-2xl border-zinc-200 bg-white py-0 shadow-sm dark:border-zinc-800 dark:bg-zinc-950'>
+      <Table className={cn('bg-white text-sm dark:bg-zinc-950', className)} {...props} />
+    </Card>
   ),
   thead: ({
     className,
     ...props
   }: React.HTMLAttributes<HTMLTableSectionElement>) => (
-    <thead className={cn('[&_tr]:border-b [&_tr]:border-zinc-200 dark:[&_tr]:border-zinc-800', className)} {...props} />
+    <TableHeader
+      className={cn(
+        '[&_tr]:border-zinc-200 dark:[&_tr]:border-zinc-800',
+        className,
+      )}
+      {...props}
+    />
   ),
   tbody: ({
     className,
     ...props
   }: React.HTMLAttributes<HTMLTableSectionElement>) => (
-    <tbody
-      className={cn('[&_tr:last-child]:border-0', className)}
-      {...props}
-    />
+    <TableBody className={className} {...props} />
   ),
   tr: ({ className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) => (
-    <tr
+    <TableRow
       className={cn(
-        'border-b border-zinc-200 transition-colors hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-900/60',
+        'border-zinc-200 transition-colors hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-900/60',
         className,
       )}
       {...props}
     />
   ),
   th: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
-    <th
+    <TableHead
       className={cn(
         'bg-zinc-50 px-4 py-3 text-left text-xs font-black tracking-[0.14em] text-zinc-500 uppercase dark:bg-zinc-900 dark:text-zinc-400',
         className,
@@ -554,9 +574,9 @@ const components = {
     />
   ),
   td: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
-    <td
+    <TableCell
       className={cn(
-        'p-4 align-top text-sm leading-7 text-zinc-700 dark:text-zinc-300',
+        'p-4 align-top text-sm leading-7 text-zinc-700 dark:text-zinc-300 whitespace-normal',
         className,
       )}
       {...props}

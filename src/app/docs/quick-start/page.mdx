@@ -1,82 +1,255 @@
+import {
+  ArchitectureCard,
+  ArchitectureGrid,
+  Callout,
+} from '@/components/mdx-components'
+import { Rocket } from 'lucide-react'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+
 export const metadata = {
   title: 'Quick Start - NeuroLab Documentation',
-  description: 'Get NeuroLab up and running in your local environment.',
+  description:
+    'Fast orientation to the active NeuroLab runtime components and setup flow.',
 }
 
-# Quick Start
+<div className='not-prose relative overflow-hidden rounded-[2rem] border border-zinc-200 bg-[linear-gradient(135deg,#fff7ed_0%,#ffffff_42%,#dbeafe_100%)] px-6 py-8 shadow-[0_30px_90px_-50px_rgba(30,64,175,0.3)] sm:px-8 sm:py-10 dark:border-zinc-800 dark:bg-[linear-gradient(135deg,#111827_0%,#09090b_42%,#172554_100%)]'>
+  <div className='relative max-w-4xl'>
+    <div className='text-[11px] font-black tracking-[0.22em] text-orange-700 uppercase dark:text-orange-300'>Quick Start</div>
+    <h1 className='mt-4 max-w-3xl text-4xl font-black tracking-tight text-zinc-950 sm:text-5xl md:text-6xl dark:text-zinc-50'>
+      The shortest path to understanding the active runtime.
+    </h1>
+    <div className='mt-5 max-w-3xl text-base leading-8 text-zinc-700 sm:text-lg dark:text-zinc-300'>
+      This page is not the full installation manual. It is the compressed view
+      of the core runtime pieces, what each one does, and the order in which to
+      bring them up locally.
+    </div>
+  </div>
+</div>
 
-Get started with NeuroLab by setting up the development environment and running the core services.
+<Callout title='Use This Page First' icon={<Rocket />}>
+  Read this page before diving into service-specific setup. It gives you the
+  runtime map you need so the backend, AI service, and clients make sense in
+  relation to each other.
+</Callout>
 
-## Prerequisites
+<section className='not-prose mt-14'>
+  <div className='mb-6 max-w-3xl'>
+    <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>Core runtime</div>
+    <h2 className='mt-2 text-3xl font-black tracking-tight text-zinc-950 sm:text-4xl dark:text-zinc-50'>
+      The pieces you should care about first
+    </h2>
+    <div className='mt-3 text-[15px] leading-8 text-zinc-600 dark:text-zinc-300'>
+      A local NeuroLab run usually starts with a datastore layer, then the
+      backend, then the AI service, then one of the client applications.
+    </div>
+  </div>
 
-Before you begin, ensure you have the following installed:
-- **Node.js** (v22.0.0 or later)
-- **Python** (3.10 or later)
-- **Docker** and Docker Compose
-- **MongoDB** (local or Atlas)
-- **Redis**
+  <ArchitectureGrid>
+    <ArchitectureCard
+      eyebrow='Core service'
+      title='Backend'
+      stack='Express, MongoDB, auth, workflows, chat orchestration'
+      icon='backend'
+    >
+      This is the main application API. Most clients talk to the backend first,
+      and the backend coordinates application data, user workflows, and calls
+      into AI services when needed.
+    </ArchitectureCard>
 
-## 1. Clone the Repository
+    <ArchitectureCard
+      eyebrow='Core service'
+      title='AI Service'
+      stack='FastAPI, analysis, reports, recommendations, chat'
+      icon='ai'
+    >
+      The active AI runtime under `AI Service/backend` provides inference and
+      analysis functionality. It is a separate service with its own runtime,
+      environment, and optional queue-backed features.
+    </ArchitectureCard>
 
-```bash
-git clone https://github.com/neurolab/neurolab.git
-cd neurolab
-```
+    <ArchitectureCard
+      eyebrow='Client'
+      title='Platform Or Webapp'
+      stack='Vite clients, API consumers, operational UI'
+      icon='network'
+    >
+      Once the backend is running, you can use one of the client apps to
+      exercise the system. These clients depend on backend connectivity, not on
+      direct AI-service integration in normal flows.
+    </ArchitectureCard>
 
-## 2. Setup the Main Backend
+    <ArchitectureCard
+      eyebrow='Dependencies'
+      title='MongoDB And Redis'
+      stack='persistence and background jobs'
+      icon='data'
+    >
+      MongoDB is the main datastore. Redis matters when you want queue-backed
+      or streaming behavior in AI workflows, especially async chat and report
+      processing.
+    </ArchitectureCard>
+  </ArchitectureGrid>
+</section>
 
-The backend manages users, sessions, and clinical data.
+<section className='not-prose mt-16'>
+  <div className='mb-6 max-w-3xl'>
+    <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>Startup order</div>
+    <h2 className='mt-2 text-3xl font-black tracking-tight text-zinc-950 sm:text-4xl dark:text-zinc-50'>
+      Bring the system up in this order
+    </h2>
+  </div>
 
-```bash
-cd backend
-npm install
-cp .env.example .env
-npm run dev
-```
+  <Card className='gap-0 overflow-hidden rounded-3xl border-zinc-200 bg-white py-0 shadow-sm dark:border-zinc-800 dark:bg-zinc-950'>
+    <Table className='text-sm'>
+      <TableHeader>
+        <TableRow className='border-zinc-200 dark:border-zinc-800'>
+          <TableHead className='bg-zinc-50 px-5 py-4 text-left text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:bg-zinc-900 dark:text-zinc-400'>
+            Step
+          </TableHead>
+          <TableHead className='bg-zinc-50 px-5 py-4 text-left text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:bg-zinc-900 dark:text-zinc-400'>
+            What to run
+          </TableHead>
+          <TableHead className='bg-zinc-50 px-5 py-4 text-left text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:bg-zinc-900 dark:text-zinc-400'>
+            Why it matters
+          </TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow className='border-zinc-200 dark:border-zinc-800'>
+          <TableCell className='px-5 py-4 font-bold text-zinc-950 dark:text-zinc-50'>
+            1
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            MongoDB and, when needed, Redis
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            These services back persistence and optional queue-driven features.
+          </TableCell>
+        </TableRow>
+        <TableRow className='border-zinc-200 dark:border-zinc-800'>
+          <TableCell className='px-5 py-4 font-bold text-zinc-950 dark:text-zinc-50'>
+            2
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            `backend/`
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            This is the main application boundary and the first service most
+            clients depend on.
+          </TableCell>
+        </TableRow>
+        <TableRow className='border-zinc-200 dark:border-zinc-800'>
+          <TableCell className='px-5 py-4 font-bold text-zinc-950 dark:text-zinc-50'>
+            3
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            `AI Service/backend/`
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            Required for analysis, recommendations, reports, and AI-backed chat
+            flows.
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell className='px-5 py-4 font-bold text-zinc-950 dark:text-zinc-50'>
+            4
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            `platform/` or `webapp/`
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            Use a client app once the service layer is available and reachable.
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  </Card>
+</section>
 
-The backend will start on `http://localhost:5000`.
+<section className='not-prose mt-16'>
+  <div className='mb-6 max-w-3xl'>
+    <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>Key pages</div>
+    <h2 className='mt-2 text-3xl font-black tracking-tight text-zinc-950 sm:text-4xl dark:text-zinc-50'>
+      Go deeper from here
+    </h2>
+  </div>
 
-## 3. Setup the AI Service
+  <div className='grid gap-4 sm:grid-cols-2 xl:grid-cols-4'>
+    <a href='/docs/prerequisites' className='block transition-all hover:-translate-y-0.5'>
+      <Card className='gap-0 rounded-2xl border-zinc-200 bg-white py-0 shadow-sm transition-all hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'>
+        <CardHeader className='px-5 pt-5 pb-0'>
+          <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
+            Setup
+          </div>
+          <CardTitle className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
+            Prerequisites
+          </CardTitle>
+        </CardHeader>
+        <CardContent className='px-5 pt-3 pb-5 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
+          Tooling and environment assumptions before setup.
+        </CardContent>
+      </Card>
+    </a>
 
-The AI service handles the heavy lifting of signal processing.
+    <a href='/docs/installation/backend' className='block transition-all hover:-translate-y-0.5'>
+      <Card className='gap-0 rounded-2xl border-zinc-200 bg-white py-0 shadow-sm transition-all hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'>
+        <CardHeader className='px-5 pt-5 pb-0'>
+          <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
+            Service
+          </div>
+          <CardTitle className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
+            Backend Setup
+          </CardTitle>
+        </CardHeader>
+        <CardContent className='px-5 pt-3 pb-5 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
+          Installation, environment, and startup details for the main API.
+        </CardContent>
+      </Card>
+    </a>
 
-```bash
-cd "../AI Service/backend"
-python -m venv venv
-source venv/bin/activate # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
-python main.py
-```
+    <a href='/docs/installation/ai-service' className='block transition-all hover:-translate-y-0.5'>
+      <Card className='gap-0 rounded-2xl border-zinc-200 bg-white py-0 shadow-sm transition-all hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'>
+        <CardHeader className='px-5 pt-5 pb-0'>
+          <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
+            Service
+          </div>
+          <CardTitle className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
+            AI Service Setup
+          </CardTitle>
+        </CardHeader>
+        <CardContent className='px-5 pt-3 pb-5 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
+          Runtime requirements and setup details for the AI service.
+        </CardContent>
+      </Card>
+    </a>
 
-The AI API will be available at `http://localhost:8000`.
-
-## 4. Launch the Platform
-
-The platform is the main user interface.
-
-```bash
-cd ../../platform
-npm install
-npm run dev
-```
-
-Visit `http://localhost:5173` to access the NeuroLab Platform.
-
-## 5. Verify the Installation
-
-1. Open the Platform in your browser.
-2. Navigate to the **Login** page.
-3. Check the browser console to ensure it's successfully communicating with the backend API.
-4. Check the Backend logs to confirm gRPC and MQTT services have initialized.
-
-## Common Issues
-
-### gRPC Connection Failure
-If the AI service cannot connect to the backend context server, ensure the `GRPC_PORT` (default 50051) is open and matching in both `.env` files.
-
-### MQTT Connection
-Ensure Mosquitto or the internal Aedes broker is running. The backend logs will indicate `✅ MQTT service initialized`.
-
----
-
-Next: [Learn about the Architecture](/docs/architecture)
+    <a href='/docs/architecture' className='block transition-all hover:-translate-y-0.5'>
+      <Card className='gap-0 rounded-2xl border-zinc-200 bg-white py-0 shadow-sm transition-all hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'>
+        <CardHeader className='px-5 pt-5 pb-0'>
+          <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
+            Runtime
+          </div>
+          <CardTitle className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
+            Architecture
+          </CardTitle>
+        </CardHeader>
+        <CardContent className='px-5 pt-3 pb-5 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
+          Service boundaries, infrastructure, and integration patterns.
+        </CardContent>
+      </Card>
+    </a>
+  </div>
+</section>
