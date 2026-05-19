@@ -1,94 +1,346 @@
+import {
+  ArchitectureCard,
+  ArchitectureGrid,
+  Callout,
+} from '@/components/mdx-components'
+import { Boxes, Info, Layers3 } from 'lucide-react'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+
 export const metadata = {
   title: 'Prerequisites - NeuroLab Documentation',
-  description: 'System requirements and dependencies for setting up the NeuroLab platform.',
+  description:
+    'Infrastructure, Docker, and runtime prerequisites for the current NeuroLab stack.',
 }
 
-# Prerequisites
-
-Before you begin setting up NeuroLab, ensure your development environment meets the following requirements. The platform is complex and requires several background services to function correctly.
-
-## Hardware Requirements
-
-### Development Environment
-- **CPU:** Quad-core processor (Intel i5/i7 or Apple M1/M2/M3 recommended)
-- **RAM:** 16GB minimum (32GB recommended for running AI models locally)
-- **Storage:** 20GB free space (SSD recommended)
-
-### Deployment (Production)
-- **CPU:** 4+ Cores
-- **RAM:** 16GB+
-- **GPU:** NVIDIA GPU with 8GB+ VRAM (Recommended for AI Service inference speed)
-
-## Software Dependencies
-
-### Core Runtimes
-- **Node.js:** v22.0.0 or higher
-- **Python:** v3.12 or higher
-- **Docker:** Engine v24.0.0+ and Compose v2.20.0+ (Optional but recommended)
-
-### Databases & Services
-- **MongoDB:** v7.0 or higher
-- **Redis:** v7.0 or higher
-- **MQTT Broker:** Mosquitto or Aedes (Included in backend)
-- **Minio:** Object storage for binary data (EEG/Audio)
-
-## Development Tools
-
-### All Services
-- **Git:** For version control
-- **VS Code:** Recommended editor (with Python and Tailwind extensions)
-- **Postman:** For API testing
-
-### AI Service
-- **uv:** Extremely fast Python package installer and resolver (recommended)
-- **FFmpeg:** For audio processing and voice emotion detection
-- **CUDA Toolkit:** If using NVIDIA GPU for acceleration (v12.x recommended)
-
-### Backend & Frontend
-- **npm / bun:** Package managers (v10+ for npm, v1.1+ for bun)
-- **Vercel CLI:** For frontend deployments (optional)
-
-## API Keys & Credentials
-
-You will need the following third-party credentials for full functionality:
-
-- **Flutterwave:** For processing payments and billing
-- **Mailgun:** For sending system notifications and emails
-- **Google Cloud:** For Calendar and OAuth integrations
-- **OpenRouter:** (Optional) If using LLM-based chat features
-
-## Knowledge Prerequisites
-
-To effectively work with NeuroLab, familiarity with the following technologies is helpful:
-
-- **Frontend:** React, Next.js, TypeScript, Tailwind CSS
-- **Backend:** Express.js, Mongoose, Socket.io, gRPC
-- **AI/ML:** FastAPI, TensorFlow, Signal Processing (EEG)
-- **DevOps:** Docker, CI/CD pipelines, Cloud infrastructure
-
----
-
-## Next Steps
-
-Once your environment is ready, proceed to the installation guides:
-
-<div className='not-prose mt-6 grid gap-4 sm:grid-cols-2'>
-  <a
-    href='/docs/installation/ai-service'
-    className='hover:bg-accent block rounded-lg border p-6 transition-colors'
-  >
-    <h3 className='mb-2 font-bold'>AI Service Setup →</h3>
-    <p className='text-muted-foreground text-sm'>
-      Set up the Python environment and ML models
-    </p>
-  </a>
-  <a
-    href='/docs/installation/backend'
-    className='hover:bg-accent block rounded-lg border p-6 transition-colors'
-  >
-    <h3 className='mb-2 font-bold'>Backend Setup →</h3>
-    <p className='text-muted-foreground text-sm'>
-      Configure the Node.js API and databases
-    </p>
-  </a>
+<div className='not-prose relative overflow-hidden rounded-[2rem] border border-zinc-200 bg-[linear-gradient(135deg,#ecfeff_0%,#ffffff_42%,#fef3c7_100%)] px-6 py-8 shadow-[0_30px_90px_-50px_rgba(14,116,144,0.28)] sm:px-8 sm:py-10 dark:border-zinc-800 dark:bg-[linear-gradient(135deg,#0f172a_0%,#09090b_42%,#451a03_100%)]'>
+  <div className='relative max-w-4xl'>
+    <div className='text-[11px] font-black tracking-[0.22em] text-cyan-700 uppercase dark:text-cyan-300'>Prerequisites</div>
+    <h1 className='mt-4 max-w-3xl text-4xl font-black tracking-tight text-zinc-950 sm:text-5xl md:text-6xl dark:text-zinc-50'>
+      Prepare the runtime layers before you start individual services.
+    </h1>
+    <div className='mt-5 max-w-3xl text-base leading-8 text-zinc-700 sm:text-lg dark:text-zinc-300'>
+      NeuroLab does not currently ship as one clean root Docker stack. The
+      reliable approach is to think in layers: host tooling, infrastructure
+      containers, application services, and then client apps.
+    </div>
+  </div>
 </div>
+
+<Callout title='Current Docker Reality' icon={<Info />}>
+  The repository contains separate Compose files for `backend/` and
+  `AI Service/backend/`, but they are not fully aligned. This page reflects the
+  actual runtime dependencies in code, not an idealized single-stack deployment.
+</Callout>
+
+<section className='not-prose mt-14'>
+  <div className='mb-6 max-w-3xl'>
+    <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>Host layer</div>
+    <h2 className='mt-2 text-3xl font-black tracking-tight text-zinc-950 sm:text-4xl dark:text-zinc-50'>
+      Local tools you need before containers
+    </h2>
+  </div>
+
+  <ArchitectureGrid>
+    <ArchitectureCard
+      eyebrow='Runtime'
+      title='Node.js'
+      stack='22.x'
+      icon='backend'
+    >
+      Required for the backend and the Vite-based client applications.
+    </ArchitectureCard>
+
+    <ArchitectureCard
+      eyebrow='Runtime'
+      title='Python'
+      stack='3.11 preferred'
+      icon='ai'
+    >
+      Required for the active AI runtime under `AI Service/backend`.
+    </ArchitectureCard>
+
+    <ArchitectureCard
+      eyebrow='Containers'
+      title='Docker Engine + Compose'
+      stack='Docker v24+ and Compose v2+'
+      icon='data'
+    >
+      Best used for infrastructure services like MongoDB, Redis, MinIO, and
+      InfluxDB.
+    </ArchitectureCard>
+
+    <ArchitectureCard
+      eyebrow='Source control'
+      title='Git + npm'
+      stack='repo checkout and package installs'
+      icon='network'
+    >
+      Needed to fetch the repo and install application dependencies that are
+      not being built inside containers.
+    </ArchitectureCard>
+  </ArchitectureGrid>
+</section>
+
+<section className='not-prose mt-16'>
+  <div className='mb-6 max-w-3xl'>
+    <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>Infrastructure layer</div>
+    <h2 className='mt-2 text-3xl font-black tracking-tight text-zinc-950 sm:text-4xl dark:text-zinc-50'>
+      Containers the codebase actually expects
+    </h2>
+    <div className='mt-3 text-[15px] leading-8 text-zinc-600 dark:text-zinc-300'>
+      These are the backing services that appear in the current runtime code,
+      service configuration, and Compose files. Some are hard requirements,
+      others are feature-specific.
+    </div>
+  </div>
+
+  <Card className='gap-0 overflow-hidden rounded-3xl border-zinc-200 bg-white py-0 shadow-sm dark:border-zinc-800 dark:bg-zinc-950'>
+    <Table className='text-sm'>
+      <TableHeader>
+        <TableRow className='border-zinc-200 dark:border-zinc-800'>
+          <TableHead className='bg-zinc-50 px-5 py-4 text-left text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:bg-zinc-900 dark:text-zinc-400'>
+            Layer
+          </TableHead>
+          <TableHead className='bg-zinc-50 px-5 py-4 text-left text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:bg-zinc-900 dark:text-zinc-400'>
+            Container
+          </TableHead>
+          <TableHead className='bg-zinc-50 px-5 py-4 text-left text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:bg-zinc-900 dark:text-zinc-400'>
+            Why it exists
+          </TableHead>
+          <TableHead className='bg-zinc-50 px-5 py-4 text-left text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:bg-zinc-900 dark:text-zinc-400'>
+            Requirement level
+          </TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow className='border-zinc-200 dark:border-zinc-800'>
+          <TableCell className='px-5 py-4 font-bold text-zinc-950 dark:text-zinc-50'>
+            Core data
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            MongoDB
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            Primary datastore for the backend and also used by the AI service
+            for session, voice, and chat persistence.
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            Required
+          </TableCell>
+        </TableRow>
+        <TableRow className='border-zinc-200 dark:border-zinc-800'>
+          <TableCell className='px-5 py-4 font-bold text-zinc-950 dark:text-zinc-50'>
+            Queueing
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            Redis
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            Required by the AI service startup checks and used for RQ-backed
+            chat, reports, and worker flows. Also supports optional backend
+            session storage.
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            Required for AI runtime
+          </TableCell>
+        </TableRow>
+        <TableRow className='border-zinc-200 dark:border-zinc-800'>
+          <TableCell className='px-5 py-4 font-bold text-zinc-950 dark:text-zinc-50'>
+            Time-series
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            InfluxDB
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            Used by the AI service for EEG metrics, training events, and other
+            time-series data paths.
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            Required for AI runtime
+          </TableCell>
+        </TableRow>
+        <TableRow className='border-zinc-200 dark:border-zinc-800'>
+          <TableCell className='px-5 py-4 font-bold text-zinc-950 dark:text-zinc-50'>
+            Object storage
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            MinIO
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            Used by the backend file upload service by default and also used by
+            the AI service for artifacts, models, datasets, and reports.
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            Strongly recommended
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell className='px-5 py-4 font-bold text-zinc-950 dark:text-zinc-50'>
+            Messaging
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            Mosquitto
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            Supports MQTT-based notifications and device integration paths in
+            the backend.
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            Optional
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  </Card>
+</section>
+
+<section className='not-prose mt-16'>
+  <div className='mb-6 max-w-3xl'>
+    <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>Container strategy</div>
+    <h2 className='mt-2 text-3xl font-black tracking-tight text-zinc-950 sm:text-4xl dark:text-zinc-50'>
+      Recommended Docker-first setup by layer
+    </h2>
+    <div className='mt-3 text-[15px] leading-8 text-zinc-600 dark:text-zinc-300'>
+      Treat infrastructure as the Docker boundary first. Then run the backend
+      and AI service either directly on the host or in their own containers once
+      the data layer is stable.
+    </div>
+  </div>
+
+  <ArchitectureGrid>
+    <ArchitectureCard
+      eyebrow='Layer 1'
+      title='Foundation Containers'
+      stack='MongoDB, Redis, InfluxDB, MinIO'
+      icon='data'
+    >
+      Start these first. They are the common backing services referenced by the
+      backend and the active AI runtime.
+    </ArchitectureCard>
+
+    <ArchitectureCard
+      eyebrow='Layer 2'
+      title='Optional Messaging'
+      stack='Mosquitto'
+      icon='network'
+    >
+      Add MQTT only if you need notification or device-message flows during
+      local development.
+    </ArchitectureCard>
+
+    <ArchitectureCard
+      eyebrow='Layer 3'
+      title='Application Services'
+      stack='backend and AI Service/backend'
+      icon='backend'
+    >
+      Run these after the dependency layer is reachable. They each have their
+      own environment and startup assumptions.
+    </ArchitectureCard>
+
+    <ArchitectureCard
+      eyebrow='Layer 4'
+      title='Client Applications'
+      stack='platform or webapp'
+      icon='ai'
+    >
+      Start a client only after the backend is healthy and the AI service is
+      available for any required analysis or chat flows.
+    </ArchitectureCard>
+  </ArchitectureGrid>
+</section>
+
+<section className='not-prose mt-16'>
+  <div className='mb-6 max-w-3xl'>
+    <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>Compose audit</div>
+    <h2 className='mt-2 text-3xl font-black tracking-tight text-zinc-950 sm:text-4xl dark:text-zinc-50'>
+      What the current Compose files tell us
+    </h2>
+  </div>
+
+  <div className='grid gap-4 lg:grid-cols-2'>
+    <Card className='gap-0 rounded-3xl border-zinc-200 bg-white py-0 shadow-sm dark:border-zinc-800 dark:bg-zinc-950'>
+      <CardHeader className='px-6 pt-6 pb-0'>
+        <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
+          backend/docker-compose.yml
+        </div>
+        <CardTitle className='mt-2 text-2xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
+          Broad dependency stack, but stale AI wiring
+        </CardTitle>
+      </CardHeader>
+      <CardContent className='px-6 pt-4 pb-6 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
+        It defines MongoDB, Redis, MinIO, InfluxDB, Mosquitto, backend, and an
+        AI service. But the AI build context points to `./ai.neurolab`, which
+        does not exist in the current repository, so this file is not a
+        trustworthy full-stack source of truth as-is.
+      </CardContent>
+    </Card>
+
+    <Card className='gap-0 rounded-3xl border-zinc-200 bg-white py-0 shadow-sm dark:border-zinc-800 dark:bg-zinc-950'>
+      <CardHeader className='px-6 pt-6 pb-0'>
+        <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
+          AI Service/backend/docker-compose.yml
+        </div>
+        <CardTitle className='mt-2 text-2xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
+          Better AI-specific stack, but missing MongoDB
+        </CardTitle>
+      </CardHeader>
+      <CardContent className='px-6 pt-4 pb-6 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
+        It defines Redis, InfluxDB, MinIO, the API, the worker, and optional
+        Nginx. But the AI service code initializes MongoDB and blocks startup on
+        MongoDB by default, while this Compose file does not include a MongoDB
+        service.
+      </CardContent>
+    </Card>
+  </div>
+</section>
+
+<section className='not-prose mt-16'>
+  <div className='mb-6 max-w-3xl'>
+    <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>Practical minimum</div>
+    <h2 className='mt-2 text-3xl font-black tracking-tight text-zinc-950 sm:text-4xl dark:text-zinc-50'>
+      Containers to pull if you want the least-fragile starting point
+    </h2>
+  </div>
+
+  <Card className='gap-0 overflow-hidden rounded-3xl border-zinc-200 bg-white py-0 shadow-sm dark:border-zinc-800 dark:bg-zinc-950'>
+    <CardHeader className='px-6 pt-6 pb-0'>
+      <div className='flex items-center gap-2 text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
+        <Boxes className='size-4' />
+        Suggested images
+      </div>
+      <CardTitle className='mt-2 text-2xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
+        Infrastructure images used by the current stack
+      </CardTitle>
+    </CardHeader>
+    <CardContent className='px-6 pt-4 pb-6'>
+      <pre>
+        <code className='language-text'>{`mongo:7.0
+redis:7-alpine
+influxdb:2.7
+minio/minio:RELEASE.2024-01-31T20-20-33Z
+eclipse-mosquitto`}</code>
+      </pre>
+    </CardContent>
+  </Card>
+</section>
+
+<Callout type='warning' title='Use Compose Files Carefully' icon={<Layers3 />}>
+  The current docs should not tell users to run a root `docker compose up` from
+  the repository because there is no accurate root Compose file. Use Docker to
+  bring up the infrastructure layer, then start the backend and AI service with
+  verified environment settings.
+</Callout>
