@@ -10,9 +10,37 @@ export const metadata = {
     'Entry point for the current NeuroLab platform documentation and service references.',
 }
 
-# Introduction
-
-NeuroLab combines clinical workflow software, an AI analysis stack, and user-facing applications into one repository. This documentation site is intended to explain the parts of that system that are active, documented, and reviewable from code today.
+<div className='not-prose relative overflow-hidden rounded-[2rem] border border-zinc-200 bg-[linear-gradient(135deg,#f8fafc_0%,#ffffff_42%,#e0f2fe_100%)] px-6 py-8 shadow-[0_30px_90px_-50px_rgba(14,116,144,0.35)] sm:px-8 sm:py-10 dark:border-zinc-800 dark:bg-[linear-gradient(135deg,#09090b_0%,#111827_42%,#082f49_100%)]'>
+  <div className='absolute inset-y-0 right-0 hidden w-1/2 bg-[radial-gradient(circle_at_top_right,rgba(14,165,233,0.14),transparent_58%)] dark:block' />
+  <div className='relative max-w-4xl'>
+    <p className='text-[11px] font-black tracking-[0.22em] text-sky-700 uppercase dark:text-sky-300'>
+      NeuroLab Docs
+    </p>
+    <h1 className='mt-4 max-w-3xl text-4xl font-black tracking-tight text-zinc-950 sm:text-5xl md:text-6xl dark:text-zinc-50'>
+      Documentation for the current NeuroLab runtime.
+    </h1>
+    <p className='mt-5 max-w-3xl text-base leading-8 text-zinc-700 sm:text-lg dark:text-zinc-300'>
+      NeuroLab combines clinical workflow software, an AI analysis stack, and
+      user-facing applications into one repository. This site explains the
+      parts of that system that are active, documented, and reviewable from
+      code today.
+    </p>
+    <div className='mt-8 flex flex-wrap gap-3'>
+      <a
+        href='/docs/quick-start'
+        className='inline-flex items-center rounded-xl bg-zinc-950 px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200'
+      >
+        Start with Quick Start
+      </a>
+      <a
+        href='/docs/architecture'
+        className='inline-flex items-center rounded-xl border border-zinc-300 bg-white/80 px-4 py-2.5 text-sm font-bold text-zinc-900 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-950/70 dark:text-zinc-100 dark:hover:bg-zinc-900'
+      >
+        Review architecture
+      </a>
+    </div>
+  </div>
+</div>
 
 <Callout
   title='Documentation Scope'
@@ -23,108 +51,270 @@ NeuroLab combines clinical workflow software, an AI analysis stack, and user-fac
   and the code disagree, treat the codebase as the source of truth.
 </Callout>
 
-## What NeuroLab covers
+<section className='not-prose mt-14'>
+  <div className='mb-6 max-w-3xl'>
+    <p className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
+      Coverage
+    </p>
+    <h2 className='mt-2 text-3xl font-black tracking-tight text-zinc-950 sm:text-4xl dark:text-zinc-50'>
+      What NeuroLab covers right now
+    </h2>
+    <p className='mt-3 text-[15px] leading-8 text-zinc-600 dark:text-zinc-300'>
+      The current documentation is centered on the runtime surfaces that matter
+      operationally: application workflows, analysis services, clients, and
+      infrastructure boundaries.
+    </p>
+  </div>
 
-NeuroLab currently spans four practical concerns:
+  <ArchitectureGrid>
+    <ArchitectureCard
+      eyebrow='Application'
+      title='Clinical And Platform Workflows'
+      stack='Users, doctors, appointments, billing, uploads, reports'
+      icon='backend'
+    >
+      The backend API owns the business surface of the platform. It handles
+      authentication, user operations, doctor workflows, appointments, uploads,
+      reports, notifications, and chat orchestration.
+    </ArchitectureCard>
 
-<ArchitectureGrid>
-  <ArchitectureCard
-    eyebrow='Application'
-    title='Clinical And Platform Workflows'
-    stack='Users, doctors, appointments, billing, uploads, reports'
-    icon='backend'
-  >
-    The backend API owns the business surface of the platform. It handles
-    authentication, user operations, doctor workflows, appointments, uploads,
-    reports, notifications, and chat orchestration.
-  </ArchitectureCard>
+    <ArchitectureCard
+      eyebrow='Inference'
+      title='AI Analysis Services'
+      stack='EEG, voice, recommendations, reports, chat'
+      icon='ai'
+    >
+      The active AI runtime processes EEG and voice data, runs queued report
+      and chat workflows, and exposes versioned FastAPI routes for
+      inference-related operations.
+    </ArchitectureCard>
 
-  <ArchitectureCard
-    eyebrow='Inference'
-    title='AI Analysis Services'
-    stack='EEG, voice, recommendations, reports, chat'
-    icon='ai'
-  >
-    The active AI runtime processes EEG and voice data, runs queued report and
-    chat workflows, and exposes versioned FastAPI routes for inference-related
-    operations.
-  </ArchitectureCard>
+    <ArchitectureCard
+      eyebrow='Clients'
+      title='User-Facing Applications'
+      stack='Platform, webapp, docs, and commerce surfaces'
+      icon='network'
+    >
+      The repository includes multiple client applications. They do not all
+      share the same framework or deployment model, so the docs aim to keep
+      those distinctions explicit.
+    </ArchitectureCard>
 
-  <ArchitectureCard
-    eyebrow='Clients'
-    title='User-Facing Applications'
-    stack='Platform, webapp, docs, and commerce surfaces'
-    icon='network'
-  >
-    The repository includes multiple client applications. They do not all share
-    the same framework or deployment model, so the docs aim to keep those
-    distinctions explicit.
-  </ArchitectureCard>
+    <ArchitectureCard
+      eyebrow='Infrastructure'
+      title='Data And Integration Layers'
+      stack='MongoDB, Redis, storage, MQTT, gRPC'
+      icon='data'
+    >
+      Supporting services provide persistence, background job execution,
+      storage, and targeted service-to-service or device communication where
+      required.
+    </ArchitectureCard>
+  </ArchitectureGrid>
+</section>
 
-  <ArchitectureCard
-    eyebrow='Infrastructure'
-    title='Data And Integration Layers'
-    stack='MongoDB, Redis, storage, MQTT, gRPC'
-    icon='data'
-  >
-    Supporting services provide persistence, background job execution, storage,
-    and targeted service-to-service or device communication where required.
-  </ArchitectureCard>
-</ArchitectureGrid>
+<section className='not-prose mt-16'>
+  <div className='mb-6 max-w-3xl'>
+    <p className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
+      Analysis model
+    </p>
+    <h2 className='mt-2 text-3xl font-black tracking-tight text-zinc-950 sm:text-4xl dark:text-zinc-50'>
+      Core mental states
+    </h2>
+    <p className='mt-3 text-[15px] leading-8 text-zinc-600 dark:text-zinc-300'>
+      The current documented analysis flows revolve around three recurring
+      states. These labels appear across the docs and service narratives, but
+      final response contracts should still be validated against the active
+      backend and AI runtime.
+    </p>
+  </div>
 
-## Core mental states
+  <div className='overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-950'>
+    <table className='w-full border-collapse text-sm'>
+      <thead>
+        <tr className='border-b border-zinc-200 dark:border-zinc-800'>
+          <th className='bg-zinc-50 px-5 py-4 text-left text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:bg-zinc-900 dark:text-zinc-400'>
+            State
+          </th>
+          <th className='bg-zinc-50 px-5 py-4 text-left text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:bg-zinc-900 dark:text-zinc-400'>
+            Typical meaning
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr className='border-b border-zinc-200 dark:border-zinc-800'>
+          <td className='px-5 py-4 font-bold text-zinc-950 dark:text-zinc-50'>
+            Relaxed
+          </td>
+          <td className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            calm or low-strain neural state
+          </td>
+        </tr>
+        <tr className='border-b border-zinc-200 dark:border-zinc-800'>
+          <td className='px-5 py-4 font-bold text-zinc-950 dark:text-zinc-50'>
+            Focused
+          </td>
+          <td className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            engaged or task-oriented state
+          </td>
+        </tr>
+        <tr>
+          <td className='px-5 py-4 font-bold text-zinc-950 dark:text-zinc-50'>
+            Stressed
+          </td>
+          <td className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+            elevated strain, agitation, or overload signal
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 
-The current documented analysis flows revolve around three recurring states:
+<section className='not-prose mt-16'>
+  <div className='mb-6 max-w-3xl'>
+    <p className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
+      Navigation
+    </p>
+    <h2 className='mt-2 text-3xl font-black tracking-tight text-zinc-950 sm:text-4xl dark:text-zinc-50'>
+      Choose the lane that matches your work
+    </h2>
+    <p className='mt-3 text-[15px] leading-8 text-zinc-600 dark:text-zinc-300'>
+      Most readers are either trying to run the stack locally or understand the
+      live contracts and runtime boundaries. Use the path that gets you there
+      fastest.
+    </p>
+  </div>
 
-| State | Typical meaning |
-| :--- | :--- |
-| **Relaxed** | calm or low-strain neural state |
-| **Focused** | engaged or task-oriented state |
-| **Stressed** | elevated strain, agitation, or overload signal |
+  <ArchitectureGrid>
+    <ArchitectureCard
+      eyebrow='Setup'
+      title='Run The Stack'
+      stack='Local environment, prerequisites, startup flow'
+      icon='network'
+    >
+      Start with [Quick Start](/docs/quick-start), then move into
+      [Backend Setup](/docs/installation/backend) and
+      [AI Service Setup](/docs/installation/ai-service) for service-specific
+      details.
+    </ArchitectureCard>
 
-These labels appear across both documentation and the current analysis stories, but you should still validate exact endpoint outputs against the active backend or AI service before treating them as a stable external contract.
+    <ArchitectureCard
+      eyebrow='Reference'
+      title='Understand The Runtime'
+      stack='Architecture, route groups, service contracts'
+      icon='backend'
+    >
+      Use [Architecture](/docs/architecture),
+      [Backend API](/docs/api/backend), and
+      [AI Service API](/docs/api/ai-service) when you need the documented
+      shape of the live system.
+    </ArchitectureCard>
+  </ArchitectureGrid>
+</section>
 
-## How to use this docs site
+<section className='not-prose mt-16'>
+  <div className='mb-6 max-w-3xl'>
+    <p className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
+      Entry points
+    </p>
+    <h2 className='mt-2 text-3xl font-black tracking-tight text-zinc-950 sm:text-4xl dark:text-zinc-50'>
+      Recommended starting pages
+    </h2>
+  </div>
 
-Choose the lane that matches the work you are doing:
+  <div className='grid gap-4 sm:grid-cols-2 xl:grid-cols-3'>
+    <a
+      href='/docs/quick-start'
+      className='rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'
+    >
+      <p className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
+        Setup
+      </p>
+      <h3 className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
+        Quick Start
+      </h3>
+      <p className='mt-2 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
+        Fastest local setup path for the repo.
+      </p>
+    </a>
 
-<ArchitectureGrid>
-  <ArchitectureCard
-    eyebrow='Setup'
-    title='Running The Stack'
-    stack='Local environment, prerequisites, service startup'
-    icon='network'
-  >
-    Start with [Quick Start](/docs/quick-start), then move into
-    [Backend Setup](/docs/installation/backend) and
-    [AI Service Setup](/docs/installation/ai-service) for service-specific
-    details.
-  </ArchitectureCard>
+    <a
+      href='/docs/prerequisites'
+      className='rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'
+    >
+      <p className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
+        Environment
+      </p>
+      <h3 className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
+        Prerequisites
+      </h3>
+      <p className='mt-2 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
+        Tooling and environment assumptions before setup.
+      </p>
+    </a>
 
-  <ArchitectureCard
-    eyebrow='Reference'
-    title='Understanding The Runtime'
-    stack='Architecture and active route groups'
-    icon='backend'
-  >
-    Use [Architecture](/docs/architecture),
-    [Backend API](/docs/api/backend), and
-    [AI Service API](/docs/api/ai-service) when you need the documented shape
-    of the live system.
-  </ArchitectureCard>
-</ArchitectureGrid>
+    <a
+      href='/docs/architecture'
+      className='rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'
+    >
+      <p className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
+        Runtime
+      </p>
+      <h3 className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
+        Architecture
+      </h3>
+      <p className='mt-2 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
+        Current runtime boundary map and service roles.
+      </p>
+    </a>
 
-## Recommended entry points
+    <a
+      href='/docs/installation/backend'
+      className='rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'
+    >
+      <p className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
+        Service
+      </p>
+      <h3 className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
+        Backend Setup
+      </h3>
+      <p className='mt-2 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
+        Express service installation and configuration.
+      </p>
+    </a>
 
-- [Quick Start](/docs/quick-start) for the fastest local setup path
-- [Prerequisites](/docs/prerequisites) for required tooling and environment assumptions
-- [Architecture](/docs/architecture) for the current runtime boundary map
-- [Backend Setup](/docs/installation/backend) for Express service setup
-- [AI Service Setup](/docs/installation/ai-service) for FastAPI service setup
-- [Backend API](/docs/api/backend) for backend route groups and auth surface
-- [AI Service API](/docs/api/ai-service) for AI route groups and service contracts
+    <a
+      href='/docs/installation/ai-service'
+      className='rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'
+    >
+      <p className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
+        Service
+      </p>
+      <h3 className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
+        AI Service Setup
+      </h3>
+      <p className='mt-2 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
+        FastAPI service installation and runtime requirements.
+      </p>
+    </a>
 
-## Documentation posture
+    <a
+      href='/docs/api/backend'
+      className='rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'
+    >
+      <p className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
+        Reference
+      </p>
+      <h3 className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
+        Backend API
+      </h3>
+      <p className='mt-2 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
+        Route groups, auth expectations, and backend entry points.
+      </p>
+    </a>
+  </div>
+</section>
 
 <Callout type='warning' title='How To Read These Docs' icon='△'>
   This documentation is being aligned against the application codebase. That
@@ -132,8 +322,30 @@ Choose the lane that matches the work you are doing:
   repository notes. Accuracy is preferred over breadth.
 </Callout>
 
-## Next step
-
-If you are new to the repository, go straight to [Quick Start](/docs/quick-start).
-If you are validating integrations or preparing rewrites, go to
-[Architecture](/docs/architecture) first.
+<section className='not-prose mt-14 overflow-hidden rounded-[2rem] border border-zinc-200 bg-zinc-950 px-6 py-7 text-white shadow-[0_24px_70px_-40px_rgba(0,0,0,0.65)] dark:border-zinc-800 sm:px-8'>
+  <p className='text-[11px] font-black tracking-[0.18em] text-zinc-400 uppercase'>
+    Next step
+  </p>
+  <h2 className='mt-2 text-3xl font-black tracking-tight text-white sm:text-4xl'>
+    Pick one starting direction and move.
+  </h2>
+  <p className='mt-3 max-w-2xl text-[15px] leading-8 text-zinc-300'>
+    If you are new to the repository, go straight to Quick Start. If you are
+    validating service boundaries or preparing documentation rewrites, review
+    the architecture page first.
+  </p>
+  <div className='mt-6 flex flex-wrap gap-3'>
+    <a
+      href='/docs/quick-start'
+      className='inline-flex items-center rounded-xl bg-white px-4 py-2.5 text-sm font-black text-zinc-950 transition-colors hover:bg-zinc-200'
+    >
+      Open Quick Start
+    </a>
+    <a
+      href='/docs/architecture'
+      className='inline-flex items-center rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-black text-white transition-colors hover:bg-white/10'
+    >
+      Open Architecture
+    </a>
+  </div>
+</section>
