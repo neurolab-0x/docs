@@ -145,7 +145,7 @@ function Pre({
 }
 
 interface CalloutProps extends React.HTMLAttributes<HTMLDivElement> {
-  icon?: string
+  icon?: React.ReactNode
   children?: React.ReactNode
   title?: string
   type?: 'default' | 'warning' | 'danger' | 'success'
@@ -179,19 +179,19 @@ function Callout({
     >
       <CardContent className='px-5 py-4'>
         <div className='flex items-start gap-3'>
-        {icon ? (
-          <span className='mt-0.5 text-xl'>{icon}</span>
-        ) : (
-          <Sparkles className='mt-0.5 size-5 text-current opacity-80' />
-        )}
-        <div className='min-w-0 flex-1'>
-          {title ? (
-            <p className='mb-2 text-sm font-black tracking-[0.14em] uppercase'>
-              {title}
-            </p>
-          ) : null}
-          <div className='text-sm leading-7'>{children}</div>
-        </div>
+          {icon ? (
+            <span className='mt-0.5 text-xl'>{icon}</span>
+          ) : (
+            <Sparkles className='mt-0.5 size-5 text-current opacity-80' />
+          )}
+          <div className='min-w-0 flex-1'>
+            {title ? (
+              <p className='mb-2 text-sm font-black tracking-[0.14em] uppercase'>
+                {title}
+              </p>
+            ) : null}
+            <div className='text-sm leading-7'>{children}</div>
+          </div>
         </div>
       </CardContent>
     </Card>

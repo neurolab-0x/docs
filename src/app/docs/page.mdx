@@ -3,7 +3,21 @@ import {
   ArchitectureGrid,
   Callout,
 } from '@/components/mdx-components'
-import { Info, Arroe } from 'lucide-react'
+import { ArrowRight, Info } from 'lucide-react'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 
 export const metadata = {
   title: 'Introduction - NeuroLab Documentation',
@@ -124,46 +138,46 @@ export const metadata = {
     </div>
   </div>
 
-  <div className='overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-950'>
-    <table className='w-full border-collapse text-sm'>
-      <thead>
-        <tr className='border-b border-zinc-200 dark:border-zinc-800'>
-          <th className='bg-zinc-50 px-5 py-4 text-left text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:bg-zinc-900 dark:text-zinc-400'>
+  <Card className='gap-0 overflow-hidden rounded-3xl border-zinc-200 bg-white py-0 shadow-sm dark:border-zinc-800 dark:bg-zinc-950'>
+    <Table className='text-sm'>
+      <TableHeader>
+        <TableRow className='border-zinc-200 dark:border-zinc-800'>
+          <TableHead className='bg-zinc-50 px-5 py-4 text-left text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:bg-zinc-900 dark:text-zinc-400'>
             State
-          </th>
-          <th className='bg-zinc-50 px-5 py-4 text-left text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:bg-zinc-900 dark:text-zinc-400'>
+          </TableHead>
+          <TableHead className='bg-zinc-50 px-5 py-4 text-left text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:bg-zinc-900 dark:text-zinc-400'>
             Typical meaning
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr className='border-b border-zinc-200 dark:border-zinc-800'>
-          <td className='px-5 py-4 font-bold text-zinc-950 dark:text-zinc-50'>
+          </TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow className='border-zinc-200 dark:border-zinc-800'>
+          <TableCell className='px-5 py-4 font-bold text-zinc-950 dark:text-zinc-50'>
             Relaxed
-          </td>
-          <td className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
             calm or low-strain neural state
-          </td>
-        </tr>
-        <tr className='border-b border-zinc-200 dark:border-zinc-800'>
-          <td className='px-5 py-4 font-bold text-zinc-950 dark:text-zinc-50'>
+          </TableCell>
+        </TableRow>
+        <TableRow className='border-zinc-200 dark:border-zinc-800'>
+          <TableCell className='px-5 py-4 font-bold text-zinc-950 dark:text-zinc-50'>
             Focused
-          </td>
-          <td className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
             engaged or task-oriented state
-          </td>
-        </tr>
-        <tr>
-          <td className='px-5 py-4 font-bold text-zinc-950 dark:text-zinc-50'>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell className='px-5 py-4 font-bold text-zinc-950 dark:text-zinc-50'>
             Stressed
-          </td>
-          <td className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
+          </TableCell>
+          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
             elevated strain, agitation, or overload signal
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  </Card>
 </section>
 
 <section className='not-prose mt-16'>
@@ -217,85 +231,121 @@ export const metadata = {
   <div className='grid gap-4 sm:grid-cols-2 xl:grid-cols-3'>
     <a
       href='/docs/quick-start'
-      className='rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'
+      className='block transition-all hover:-translate-y-0.5'
     >
-      <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>Setup</div>
-      <h3 className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
-        Quick Start
-      </h3>
-      <div className='mt-2 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
-        Fastest local setup path for the repo.
-      </div>
+      <Card className='gap-0 rounded-2xl border-zinc-200 bg-white py-0 shadow-sm transition-all hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'>
+        <CardHeader className='px-5 pt-5 pb-0'>
+          <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
+            Setup
+          </div>
+          <CardTitle className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
+            Quick Start
+          </CardTitle>
+        </CardHeader>
+        <CardContent className='px-5 pt-3 pb-5 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
+          Fastest local setup path for the repo.
+        </CardContent>
+      </Card>
     </a>
 
     <a
       href='/docs/prerequisites'
-      className='rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'
+      className='block transition-all hover:-translate-y-0.5'
     >
-      <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>Environment</div>
-      <h3 className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
-        Prerequisites
-      </h3>
-      <div className='mt-2 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
-        Tooling and environment assumptions before setup.
-      </div>
+      <Card className='gap-0 rounded-2xl border-zinc-200 bg-white py-0 shadow-sm transition-all hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'>
+        <CardHeader className='px-5 pt-5 pb-0'>
+          <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
+            Environment
+          </div>
+          <CardTitle className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
+            Prerequisites
+          </CardTitle>
+        </CardHeader>
+        <CardContent className='px-5 pt-3 pb-5 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
+          Tooling and environment assumptions before setup.
+        </CardContent>
+      </Card>
     </a>
 
     <a
       href='/docs/architecture'
-      className='rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'
+      className='block transition-all hover:-translate-y-0.5'
     >
-      <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>Runtime</div>
-      <h3 className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
-        Architecture
-      </h3>
-      <div className='mt-2 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
-        Current runtime boundary map and service roles.
-      </div>
+      <Card className='gap-0 rounded-2xl border-zinc-200 bg-white py-0 shadow-sm transition-all hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'>
+        <CardHeader className='px-5 pt-5 pb-0'>
+          <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
+            Runtime
+          </div>
+          <CardTitle className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
+            Architecture
+          </CardTitle>
+        </CardHeader>
+        <CardContent className='px-5 pt-3 pb-5 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
+          Current runtime boundary map and service roles.
+        </CardContent>
+      </Card>
     </a>
 
     <a
       href='/docs/installation/backend'
-      className='rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'
+      className='block transition-all hover:-translate-y-0.5'
     >
-      <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>Service</div>
-      <h3 className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
-        Backend Setup
-      </h3>
-      <div className='mt-2 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
-        Express service installation and configuration.
-      </div>
+      <Card className='gap-0 rounded-2xl border-zinc-200 bg-white py-0 shadow-sm transition-all hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'>
+        <CardHeader className='px-5 pt-5 pb-0'>
+          <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
+            Service
+          </div>
+          <CardTitle className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
+            Backend Setup
+          </CardTitle>
+        </CardHeader>
+        <CardContent className='px-5 pt-3 pb-5 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
+          Express service installation and configuration.
+        </CardContent>
+      </Card>
     </a>
 
     <a
       href='/docs/installation/ai-service'
-      className='rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'
+      className='block transition-all hover:-translate-y-0.5'
     >
-      <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>Service</div>
-      <h3 className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
-        AI Service Setup
-      </h3>
-      <div className='mt-2 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
-        FastAPI service installation and runtime requirements.
-      </div>
+      <Card className='gap-0 rounded-2xl border-zinc-200 bg-white py-0 shadow-sm transition-all hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'>
+        <CardHeader className='px-5 pt-5 pb-0'>
+          <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
+            Service
+          </div>
+          <CardTitle className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
+            AI Service Setup
+          </CardTitle>
+        </CardHeader>
+        <CardContent className='px-5 pt-3 pb-5 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
+          FastAPI service installation and runtime requirements.
+        </CardContent>
+      </Card>
     </a>
 
     <a
       href='/docs/api/backend'
-      className='rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'
+      className='block transition-all hover:-translate-y-0.5'
     >
-      <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>Reference</div>
-      <h3 className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
-        Backend API
-      </h3>
-      <div className='mt-2 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
-        Route groups, auth expectations, and backend entry points.
-      </div>
+      <Card className='gap-0 rounded-2xl border-zinc-200 bg-white py-0 shadow-sm transition-all hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'>
+        <CardHeader className='px-5 pt-5 pb-0'>
+          <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
+            Reference
+          </div>
+          <CardTitle className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
+            Backend API
+          </CardTitle>
+        </CardHeader>
+        <CardContent className='px-5 pt-3 pb-5 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
+          Route groups, auth expectations, and backend entry points.
+        </CardContent>
+      </Card>
     </a>
   </div>
 </section>
 
-<Callout type='warning' title='How To Read These Docs' icon={<Arrow/>}>
+<Callout type='warning' title='How To Read These Docs' icon={<ArrowRight/>}>
   This documentation is being aligned against the application codebase. That
   means some pages are intentionally narrower and more conservative than older
   repository notes. Accuracy is preferred over breadth.
