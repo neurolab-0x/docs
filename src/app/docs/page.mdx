@@ -1,86 +1,139 @@
+import {
+  ArchitectureCard,
+  ArchitectureGrid,
+  Callout,
+} from '@/components/mdx-components'
+
 export const metadata = {
   title: 'Introduction - NeuroLab Documentation',
-  description: 'Overview of the NeuroLab platform and the currently documented services.',
+  description:
+    'Entry point for the current NeuroLab platform documentation and service references.',
 }
 
 # Introduction
 
-NeuroLab is a multimodal platform for EEG analysis, clinical workflows, and AI-assisted interpretation. This documentation site is scoped to the parts of the codebase that are currently documented and maintained here.
+NeuroLab combines clinical workflow software, an AI analysis stack, and user-facing applications into one repository. This documentation site is intended to explain the parts of that system that are active, documented, and reviewable from code today.
 
-## What is NeuroLab?
+<Callout
+  title='Documentation Scope'
+  icon='◆'
+>
+  This site is intentionally scoped to the documented runtime, not the full set
+  of ideas or experiments that may exist elsewhere in the repository. If a page
+  and the code disagree, treat the codebase as the source of truth.
+</Callout>
 
-NeuroLab is designed for:
+## What NeuroLab covers
 
-- **Mental health monitoring** through EEG-driven state analysis
-- **Neurofeedback applications** that react to brain activity in near real time
-- **Clinical workflows** such as appointments, billing, and session tracking
-- **Research and experimentation** around neural data and model-backed analysis
+NeuroLab currently spans four practical concerns:
 
-## Current platform coverage
-
-The repository currently contains:
-
-- a Node.js backend for platform and clinical operations
-- a Python AI backend for inference, reports, and chat workloads
-- platform and web clients
-- a docs site covering the implemented and documented surface area
-
-## Mental states
-
-The current documentation covers the three primary states used across the platform:
-
-- **Relaxed**
-- **Focused**
-- **Stressed**
-
-## Architecture overview
-
-At a high level, the system is split into:
-
-```text
-Frontend clients
-    ↓
-Backend API (Express.js)
-    ↓
-AI services (FastAPI / Python)
-    ↓
-MongoDB, Redis, and related infrastructure
-```
-
-See [Architecture](/docs/architecture) for the more detailed breakdown.
-
-## Start here
-
-- [Quick Start](/docs/quick-start) for local setup
-- [Prerequisites](/docs/prerequisites) for required tooling
-- [Backend Installation](/docs/installation/backend) for backend setup
-- [AI Service Installation](/docs/installation/ai-service) for AI setup
-- [Backend API](/docs/api/backend) for backend reference
-- [AI Service API](/docs/api/ai-service) for AI reference
-
-## Support
-
-If documentation and code disagree, treat the codebase as the source of truth and update the docs accordingly.
-
-## Next steps
-
-<div className='not-prose mt-6 grid gap-4 sm:grid-cols-2'>
-  <a
-    href='/docs/quick-start'
-    className='hover:bg-accent block rounded-lg border p-6 transition-colors'
+<ArchitectureGrid>
+  <ArchitectureCard
+    eyebrow='Application'
+    title='Clinical And Platform Workflows'
+    stack='Users, doctors, appointments, billing, uploads, reports'
+    icon='backend'
   >
-    <h3 className='mb-2 font-bold'>Quick Start →</h3>
-    <p className='text-muted-foreground text-sm'>
-      Set up the backend, AI service, and platform locally
-    </p>
-  </a>
-  <a
-    href='/docs/architecture'
-    className='hover:bg-accent block rounded-lg border p-6 transition-colors'
+    The backend API owns the business surface of the platform. It handles
+    authentication, user operations, doctor workflows, appointments, uploads,
+    reports, notifications, and chat orchestration.
+  </ArchitectureCard>
+
+  <ArchitectureCard
+    eyebrow='Inference'
+    title='AI Analysis Services'
+    stack='EEG, voice, recommendations, reports, chat'
+    icon='ai'
   >
-    <h3 className='mb-2 font-bold'>Architecture →</h3>
-    <p className='text-muted-foreground text-sm'>
-      Review the documented runtime architecture and service boundaries
-    </p>
-  </a>
-</div>
+    The active AI runtime processes EEG and voice data, runs queued report and
+    chat workflows, and exposes versioned FastAPI routes for inference-related
+    operations.
+  </ArchitectureCard>
+
+  <ArchitectureCard
+    eyebrow='Clients'
+    title='User-Facing Applications'
+    stack='Platform, webapp, docs, and commerce surfaces'
+    icon='network'
+  >
+    The repository includes multiple client applications. They do not all share
+    the same framework or deployment model, so the docs aim to keep those
+    distinctions explicit.
+  </ArchitectureCard>
+
+  <ArchitectureCard
+    eyebrow='Infrastructure'
+    title='Data And Integration Layers'
+    stack='MongoDB, Redis, storage, MQTT, gRPC'
+    icon='data'
+  >
+    Supporting services provide persistence, background job execution, storage,
+    and targeted service-to-service or device communication where required.
+  </ArchitectureCard>
+</ArchitectureGrid>
+
+## Core mental states
+
+The current documented analysis flows revolve around three recurring states:
+
+| State | Typical meaning |
+| :--- | :--- |
+| **Relaxed** | calm or low-strain neural state |
+| **Focused** | engaged or task-oriented state |
+| **Stressed** | elevated strain, agitation, or overload signal |
+
+These labels appear across both documentation and the current analysis stories, but you should still validate exact endpoint outputs against the active backend or AI service before treating them as a stable external contract.
+
+## How to use this docs site
+
+Choose the lane that matches the work you are doing:
+
+<ArchitectureGrid>
+  <ArchitectureCard
+    eyebrow='Setup'
+    title='Running The Stack'
+    stack='Local environment, prerequisites, service startup'
+    icon='network'
+  >
+    Start with [Quick Start](/docs/quick-start), then move into
+    [Backend Setup](/docs/installation/backend) and
+    [AI Service Setup](/docs/installation/ai-service) for service-specific
+    details.
+  </ArchitectureCard>
+
+  <ArchitectureCard
+    eyebrow='Reference'
+    title='Understanding The Runtime'
+    stack='Architecture and active route groups'
+    icon='backend'
+  >
+    Use [Architecture](/docs/architecture),
+    [Backend API](/docs/api/backend), and
+    [AI Service API](/docs/api/ai-service) when you need the documented shape
+    of the live system.
+  </ArchitectureCard>
+</ArchitectureGrid>
+
+## Recommended entry points
+
+- [Quick Start](/docs/quick-start) for the fastest local setup path
+- [Prerequisites](/docs/prerequisites) for required tooling and environment assumptions
+- [Architecture](/docs/architecture) for the current runtime boundary map
+- [Backend Setup](/docs/installation/backend) for Express service setup
+- [AI Service Setup](/docs/installation/ai-service) for FastAPI service setup
+- [Backend API](/docs/api/backend) for backend route groups and auth surface
+- [AI Service API](/docs/api/ai-service) for AI route groups and service contracts
+
+## Documentation posture
+
+<Callout type='warning' title='How To Read These Docs' icon='△'>
+  This documentation is being aligned against the application codebase. That
+  means some pages are intentionally narrower and more conservative than older
+  repository notes. Accuracy is preferred over breadth.
+</Callout>
+
+## Next step
+
+If you are new to the repository, go straight to [Quick Start](/docs/quick-start).
+If you are validating integrations or preparing rewrites, go to
+[Architecture](/docs/architecture) first.
