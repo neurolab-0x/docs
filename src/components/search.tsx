@@ -1,24 +1,16 @@
 'use client'
 
+import Link from 'next/link'
 import { Search as SearchIcon } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 
 export function Search() {
   return (
-    <Button
-      type='button'
-      variant='outline'
-      className='relative h-9 w-full cursor-default justify-start text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64'
-      disabled
-      aria-disabled='true'
-      title='Search is not implemented yet'
+    <Link
+      href='/docs'
+      className='flex h-10 w-[220px] items-center gap-2 rounded-lg border border-zinc-200 bg-zinc-50 px-3 text-sm text-zinc-500 transition-colors hover:border-zinc-300 hover:bg-white hover:text-zinc-700 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:border-zinc-700 dark:hover:bg-zinc-950 dark:hover:text-zinc-200 lg:w-[260px]'
     >
-      <SearchIcon className='mr-2 h-4 w-4' />
-      <span className='hidden lg:inline-flex'>Search coming soon</span>
-      <span className='inline-flex lg:hidden'>Search</span>
-      <kbd className='pointer-events-none absolute right-1.5 top-1.5 hidden h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex'>
-        <span className='text-xs'>⌘</span>K
-      </kbd>
-    </Button>
+      <SearchIcon className='size-4' />
+      <span className='truncate'>Search documentation</span>
+    </Link>
   )
 }
