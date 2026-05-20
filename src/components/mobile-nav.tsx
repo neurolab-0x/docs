@@ -121,7 +121,19 @@ function MobileLink({
   children,
   className,
 }: MobileLinkProps) {
-  const active = pathname === href || (href !== "/" && pathname.startsWith(href))
+  const allHrefs = [
+    ...docsConfig.mainNav.map((n) => n.href),
+    ...docsConfig.sidebarNav.flatMap((s) => s.items.map((i) => i.href)),
+  ].filter(Boolean) as string[]
+
+  const active =
+    pathname === href ||
+    (href !== "/" &&
+      pathname.startsWith(href) &&
+      !allHrefs.some(
+        (other) =>
+          other !== href && pathname.startsWith(other) && other.length > href.length
+      ))
 
   return (
     <Link
