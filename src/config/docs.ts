@@ -27,14 +27,9 @@ export const docsConfig: DocsConfig = {
       href: '/docs/architecture',
     },
     {
-      title: 'AI API',
+      title: 'AI/ML Services',
       href: '/docs/api/ai-service',
-    },
-    {
-      title: 'GitHub',
-      href: 'https://github.com/neurolab',
-      external: true,
-    },
+    }
   ],
   sidebarNav: [
     {

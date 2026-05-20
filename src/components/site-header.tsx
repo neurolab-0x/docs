@@ -7,6 +7,7 @@ import { docsConfig } from '@/config/docs'
 import { MobileNav } from '@/components/mobile-nav'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { Search } from '@/components/search'
+import { LucideGithub } from 'lucide-react'
 
 export function SiteHeader() {
   const pathname = usePathname()
@@ -44,12 +45,15 @@ export function SiteHeader() {
           </nav>
         </div>
         <div className='flex flex-1 items-center justify-between space-x-2 md:justify-end'>
+          <div className='rounded-md border border-zinc-200 p-2 transition-colors hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-900'>
+            <LucideGithub />
+          </div>
           <div className='w-full flex-1 md:w-auto md:flex-none'>
             <Search />
           </div>
-          <nav className='flex items-center'>
+          <div className='rounded-md border border-zinc-200 transition-colors hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-900'>
             <ThemeToggle />
-          </nav>
+          </div>
         </div>
       </div>
     </header>
