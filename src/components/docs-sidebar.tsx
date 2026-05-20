@@ -11,7 +11,7 @@ export function DocsSidebar() {
   const pathname = usePathname()
 
   return (
-    <aside className='border-border/40 fixed top-14 z-30 hidden h-[calc(100vh-3.5rem)] w-full shrink-0 overflow-y-auto border-r md:sticky md:block'>
+    <aside className='border-border/40 fixed top-14 z-30 hidden h-[calc(100vh-3.5rem)] w-full shrink-0 overflow-y-auto border-r md:sticky md:block [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden'>
       <div className='py-6 pr-6 lg:py-8'>
         <div className='w-full'>
           {docsConfig.sidebarNav.map((section, index) => (
@@ -60,7 +60,7 @@ function SidebarNavItem({ item, pathname }: { item: NavItemWithChildren; pathnam
     return checkActive(item)
   }, [item, pathname])
 
-  const [isOpen, setIsOpen] = React.useState(isChildActive)
+  const [isOpen, setIsOpen] = React.useState(isChildActive || item.defaultOpen)
   const isActive = pathname === item.href
 
   return (

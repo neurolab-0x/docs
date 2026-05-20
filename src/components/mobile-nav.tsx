@@ -179,7 +179,7 @@ function MobileSidebarNavItem({
     return checkActive(item)
   }, [item, pathname])
 
-  const [isOpen, setIsOpen] = React.useState(isChildActive)
+  const [isOpen, setIsOpen] = React.useState(isChildActive || item.defaultOpen)
   const isActive = pathname === item.href
 
   return (
