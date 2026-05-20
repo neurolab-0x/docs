@@ -75,13 +75,13 @@ export function MobileNav() {
             <div className="px-3 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400">
               Documentation
             </div>
-            <div className="mt-3 space-y-4">
+            <div className="mt-3 space-y-6">
               {docsConfig.sidebarNav.map((section) => (
                 <div key={section.title}>
-                  <div className="px-3 text-sm font-medium text-zinc-900 dark:text-zinc-100">
+                  <div className="px-2 mb-1 text-sm font-semibold text-zinc-900 dark:text-zinc-100">
                     {section.title}
                   </div>
-                  <div className="mt-1 space-y-1">
+                  <div className="flex flex-col space-y-1 border-l border-zinc-200 ml-3 pl-2 dark:border-zinc-800">
                     {section.items.map((item) =>
                       item.href ? (
                         <MobileLink
@@ -89,7 +89,7 @@ export function MobileNav() {
                           href={item.href}
                           pathname={pathname}
                           onOpenChange={setOpen}
-                          className="text-zinc-600 dark:text-zinc-300"
+                          className="px-2 py-1.5 text-zinc-600 dark:text-zinc-400"
                         >
                           {item.title}
                         </MobileLink>
