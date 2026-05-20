@@ -2,58 +2,80 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { cn } from '@/lib/utils'
+import { Github, Star } from 'lucide-react'
 import { docsConfig } from '@/config/docs'
 import { MobileNav } from '@/components/mobile-nav'
-import { ThemeToggle } from '@/components/theme-toggle'
 import { Search } from '@/components/search'
-import { LucideGithub } from 'lucide-react'
+import { ThemeToggle } from '@/components/theme-toggle'
+import { cn } from '@/lib/utils'
 
 export function SiteHeader() {
   const pathname = usePathname()
 
   return (
-    <header className='bg-background/60 border-border/40 hover:border-border/80 sticky top-0 z-50 w-full border-b backdrop-blur-md transition-all duration-300 ease-in-out'>
-      <div className='container flex h-16 items-center'>
+    <header className='sticky top-0 z-50 w-full border-b border-zinc-200/80 bg-white/90 backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/85'>
+      <div className='container flex h-16 items-center gap-3'>
         <MobileNav />
-        <div className='mr-4 hidden md:flex'>
-          <Link
-            href='/'
-            className='mr-8 flex items-center space-x-2 transition-opacity hover:opacity-80'
-          >
-            <span className='hidden text-lg font-extrabold tracking-tighter uppercase sm:inline-block'>
-              NeuroLab
+
+        <Link href='/' className='flex min-w-0 items-center gap-3'>
+          <span className='min-w-0'>
+            <span className='block truncate font-sans text-lg font-semibold text-zinc-950 dark:text-zinc-50'>
+              NeuroLab Docs
             </span>
-          </Link>
-          <nav className='flex items-center space-x-8 text-sm font-medium'>
-            {docsConfig.mainNav.map((item) => (
+          </span>
+        </Link>
+
+        <nav className='ml-4 hidden items-center gap-1 lg:flex'>
+          {docsConfig.mainNav.map((item) => {
+            const allMainHrefs = docsConfig.mainNav.map((n) => n.href).filter(Boolean) as string[]
+            const isActive =
+              pathname === item.href ||
+              (!!item.href &&
+                item.href !== '/' &&
+                pathname.startsWith(item.href) &&
+                !allMainHrefs.some(
+                  (other) =>
+                    other !== item.href &&
+                    pathname.startsWith(other) &&
+                    other.length > item.href!.length
+                ))
+
+            return (
               <Link
                 key={item.href}
                 href={item.href || '/'}
                 className={cn(
-                  'hover:text-foreground relative py-1 transition-colors',
-                  pathname === item.href
-                    ? 'text-foreground after:bg-primary font-semibold after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:rounded-full'
-                    : 'text-foreground/60',
+                  'rounded-lg px-3 py-2 text-sm font-medium transition-colors',
+                  isActive
+                    ? 'bg-zinc-100 text-zinc-950 dark:bg-zinc-900 dark:text-zinc-50'
+                    : 'text-zinc-600 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-300 dark:hover:bg-zinc-900 dark:hover:text-zinc-50',
                 )}
                 target={item.external ? '_blank' : undefined}
                 rel={item.external ? 'noreferrer' : undefined}
               >
                 {item.title}
               </Link>
-            ))}
-          </nav>
+            )
+          })}
+        </nav>
+
+        <div className='ml-auto hidden md:block'>
+          <Search />
         </div>
-        <div className='flex flex-1 items-center justify-between space-x-2 md:justify-end'>
-          <div className='rounded-md border border-zinc-200 p-2 transition-colors hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-900'>
-            <LucideGithub />
-          </div>
-          <div className='w-full flex-1 md:w-auto md:flex-none'>
-            <Search />
-          </div>
-          <div className='rounded-md border border-zinc-200 transition-colors hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-900'>
-            <ThemeToggle />
-          </div>
+
+        <Link
+          href='https://github.com/neurolab-0x'
+          target='_blank'
+          rel='noreferrer'
+          className='hidden items-center gap-2 rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-600 transition-colors hover:border-zinc-300 hover:text-zinc-950 md:flex dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-300 dark:hover:border-zinc-700 dark:hover:text-zinc-50'
+        >
+          <Github className='size-4' />
+          221K{' '}
+          <Star className='size-4 text-zinc-600 transition-colors hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-zinc-50' />
+        </Link>
+
+        <div className='rounded-lg border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950'>
+          <ThemeToggle />
         </div>
       </div>
     </header>
