@@ -3,8 +3,8 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Github, Menu } from "lucide-react"
-import { docsConfig } from "@/config/docs"
+import { Github, Menu, ChevronRight } from "lucide-react"
+import { docsConfig, type NavItemWithChildren } from "@/config/docs"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { cn } from "@/lib/utils"
@@ -82,19 +82,14 @@ export function MobileNav() {
                     {section.title}
                   </div>
                   <div className="flex flex-col space-y-1 border-l border-zinc-200 ml-3 pl-2 dark:border-zinc-800">
-                    {section.items.map((item) =>
-                      item.href ? (
-                        <MobileLink
-                          key={item.href}
-                          href={item.href}
-                          pathname={pathname}
-                          onOpenChange={setOpen}
-                          className="px-2 py-1.5 text-zinc-600 dark:text-zinc-400"
-                        >
-                          {item.title}
-                        </MobileLink>
-                      ) : null
-                    )}
+                    {section.items.map((item, index) => (
+                      <MobileSidebarNavItem
+                        key={index}
+                        item={item}
+                        pathname={pathname}
+                        onOpenChange={setOpen}
+                      />
+                    ))}
                   </div>
                 </div>
               ))}
@@ -121,10 +116,20 @@ function MobileLink({
   children,
   className,
 }: MobileLinkProps) {
-  const allHrefs = [
-    ...docsConfig.mainNav.map((n) => n.href),
-    ...docsConfig.sidebarNav.flatMap((s) => s.items.map((i) => i.href)),
-  ].filter(Boolean) as string[]
+  const allHrefs = React.useMemo(() => {
+    const hrefs: string[] = []
+    const extractHrefs = (items: NavItemWithChildren[]) => {
+      items.forEach((item) => {
+        if (item.href) hrefs.push(item.href)
+        if (item.items) extractHrefs(item.items)
+      })
+    }
+    docsConfig.mainNav.forEach((item) => {
+      if (item.href) hrefs.push(item.href)
+    })
+    extractHrefs(docsConfig.sidebarNav as NavItemWithChildren[])
+    return hrefs
+  }, [])
 
   const active =
     pathname === href ||
@@ -149,5 +154,94 @@ function MobileLink({
     >
       {children}
     </Link>
+  )
+}
+
+function MobileSidebarNavItem({
+  item,
+  pathname,
+  onOpenChange,
+}: {
+  item: NavItemWithChildren
+  pathname: string
+  onOpenChange?: (open: boolean) => void
+}) {
+  const hasChildren = item.items && item.items.length > 0
+  
+  const isChildActive = React.useMemo(() => {
+    const checkActive = (navItem: NavItemWithChildren): boolean => {
+      if (navItem.href && pathname?.startsWith(navItem.href) && navItem.href !== '/') return true
+      if (navItem.items && navItem.items.length > 0) {
+        return navItem.items.some(checkActive)
+      }
+      return false
+    }
+    return checkActive(item)
+  }, [item, pathname])
+
+  const [isOpen, setIsOpen] = React.useState(isChildActive)
+  const isActive = pathname === item.href
+
+  return (
+    <div className="flex flex-col space-y-1 relative">
+      <div className="group relative flex w-full items-center">
+        {item.href ? (
+          <Link
+            href={item.href}
+            onClick={() => onOpenChange?.(false)}
+            className={cn(
+              "flex w-full items-center rounded-lg px-2 py-1.5 pr-8 transition-colors",
+              item.disabled && "cursor-not-allowed opacity-60",
+              isActive
+                ? "bg-zinc-100 font-medium text-zinc-950 dark:bg-zinc-900 dark:text-zinc-50"
+                : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-50"
+            )}
+          >
+            {item.title}
+          </Link>
+        ) : (
+          <span
+            className={cn(
+              "flex w-full items-center rounded-lg px-2 py-1.5 pr-8 text-zinc-600 transition-colors dark:text-zinc-400",
+              item.disabled ? "cursor-not-allowed opacity-60" : "cursor-pointer hover:bg-zinc-100 hover:text-zinc-950 dark:hover:bg-zinc-900 dark:hover:text-zinc-50"
+            )}
+            onClick={!item.disabled && hasChildren ? () => setIsOpen(!isOpen) : undefined}
+          >
+            {item.title}
+          </span>
+        )}
+        
+        {hasChildren && (
+          <button
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              setIsOpen(!isOpen)
+            }}
+            className="absolute right-1 top-1 p-1 rounded-sm text-zinc-400 hover:bg-zinc-200 hover:text-zinc-950 dark:text-zinc-500 dark:hover:bg-zinc-700 dark:hover:text-zinc-100"
+          >
+            <ChevronRight
+              className={cn(
+                "h-4 w-4 shrink-0 transition-transform duration-200",
+                isOpen && "rotate-90"
+              )}
+            />
+          </button>
+        )}
+      </div>
+      
+      {hasChildren && isOpen && (
+        <div className="ml-3 border-l border-zinc-200 pl-2 dark:border-zinc-800 mt-1 flex flex-col space-y-1">
+          {item.items.map((child, index) => (
+            <MobileSidebarNavItem
+              key={index}
+              item={child}
+              pathname={pathname}
+              onOpenChange={onOpenChange}
+            />
+          ))}
+        </div>
+      )}
+    </div>
   )
 }

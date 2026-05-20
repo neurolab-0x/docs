@@ -103,7 +103,18 @@ export const docsConfig: DocsConfig = {
         {
           title: 'AI Service API',
           href: '/docs/api/ai-service',
-          items: [],
+          items: [
+            {
+              title: 'Authentication',
+              href: '/docs/api/ai-service/authentication',
+              items: [],
+            },
+            {
+              title: 'Endpoints',
+              href: '/docs/api/ai-service/endpoints',
+              items: [],
+            },
+          ],
         },
         {
           title: 'Backend API',
