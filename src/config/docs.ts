@@ -51,7 +51,7 @@ export const docsConfig: DocsConfig = {
           defaultOpen: true,
           items: [
             {
-              title: 'Overall',
+              title: 'Introduction',
               href: '/docs/architecture',
               items: [],
             },
@@ -75,6 +75,26 @@ export const docsConfig: DocsConfig = {
               href: '/docs/architecture/model-registry',
               items: [],
             },
+            {
+              title: 'Data Storage',
+              href: '/docs/architecture/data-storage',
+              items: []
+            },
+            {
+              title: 'Inference Backend',
+              href: '/docs/architecture/inference-backend',
+              items: []
+            },
+            {
+              title : 'Orchestration Backend',
+              href : '/docs/architecture/orchestration-backend',
+              items : []
+            },
+            {
+              title: 'Web UI',
+              href: '/docs/architecture/web-ui',
+              items: []
+            }
           ],
         },
         {
@@ -89,9 +109,13 @@ export const docsConfig: DocsConfig = {
       items: [
         {
           title: 'AI Service',
-          href: '/docs/installation/ai-service',
           defaultOpen: true,
           items: [
+            {
+              title: 'Introduction',
+              href: '/docs/installation/ai-service',
+              items: [],
+            },
             {
               title: 'Inference Backend',
               href: '/docs/installation/ai-service/inference-backend',
@@ -141,8 +165,13 @@ export const docsConfig: DocsConfig = {
       items: [
         {
           title: 'AI Service API',
-          href: '/docs/api/ai-service',
+          defaultOpen: true,
           items: [
+            {
+              title: 'All',
+              href: '/docs/api/ai-service',
+              items: [],
+            },
             {
               title: 'Authentication',
               href: '/docs/api/ai-service/authentication',
@@ -187,8 +216,13 @@ export const docsConfig: DocsConfig = {
         },
         {
           title: 'Backend API',
-          href: '/docs/api/backend',
+          defaultOpen: true,
           items: [
+            {
+              title: 'All',
+              href: '/docs/api/backend',
+              items: [],
+            },
             {
               title: 'Authentication',
               href: '/docs/api/backend/authentication',
