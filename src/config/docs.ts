@@ -86,9 +86,9 @@ export const docsConfig: DocsConfig = {
               items: []
             },
             {
-              title : 'Orchestration Backend',
-              href : '/docs/architecture/orchestration-backend',
-              items : []
+              title: 'Orchestration Backend',
+              href: '/docs/architecture/orchestration-backend',
+              items: []
             },
             {
               title: 'Web UI',
@@ -219,7 +219,7 @@ export const docsConfig: DocsConfig = {
           defaultOpen: true,
           items: [
             {
-              title: 'All',
+              title: 'Introduction',
               href: '/docs/api/backend',
               items: [],
             },
@@ -234,9 +234,29 @@ export const docsConfig: DocsConfig = {
               items: [],
             },
             {
+              title: 'Appointments',
+              href: '/docs/api/backend/appointments',
+              items: []
+            },
+            {
               title: 'Organizations',
               href: '/docs/api/backend/organizations',
               items: [],
+            },
+            {
+              title: 'Devices',
+              href: '/docs/api/backend/device',
+              items: []
+            },
+            {
+              title: 'Reports',
+              href: '/docs/api/backend/reports',
+              items: []
+            },
+            {
+              title : 'Sessions',
+              href : '/docs/api/backend/sessions',
+              items : []
             },
             {
               title: 'Billing & Subscriptions',
@@ -257,5 +277,9 @@ export const docsConfig: DocsConfig = {
         },
       ],
     },
+    {
+      title : 'Workflows',
+      items : []
+    }
   ],
 }

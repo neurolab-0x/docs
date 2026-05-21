@@ -16,7 +16,7 @@ export function DocsSidebar() {
         <div className='w-full'>
           {docsConfig.sidebarNav.map((section, index) => (
             <div key={index} className='pb-6'>
-              <h4 className='mb-1 px-2 text-sm font-semibold text-zinc-900 dark:text-zinc-100'>
+              <h4 className='px-2 py-2 text-md font-semibold text-zinc-900 dark:text-zinc-100'>
                 {section.title}
               </h4>
               {section.items?.length ? (
@@ -73,7 +73,7 @@ function SidebarNavItem({ item, pathname }: { item: NavItemWithChildren; pathnam
               'flex w-full items-center rounded-md border border-transparent px-2 py-1.5 pr-8 transition-colors',
               item.disabled && 'cursor-not-allowed opacity-60',
               isActive
-                ? 'bg-zinc-100 font-medium text-zinc-900 dark:bg-zinc-800/50 dark:text-zinc-50'
+                ? 'bg-zinc-100 font-semibold text-zinc-900 dark:bg-zinc-800/50 dark:text-zinc-50'
                 : 'text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800/50 dark:hover:text-zinc-50',
             )}
             target={item.external ? '_blank' : ''}
