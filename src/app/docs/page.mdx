@@ -1,286 +1,114 @@
-import {
-  ArchitectureCard,
-  ArchitectureGrid,
-  Callout,
-} from '@/components/mdx-components'
-import { ArrowRight, Info } from 'lucide-react'
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
+import { Callout } from '@/components/mdx-components'
+import { Info, Network, Server, BrainCircuit, Database, ArrowRight, Lightbulb, Compass, Code2 } from 'lucide-react'
+import Link from 'next/link'
 
 export const metadata = {
   title: 'Introduction - NeuroLab Documentation',
-  description:
-    'High-level overview of the NeuroLab product, runtime system, and documentation scope.',
+  description: 'High-level overview of the NeuroLab product, runtime system, and documentation scope.',
 }
 
-<div className='not-prose relative overflow-hidden rounded-[2rem] border border-zinc-200 bg-[linear-gradient(135deg,#f8fafc_0%,#ffffff_42%,#e0f2fe_100%)] px-6 py-8 shadow-[0_30px_90px_-50px_rgba(14,116,144,0.35)] sm:px-8 sm:py-10 dark:border-zinc-800 dark:bg-[linear-gradient(135deg,#09090b_0%,#111827_42%,#082f49_100%)]'>
-  <div className='absolute inset-y-0 right-0 hidden w-1/2 bg-[radial-gradient(circle_at_top_right,rgba(14,165,233,0.14),transparent_58%)] dark:block' />
-  <div className='relative max-w-4xl'>
-    <div className='text-[11px] font-black tracking-[0.22em] text-sky-700 uppercase dark:text-sky-300'>NeuroLab Docs</div>
-    <h1 className='mt-4 max-w-3xl text-4xl font-black tracking-tight text-zinc-950 sm:text-5xl md:text-6xl dark:text-zinc-50'>
-      A clinical platform backed by AI services, user applications, and operational infrastructure.
-    </h1>
-    <div className='mt-5 max-w-3xl text-base leading-8 text-zinc-700 sm:text-lg dark:text-zinc-300'>
-      NeuroLab is a single repository that combines application workflows,
-      analysis services, client applications, and supporting infrastructure.
-      This documentation is organized around the current runtime shape of that
-      system, not around older design notes or aspirational architecture.
+# Introduction
+
+NeuroLab is a clinical platform backed by AI services, user applications, and operational infrastructure. 
+
+This repository combines application workflows, analysis services, client applications, and supporting infrastructure into a single unified system. This documentation is organized around the current runtime shape of that system, serving as the canonical source of truth for developers and operators.
+
+<Callout title='Documentation Scope' icon={<Info />}>
+  This site is intentionally conservative. If a docs page and the codebase disagree, always treat the active backend, AI service, and client entrypoints as the source of truth.
+</Callout>
+
+## System Overview
+
+NeuroLab is a layered application, not a single monolithic service. The product surface users interact with is supported by a backend API, an AI runtime, multiple frontends, and a set of persistence and messaging services.
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 mb-12 not-prose">
+  <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 flex flex-col gap-2">
+    <div className="flex items-center gap-3 font-semibold text-zinc-900 dark:text-zinc-100">
+      <Network className="w-5 h-5 text-zinc-500" />
+      Client Applications
     </div>
-    <div className='mt-8 flex flex-wrap gap-3'>
-      <a
-        href='/docs/quick-start'
-        className='inline-flex items-center rounded-xl bg-zinc-950 px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200'
-      >
-        Open Quick Start
-      </a>
-      <a
-        href='/docs/architecture'
-        className='inline-flex items-center rounded-xl border border-zinc-300 bg-white/80 px-4 py-2.5 text-sm font-bold text-zinc-900 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-950/70 dark:text-zinc-100 dark:hover:bg-zinc-900'
-      >
-        Review architecture
-      </a>
+    <div className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+      Multiple user-facing applications (platform, webapp, docs, ecommerce) built on different frameworks.
+    </div>
+  </div>
+  
+  <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 flex flex-col gap-2">
+    <div className="flex items-center gap-3 font-semibold text-zinc-900 dark:text-zinc-100">
+      <Server className="w-5 h-5 text-zinc-500" />
+      Backend API
+    </div>
+    <div className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+      The main application boundary. Owns users, doctors, appointments, uploads, and conversation persistence.
+    </div>
+  </div>
+
+  <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 flex flex-col gap-2">
+    <div className="flex items-center gap-3 font-semibold text-zinc-900 dark:text-zinc-100">
+      <BrainCircuit className="w-5 h-5 text-zinc-500" />
+      AI Inference Service
+    </div>
+    <div className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+      The canonical AI runtime exposing EEG analysis, voice processing, and recommendations via versioned FastAPI routes.
+    </div>
+  </div>
+
+  <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 flex flex-col gap-2">
+    <div className="flex items-center gap-3 font-semibold text-zinc-900 dark:text-zinc-100">
+      <Database className="w-5 h-5 text-zinc-500" />
+      Infrastructure
+    </div>
+    <div className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+      MongoDB, Redis, object storage, and gRPC integrations handling background jobs and real-time state.
     </div>
   </div>
 </div>
 
-<Callout title='Documentation Scope' icon={<Info />}>
-  This site is intentionally conservative. If a docs page and the codebase
-  disagree, treat the active backend, AI service, and client entrypoints as the
-  source of truth.
-</Callout>
+## Repository Architecture
 
-<section className='not-prose mt-14'>
-  <div className='mb-6 max-w-3xl'>
-    <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>System overview</div>
-    <h2 className='mt-2 text-3xl font-black tracking-tight text-zinc-950 sm:text-4xl dark:text-zinc-50'>
-      NeuroLab is a layered application, not a single service
-    </h2>
-    <div className='mt-3 text-[15px] leading-8 text-zinc-600 dark:text-zinc-300'>
-      The product surface users interact with is supported by a backend API, an
-      AI runtime, multiple frontends, and a set of persistence and messaging
-      services. Each layer has a distinct role.
+This mono-repo mixes product code, service code, and documentation. The table below explains the primary directories you will interact with.
+
+| Directory | Current Role |
+| :--- | :--- |
+| **`backend/`** | Main Express application and primary client-facing API surface. |
+| **`AI Service/backend/`** | Canonical AI runtime for analysis, reports, and chat workflows. |
+| **`platform/` & `webapp/`** | User-facing clients that consume backend APIs and operational workflows. |
+| **`docs/`** | This documentation application detailing the runtime and integration model. |
+
+## Next Steps
+
+Select a path below to continue your journey through the NeuroLab system.
+
+<div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 not-prose">
+  <Link href="/docs/quick-start" className="group border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors">
+    <Compass className="w-5 h-5 text-zinc-700 dark:text-zinc-300 mb-3" />
+    <div className="font-semibold text-zinc-900 dark:text-zinc-100 mb-1 flex items-center gap-1">
+      Quick Start
+      <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
     </div>
-  </div>
-
-  <ArchitectureGrid>
-    <ArchitectureCard
-      eyebrow='Client layer'
-      title='Applications'
-      stack='platform, webapp, docs, ecommerce'
-      icon='network'
-    >
-      The repository contains multiple user-facing applications. They do not
-      all use the same framework or deployment model, so the docs separate them
-      instead of flattening them into one frontend story.
-    </ArchitectureCard>
-
-    <ArchitectureCard
-      eyebrow='Core layer'
-      title='Backend API'
-      stack='authentication, workflows, persistence, orchestration'
-      icon='backend'
-    >
-      The backend is the main application boundary. It owns users, doctors,
-      appointments, uploads, reports, billing, notifications, and chat
-      conversation persistence.
-    </ArchitectureCard>
-
-    <ArchitectureCard
-      eyebrow='Inference layer'
-      title='AI Service'
-      stack='EEG, voice, reports, recommendations, chat'
-      icon='ai'
-    >
-      The active AI runtime lives under `AI Service/backend`. It exposes the
-      analysis and inference surface of the system through versioned FastAPI
-      routes and optional queue-backed workflows.
-    </ArchitectureCard>
-
-    <ArchitectureCard
-      eyebrow='Support layer'
-      title='Infrastructure'
-      stack='MongoDB, Redis, storage, MQTT, gRPC'
-      icon='data'
-    >
-      Supporting services handle persistence, background jobs, storage, and
-      targeted integrations for real-time or service-to-service communication.
-    </ArchitectureCard>
-  </ArchitectureGrid>
-</section>
-
-<section className='not-prose mt-16'>
-  <div className='mb-6 max-w-3xl'>
-    <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>Repository shape</div>
-    <h2 className='mt-2 text-3xl font-black tracking-tight text-zinc-950 sm:text-4xl dark:text-zinc-50'>
-      The major parts of the repository
-    </h2>
-    <div className='mt-3 text-[15px] leading-8 text-zinc-600 dark:text-zinc-300'>
-      This repo mixes product code, service code, and documentation. The pages
-      in this docs app are meant to explain the current runtime boundary between
-      those parts.
+    <div className="text-sm text-zinc-600 dark:text-zinc-400">
+      Fast summary of the active runtime and recommended startup order.
     </div>
-  </div>
+  </Link>
 
-  <Card className='gap-0 overflow-hidden rounded-3xl border-zinc-200 bg-white py-0 shadow-sm dark:border-zinc-800 dark:bg-zinc-950'>
-    <Table className='text-sm'>
-      <TableHeader>
-        <TableRow className='border-zinc-200 dark:border-zinc-800'>
-          <TableHead className='bg-zinc-50 px-5 py-4 text-left text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:bg-zinc-900 dark:text-zinc-400'>
-            Area
-          </TableHead>
-          <TableHead className='bg-zinc-50 px-5 py-4 text-left text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:bg-zinc-900 dark:text-zinc-400'>
-            Current role
-          </TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        <TableRow className='border-zinc-200 dark:border-zinc-800'>
-          <TableCell className='px-5 py-4 font-bold text-zinc-950 dark:text-zinc-50'>
-            `backend/`
-          </TableCell>
-          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
-            Main Express application and primary client-facing API surface.
-          </TableCell>
-        </TableRow>
-        <TableRow className='border-zinc-200 dark:border-zinc-800'>
-          <TableCell className='px-5 py-4 font-bold text-zinc-950 dark:text-zinc-50'>
-            `AI Service/backend/`
-          </TableCell>
-          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
-            Canonical AI runtime for analysis, reports, and chat workflows.
-          </TableCell>
-        </TableRow>
-        <TableRow className='border-zinc-200 dark:border-zinc-800'>
-          <TableCell className='px-5 py-4 font-bold text-zinc-950 dark:text-zinc-50'>
-            `platform/` and `webapp/`
-          </TableCell>
-          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
-            User-facing clients that consume backend APIs and operational
-            workflows.
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell className='px-5 py-4 font-bold text-zinc-950 dark:text-zinc-50'>
-            `docs/`
-          </TableCell>
-          <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
-            Documentation application for the current runtime, integration
-            model, and setup path.
-          </TableCell>
-        </TableRow>
-      </TableBody>
-    </Table>
-  </Card>
-</section>
-
-<section className='not-prose mt-16'>
-  <div className='mb-6 max-w-3xl'>
-    <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>Reading path</div>
-    <h2 className='mt-2 text-3xl font-black tracking-tight text-zinc-950 sm:text-4xl dark:text-zinc-50'>
-      Where to go next
-    </h2>
-    <div className='mt-3 text-[15px] leading-8 text-zinc-600 dark:text-zinc-300'>
-      Start with the page that matches what you need to do. The docs are split
-      between runtime orientation, setup, and concrete API reference.
+  <Link href="/docs/architecture" className="group border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors">
+    <Lightbulb className="w-5 h-5 text-zinc-700 dark:text-zinc-300 mb-3" />
+    <div className="font-semibold text-zinc-900 dark:text-zinc-100 mb-1 flex items-center gap-1">
+      Architecture
+      <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
     </div>
-  </div>
+    <div className="text-sm text-zinc-600 dark:text-zinc-400">
+      Deep dive into service boundaries, dependencies, and operational layers.
+    </div>
+  </Link>
 
-  <div className='grid gap-4 sm:grid-cols-2 xl:grid-cols-3'>
-    <a
-      href='/docs/quick-start'
-      className='block transition-all hover:-translate-y-0.5'
-    >
-      <Card className='gap-0 rounded-2xl border-zinc-200 bg-white py-0 shadow-sm transition-all hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'>
-        <CardHeader className='px-5 pt-5 pb-0'>
-          <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
-            Orientation
-          </div>
-          <CardTitle className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
-            Quick Start
-          </CardTitle>
-        </CardHeader>
-        <CardContent className='px-5 pt-3 pb-5 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
-          Fast summary of the active runtime components and the recommended
-          startup order.
-        </CardContent>
-      </Card>
-    </a>
-
-    <a
-      href='/docs/architecture'
-      className='block transition-all hover:-translate-y-0.5'
-    >
-      <Card className='gap-0 rounded-2xl border-zinc-200 bg-white py-0 shadow-sm transition-all hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'>
-        <CardHeader className='px-5 pt-5 pb-0'>
-          <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
-            Runtime
-          </div>
-          <CardTitle className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
-            Architecture
-          </CardTitle>
-        </CardHeader>
-        <CardContent className='px-5 pt-3 pb-5 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
-          Current service boundaries, dependencies, and operational layers.
-        </CardContent>
-      </Card>
-    </a>
-
-    <a
-      href='/docs/api/backend'
-      className='block transition-all hover:-translate-y-0.5'
-    >
-      <Card className='gap-0 rounded-2xl border-zinc-200 bg-white py-0 shadow-sm transition-all hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700'>
-        <CardHeader className='px-5 pt-5 pb-0'>
-          <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
-            Reference
-          </div>
-          <CardTitle className='mt-2 text-xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
-            Backend API
-          </CardTitle>
-        </CardHeader>
-        <CardContent className='px-5 pt-3 pb-5 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
-          Route groups, responsibilities, and integration entry points for the
-          main application API.
-        </CardContent>
-      </Card>
-    </a>
-  </div>
-</section>
-
-<section className='not-prose mt-16 overflow-hidden rounded-[2rem] border border-zinc-200 bg-zinc-950 px-6 py-7 text-white shadow-[0_24px_70px_-40px_rgba(0,0,0,0.65)] dark:border-zinc-800 sm:px-8'>
-  <div className='text-[11px] font-black tracking-[0.18em] text-zinc-400 uppercase'>Next step</div>
-  <h2 className='mt-2 text-3xl font-black tracking-tight text-white sm:text-4xl'>
-    Move from overview into the active runtime.
-  </h2>
-  <div className='mt-3 max-w-2xl text-[15px] leading-8 text-zinc-300'>
-    If you need the shortest path into the system, open Quick Start. If you
-    need the deeper service map, go straight to Architecture.
-  </div>
-  <div className='mt-6 flex flex-wrap gap-3'>
-    <a
-      href='/docs/quick-start'
-      className='inline-flex items-center rounded-xl bg-white px-4 py-2.5 text-sm font-black text-zinc-950 transition-colors hover:bg-zinc-200'
-    >
-      Open Quick Start
-    </a>
-    <a
-      href='/docs/architecture'
-      className='inline-flex items-center rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-black text-white transition-colors hover:bg-white/10'
-    >
-      Open Architecture
-      <ArrowRight className='ml-2 size-4' />
-    </a>
-  </div>
-</section>
+  <Link href="/docs/api/backend" className="group border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors">
+    <Code2 className="w-5 h-5 text-zinc-700 dark:text-zinc-300 mb-3" />
+    <div className="font-semibold text-zinc-900 dark:text-zinc-100 mb-1 flex items-center gap-1">
+      Backend API
+      <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+    </div>
+    <div className="text-sm text-zinc-600 dark:text-zinc-400">
+      Reference for route groups, responsibilities, and integration points.
+    </div>
+  </Link>
+</div>

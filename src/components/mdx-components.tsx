@@ -19,14 +19,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
 import { cn } from '@/lib/utils'
 
 function extractTextContent(node: React.ReactNode): string {
@@ -69,7 +61,7 @@ function InlineCode({
   return (
     <code
       className={cn(
-        'bg-amber-100/80 text-zinc-900 ring-amber-300/60 relative rounded-md px-2 py-1 font-mono text-[0.9em] font-semibold ring-1 dark:bg-zinc-800 dark:text-zinc-100 dark:ring-zinc-700',
+        'bg-zinc-100/80 text-zinc-900 dark:bg-zinc-800/80 dark:text-zinc-100 rounded px-1.5 py-0.5 font-mono text-[0.875em] font-medium border border-zinc-200/40 dark:border-zinc-700/40',
         className,
       )}
       {...props}
@@ -418,7 +410,7 @@ const components = {
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1
       className={cn(
-        'mt-3 scroll-m-20 text-4xl font-black tracking-tight text-zinc-950 sm:text-5xl dark:text-zinc-50',
+        'mt-2 scroll-m-20 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50',
         className,
       )}
       {...props}
@@ -427,7 +419,7 @@ const components = {
   h2: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2
       className={cn(
-        'mt-14 scroll-m-20 border-b border-zinc-200 pb-3 text-3xl font-black tracking-tight text-zinc-950 first:mt-0 dark:border-zinc-800 dark:text-zinc-50',
+        'mt-10 scroll-m-20 border-b border-zinc-200/50 pb-2 text-2xl font-semibold tracking-tight text-zinc-900 first:mt-0 dark:border-zinc-800/50 dark:text-zinc-50',
         className,
       )}
       {...props}
@@ -436,7 +428,7 @@ const components = {
   h3: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h3
       className={cn(
-        'mt-10 scroll-m-20 text-2xl font-black tracking-tight text-zinc-950 dark:text-zinc-50',
+        'mt-8 scroll-m-20 text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50',
         className,
       )}
       {...props}
@@ -445,7 +437,7 @@ const components = {
   h4: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h4
       className={cn(
-        'mt-8 scroll-m-20 text-xl font-bold tracking-tight text-zinc-950 dark:text-zinc-50',
+        'mt-6 scroll-m-20 text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-50',
         className,
       )}
       {...props}
@@ -454,7 +446,7 @@ const components = {
   h5: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h5
       className={cn(
-        'mt-8 scroll-m-20 text-lg font-bold tracking-tight text-zinc-950 dark:text-zinc-50',
+        'mt-6 scroll-m-20 text-base font-semibold tracking-tight text-zinc-900 dark:text-zinc-50',
         className,
       )}
       {...props}
@@ -463,7 +455,7 @@ const components = {
   h6: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h6
       className={cn(
-        'mt-8 scroll-m-20 text-base font-bold tracking-tight text-zinc-950 dark:text-zinc-50',
+        'mt-6 scroll-m-20 text-sm font-semibold tracking-tight text-zinc-900 dark:text-zinc-50',
         className,
       )}
       {...props}
@@ -472,7 +464,7 @@ const components = {
   a: ({ className, ...props }: React.HTMLAttributes<HTMLAnchorElement>) => (
     <a
       className={cn(
-        'font-semibold text-sky-700 underline decoration-sky-300 underline-offset-4 transition-colors hover:text-sky-900 dark:text-sky-300 dark:decoration-sky-700 dark:hover:text-sky-200',
+        'font-medium text-sky-600 hover:text-sky-500 dark:text-sky-400 dark:hover:text-sky-300 underline underline-offset-4 decoration-sky-500/30 hover:decoration-sky-500 transition-colors',
         className,
       )}
       {...props}
@@ -481,7 +473,7 @@ const components = {
   p: ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
     <p
       className={cn(
-        'text-[15px] leading-8 text-zinc-700 [&:not(:first-child)]:mt-6 dark:text-zinc-300',
+        'text-[15px] leading-7 text-zinc-650 dark:text-zinc-350 [&:not(:first-child)]:mt-4',
         className,
       )}
       {...props}
@@ -490,7 +482,7 @@ const components = {
   ul: ({ className, ...props }: React.HTMLAttributes<HTMLUListElement>) => (
     <ul
       className={cn(
-        'my-6 ml-6 list-disc space-y-2 text-zinc-700 marker:text-zinc-400 dark:text-zinc-300 dark:marker:text-zinc-600',
+        'my-5 ml-6 list-disc space-y-2 text-zinc-650 marker:text-zinc-300 dark:text-zinc-350 dark:marker:text-zinc-700',
         className,
       )}
       {...props}
@@ -499,19 +491,19 @@ const components = {
   ol: ({ className, ...props }: React.HTMLAttributes<HTMLOListElement>) => (
     <ol
       className={cn(
-        'my-6 ml-6 list-decimal space-y-2 text-zinc-700 marker:font-semibold marker:text-zinc-500 dark:text-zinc-300 dark:marker:text-zinc-400',
+        'my-5 ml-6 list-decimal space-y-2 text-zinc-650 marker:text-zinc-400 dark:text-zinc-350 dark:marker:text-zinc-650',
         className,
       )}
       {...props}
     />
   ),
   li: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
-    <li className={cn('mt-2 pl-1', className)} {...props} />
+    <li className={cn('mt-1.5 pl-1 leading-7', className)} {...props} />
   ),
   blockquote: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <blockquote
       className={cn(
-        'mt-8 border-l-4 border-zinc-300 pl-5 text-lg font-medium italic text-zinc-700 dark:border-zinc-700 dark:text-zinc-300',
+        'mt-6 border-l-2 border-zinc-300 pl-4 italic text-zinc-650 dark:border-zinc-700 dark:text-zinc-350',
         className,
       )}
       {...props}
@@ -524,26 +516,26 @@ const components = {
   }: React.ImgHTMLAttributes<HTMLImageElement>) => (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      className={cn('rounded-2xl border border-zinc-200 shadow-sm dark:border-zinc-800', className)}
+      className={cn('rounded-xl border border-zinc-200/60 shadow-sm dark:border-zinc-800/60', className)}
       alt={alt}
       {...props}
     />
   ),
   hr: ({ ...props }) => (
-    <hr className='my-10 border-zinc-200 dark:border-zinc-800' {...props} />
+    <hr className='my-8 border-zinc-200/60 dark:border-zinc-800/60' {...props} />
   ),
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
-    <Card className='my-8 gap-0 overflow-hidden rounded-2xl border-zinc-200 bg-white py-0 shadow-sm dark:border-zinc-800 dark:bg-zinc-950'>
-      <Table className={cn('bg-white text-sm dark:bg-zinc-950', className)} {...props} />
-    </Card>
+    <div className="my-6 w-full overflow-x-auto border border-zinc-200/50 dark:border-zinc-800/50 rounded-xl bg-white dark:bg-zinc-950/20">
+      <table className={cn('w-full border-collapse text-left text-sm', className)} {...props} />
+    </div>
   ),
   thead: ({
     className,
     ...props
   }: React.HTMLAttributes<HTMLTableSectionElement>) => (
-    <TableHeader
+    <thead
       className={cn(
-        '[&_tr]:border-zinc-200 dark:[&_tr]:border-zinc-800',
+        'border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/30',
         className,
       )}
       {...props}
@@ -553,30 +545,30 @@ const components = {
     className,
     ...props
   }: React.HTMLAttributes<HTMLTableSectionElement>) => (
-    <TableBody className={className} {...props} />
+    <tbody className={cn('[&_tr:last-child]:border-0', className)} {...props} />
   ),
   tr: ({ className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) => (
-    <TableRow
+    <tr
       className={cn(
-        'border-zinc-200 transition-colors hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-900/60',
+        'border-b border-zinc-100 dark:border-zinc-900 transition-colors hover:bg-zinc-50/50 dark:hover:bg-zinc-900/10',
         className,
       )}
       {...props}
     />
   ),
   th: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
-    <TableHead
+    <th
       className={cn(
-        'bg-zinc-50 px-4 py-3 text-left text-xs font-black tracking-[0.14em] text-zinc-500 uppercase dark:bg-zinc-900 dark:text-zinc-400',
+        'px-4 py-3 text-left font-semibold text-zinc-900 dark:text-zinc-100',
         className,
       )}
       {...props}
     />
   ),
   td: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
-    <TableCell
+    <td
       className={cn(
-        'p-4 align-top text-sm leading-7 text-zinc-700 dark:text-zinc-300 whitespace-normal',
+        'px-4 py-3 align-top text-zinc-600 dark:text-zinc-400 whitespace-normal leading-6',
         className,
       )}
       {...props}
