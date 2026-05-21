@@ -11,8 +11,9 @@ export function ThemeToggle() {
   return (
     <Button
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-      className=""
+      className="size-9 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
       variant="ghost"
+      size="icon"
     >
       <Sun className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
       <Moon className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
