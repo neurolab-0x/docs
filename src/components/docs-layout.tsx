@@ -17,7 +17,7 @@ export function DocsLayout({ children }: DocsLayoutProps) {
         <div className='container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10 xl:grid-cols-[240px_minmax(0,1fr)_200px]'>
           <DocsSidebar />
           <main className='relative py-8 lg:py-12'>
-            <div className='mx-auto w-full max-w-4xl min-w-0'>
+            <div className='docs-content mx-auto w-full max-w-4xl min-w-0'>
               {children}
               <DocsFooter />
             </div>
