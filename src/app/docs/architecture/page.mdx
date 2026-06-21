@@ -4,74 +4,61 @@ import {
   Callout,
 } from '@/components/mdx-components'
 
-export const metadata = {
-  title: 'Architecture - NeuroLab Documentation',
-  description: 'Documented runtime architecture for the current NeuroLab codebase.',
-}
-
 # Architecture
 
-NeuroLab currently spans a backend application, an AI service, client applications, and supporting infrastructure. This page focuses on the runtime shape that is visible in the repository today.
+NeuroLab is documented here as a layered system: clients, backend API, AI service, and supporting infrastructure.
 
 <Callout
   type='warning'
   title='Source Of Truth'
   icon='△'
 >
-  This page describes the current documented runtime. If architecture notes elsewhere in the repository disagree, trust the active service entrypoints and route files first.
+  This page summarizes the architecture model used by the docs site. It does not assert that the service source code lives in this repository.
 </Callout>
 
 ## System Overview
 
-The current repository is best understood as four operational layers:
+The platform is described as four operational layers:
 
 <ArchitectureGrid>
   <ArchitectureCard
     eyebrow='Client Layer'
-    title='User-Facing Applications'
-    stack='Vite and Next.js clients'
+    title='Client Applications'
+    stack='User-facing web apps'
     icon='network'
   >
-    `platform/`, `webapp/`, `docs/`, and `ecommerce/` sit at the edge of the
-    system. They consume backend HTTP APIs and expose different product
-    surfaces: platform workflows, user-facing web experiences, and
-    documentation.
+    The docs site sits alongside the platform-facing applications and
+    describes the supported workflows, setup, and reference surfaces.
   </ArchitectureCard>
 
   <ArchitectureCard
     eyebrow='Core Layer'
     title='Backend API'
-    stack='Node.js + Express + MongoDB'
+    stack='Backend service boundary'
     icon='backend'
   >
-    The backend owns authentication, user and doctor workflows, appointments,
-    uploads, reports, notifications, billing, and chat orchestration. It also
-    exposes Swagger at `/api-docs` and acts as the main application boundary
-    for most clients.
+    The backend is the primary HTTP boundary for users, appointments,
+    uploads, reports, billing, notifications, and related workflows.
   </ArchitectureCard>
 
   <ArchitectureCard
     eyebrow='Inference Layer'
     title='AI Service'
-    stack='FastAPI + Python + optional RQ/Redis'
+    stack='Analysis and inference service'
     icon='ai'
   >
-    The active AI runtime lives under `AI Service/backend`. It handles EEG
-    analysis, voice analysis, recommendations, reports, chat workflows, model
-    calibration, and optional streaming. Versioned routes are exposed under
-    `/api/v1/*`.
+    The AI service covers EEG analysis, voice processing, report generation,
+    and model-related endpoints under a versioned API prefix.
   </ArchitectureCard>
 
   <ArchitectureCard
     eyebrow='Infrastructure Layer'
-    title='Data And Messaging'
-    stack='MongoDB, Redis, object storage, MQTT, gRPC'
+    title='Supporting Services'
+    stack='Data, queueing, and storage'
     icon='data'
   >
-    MongoDB is the primary application datastore. Redis supports queue-backed
-    workloads and background processing. MQTT and gRPC exist as integration
-    mechanisms for device and service-to-service communication in specific
-    flows.
+    Supporting services include the datastore, queueing, and object storage
+    layers that the backend and AI service depend on.
   </ArchitectureCard>
 </ArchitectureGrid>
 
@@ -79,62 +66,51 @@ The current repository is best understood as four operational layers:
 
 ### Backend Responsibilities
 
-- API surface for `/api/auth`, `/api/users`, `/api/admin`, `/api/doctors`,
-  `/api/devices`, `/api/sessions`, `/api/analysis`, `/api/uploads`,
-  `/api/reports`, `/api/appointments`, `/api/calendar`, `/api/notifications`,
-  `/api/clinics`, `/api/billing`, and `/api/chat`
-- auth and token issuance
+- authentication and token issuance
 - application data persistence
-- appointment, billing, and workflow orchestration
-- chat conversation persistence and AI job reconciliation
+- appointments, uploads, reports, billing, notifications, and chat workflows
+- route groups summarized in the backend API reference
 
 ### AI Service Responsibilities
 
-- versioned FastAPI routing under `/api/v1`
+- versioned API routing
 - EEG analysis endpoints
 - voice analysis endpoints
-- model calibration
-- report generation jobs
-- chat request processing, including queued background mode
+- report generation and model-related workflows
 
 ## Integration Patterns
 
 | Mechanism | Current Role | Notes |
 | :--- | :--- | :--- |
 | **HTTP/REST** | Primary application integration | Main client and service API surface |
-| **Swagger/OpenAPI** | Backend schema discovery | Exposed by the backend at `/api-docs` |
-| **Versioned FastAPI routes** | AI service contract | Canonical AI surface is `/api/v1/*` |
-| **Redis/RQ** | Background processing | Used for queued AI chat and report workflows |
-| **gRPC** | Targeted service-to-service context exchange | Present in current backend and AI chat/context paths |
-| **MQTT** | Device and notification integration | Present as an optional real-time integration mechanism |
+| **OpenAPI/Swagger** | Backend schema discovery | The backend API page points to the generated schema |
+| **Versioned API routes** | AI service contract | The AI service API is documented under a versioned prefix |
+| **Queue-backed jobs** | Background processing | Used for asynchronous analysis and report workflows |
 
 ## Runtime Shape
 
 ```text
 Client applications
-    -> Backend API (Express)
-    -> AI service (FastAPI) for analysis, reports, and chat
-    -> MongoDB / Redis / storage / optional messaging integrations
+    -> Backend API
+    -> AI service for analysis and inference
+    -> Data, queueing, and storage services
 ```
 
 ## Architectural Notes
 
 <Callout title='Important Distinction' icon='◆'>
-  The repository also contains older or alternate architectural traces. For
-  documentation work, treat `AI Service/backend` as the primary AI runtime
-  unless the goal is explicitly historical or comparative.
+  Keep the architecture page aligned with the routes and pages that exist in
+  this docs repository. Avoid adding directory-level claims unless the source
+  code is actually present here.
 </Callout>
 
 ### What is stable
 
-- backend route groups and Swagger exposure
+- backend route summaries and OpenAPI entrypoints
 - AI service versioned API prefix
-- Vite-based `platform` and `webapp` clients
 - docs app as a separate Next.js application
 
 ### What is integration-sensitive
 
-- MQTT-dependent flows
-- gRPC-dependent context exchange
-- Redis-backed async jobs
-- deployment assumptions across the various frontend apps
+- queue-backed async jobs
+- deployment assumptions across the documented setup pages

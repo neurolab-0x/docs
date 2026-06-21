@@ -17,8 +17,8 @@ export default function Home() {
               NeuroLab Documentation
             </h1>
             <p className="max-w-[750px] text-lg text-muted-foreground sm:text-xl">
-              Comprehensive documentation for the EEG & Voice Mental State Analysis Platform.
-              Build powerful neurotechnology applications with multimodal AI.
+              Documentation for the NeuroLab platform and the pages in this repository.
+              Start with the overview, then move into setup and API reference pages.
             </p>
           </div>
           <div className="flex gap-4">
@@ -43,9 +43,9 @@ export default function Home() {
               <div className="flex h-[180px] flex-col justify-between">
                 <Brain className="h-12 w-12" />
                 <div className="space-y-2">
-                  <h3 className="font-bold">EEG Analysis</h3>
+                  <h3 className="font-bold">EEG Processing</h3>
                   <p className="text-sm text-muted-foreground">
-                    Real-time brain signal processing with advanced ML models
+                    Signal processing concepts and feature extraction basics
                   </p>
                 </div>
               </div>
@@ -54,9 +54,9 @@ export default function Home() {
               <div className="flex h-[180px] flex-col justify-between">
                 <Mic className="h-12 w-12" />
                 <div className="space-y-2">
-                  <h3 className="font-bold">Voice Emotion</h3>
+                  <h3 className="font-bold">Mental States</h3>
                   <p className="text-sm text-muted-foreground">
-                    Audio emotion detection mapped to mental states
+                    The state taxonomy used throughout the docs
                   </p>
                 </div>
               </div>
@@ -65,9 +65,9 @@ export default function Home() {
               <div className="flex h-[180px] flex-col justify-between">
                 <Activity className="h-12 w-12" />
                 <div className="space-y-2">
-                  <h3 className="font-bold">Multimodal</h3>
+                  <h3 className="font-bold">Setup</h3>
                   <p className="text-sm text-muted-foreground">
-                    Combine EEG and voice for comprehensive analysis
+                    Installation and deployment guidance
                   </p>
                 </div>
               </div>
@@ -76,9 +76,9 @@ export default function Home() {
               <div className="flex h-[180px] flex-col justify-between">
                 <Zap className="h-12 w-12" />
                 <div className="space-y-2">
-                  <h3 className="font-bold">Real-time</h3>
+                  <h3 className="font-bold">API Reference</h3>
                   <p className="text-sm text-muted-foreground">
-                    Stream and analyze data in real-time via WebSocket
+                    Backend and AI service endpoints
                   </p>
                 </div>
               </div>
@@ -113,19 +113,19 @@ export default function Home() {
                 </p>
               </div>
             </Link>
-            <Link href="/docs/api/ai-service" className="group relative overflow-hidden rounded-lg border bg-background p-8 hover:bg-accent">
+            <Link href="/docs/api" className="group relative overflow-hidden rounded-lg border bg-background p-8 hover:bg-accent">
               <div className="space-y-2">
-                <h3 className="font-bold">AI API</h3>
+                <h3 className="font-bold">API Overview</h3>
                 <p className="text-sm text-muted-foreground">
-                  Explore the AI service endpoints
+                  See the backend and AI service reference pages
                 </p>
               </div>
             </Link>
-            <Link href="/docs/guides/streaming" className="group relative overflow-hidden rounded-lg border bg-background p-8 hover:bg-accent">
+            <Link href="/docs/concepts/eeg-processing" className="group relative overflow-hidden rounded-lg border bg-background p-8 hover:bg-accent">
               <div className="space-y-2">
-                <h3 className="font-bold">Real-time Streaming</h3>
+                <h3 className="font-bold">EEG Concepts</h3>
                 <p className="text-sm text-muted-foreground">
-                  Stream EEG data in real-time
+                  Learn the processing pipeline behind the mental state model
                 </p>
               </div>
             </Link>
@@ -137,11 +137,11 @@ export default function Home() {
                 </p>
               </div>
             </Link>
-            <Link href="/docs/guides/training" className="group relative overflow-hidden rounded-lg border bg-background p-8 hover:bg-accent">
+            <Link href="/docs/architecture" className="group relative overflow-hidden rounded-lg border bg-background p-8 hover:bg-accent">
               <div className="space-y-2">
-                <h3 className="font-bold">Model Training</h3>
+                <h3 className="font-bold">Architecture</h3>
                 <p className="text-sm text-muted-foreground">
-                  Train custom ML models
+                  See the high-level system boundaries
                 </p>
               </div>
             </Link>

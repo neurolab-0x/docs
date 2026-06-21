@@ -1,95 +1,90 @@
 import { Callout } from '@/components/mdx-components'
-import { Info, Network, Server, BrainCircuit, Database, ArrowRight, Lightbulb, Compass, Code2 } from 'lucide-react'
+import { Info, BookOpen, BrainCircuit, Boxes, Code2, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
-
-export const metadata = {
-  title: 'Introduction - NeuroLab Documentation',
-  description: 'High-level overview of the NeuroLab product, runtime system, and documentation scope.',
-}
 
 # Introduction
 
-NeuroLab is a clinical platform backed by AI services, user applications, and operational infrastructure. 
+This repository is a documentation site. It does not contain the NeuroLab application services themselves.
 
-This repository combines application workflows, analysis services, client applications, and supporting infrastructure into a single unified system. This documentation is organized around the current runtime shape of that system, serving as the canonical source of truth for developers and operators.
+The pages here summarize the platform at a practical level: what the system is, how the main pieces fit together, how to install the documented services, and how to read the API surfaces.
 
 <Callout title='Documentation Scope' icon={<Info />}>
-  This site is intentionally conservative. If a docs page and the codebase disagree, always treat the active backend, AI service, and client entrypoints as the source of truth.
+  Treat these pages as a guide to the documented platform, not as proof that the runtime code is present in this repository.
 </Callout>
 
 ## System Overview
 
-NeuroLab is a layered application, not a single monolithic service. The product surface users interact with is supported by a backend API, an AI runtime, multiple frontends, and a set of persistence and messaging services.
+NeuroLab is documented as a layered system. The site separates overview content, setup guidance, concepts, and API reference so you can move from orientation to implementation details without guesswork.
 
 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 mb-12 not-prose">
   <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 flex flex-col gap-2">
     <div className="flex items-center gap-3 font-semibold text-zinc-900 dark:text-zinc-100">
-      <Network className="w-5 h-5 text-zinc-500" />
-      Client Applications
+      <BookOpen className="w-5 h-5 text-zinc-500" />
+      Getting Started
     </div>
     <div className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-      Multiple user-facing applications (platform, webapp, docs, ecommerce) built on different frameworks.
+      A short path through the prerequisites, quick start, and architecture summary.
     </div>
   </div>
   
   <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 flex flex-col gap-2">
     <div className="flex items-center gap-3 font-semibold text-zinc-900 dark:text-zinc-100">
-      <Server className="w-5 h-5 text-zinc-500" />
-      Backend API
-    </div>
-    <div className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-      The main application boundary. Owns users, doctors, appointments, uploads, and conversation persistence.
-    </div>
-  </div>
-
-  <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 flex flex-col gap-2">
-    <div className="flex items-center gap-3 font-semibold text-zinc-900 dark:text-zinc-100">
       <BrainCircuit className="w-5 h-5 text-zinc-500" />
-      AI Inference Service
+      Concepts
     </div>
     <div className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-      The canonical AI runtime exposing EEG analysis, voice processing, and recommendations via versioned FastAPI routes.
+      EEG processing and mental state explanations that the rest of the docs build on.
     </div>
   </div>
 
   <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 flex flex-col gap-2">
     <div className="flex items-center gap-3 font-semibold text-zinc-900 dark:text-zinc-100">
-      <Database className="w-5 h-5 text-zinc-500" />
-      Infrastructure
+      <Boxes className="w-5 h-5 text-zinc-500" />
+      Installation
     </div>
     <div className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-      MongoDB, Redis, object storage, and gRPC integrations handling background jobs and real-time state.
+      Setup notes for the backend, AI service, Docker, and production deployment.
+    </div>
+  </div>
+
+  <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 flex flex-col gap-2">
+    <div className="flex items-center gap-3 font-semibold text-zinc-900 dark:text-zinc-100">
+      <Code2 className="w-5 h-5 text-zinc-500" />
+      API Reference
+    </div>
+    <div className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+      The backend and AI service API summaries are grouped under a single entry point.
     </div>
   </div>
 </div>
 
 ## Repository Architecture
 
-This mono-repo mixes product code, service code, and documentation. The table below explains the primary directories you will interact with.
+This repository only contains the docs app. The sections below explain the documentation structure you can browse here.
 
 <table>
   <thead>
     <tr>
-      <th>Directory</th>
+      <th>Section</th>
       <th>Current Role</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>`backend/`</td>
-      <td>Main Express application and primary client-facing API surface.</td>
+      <td>`Getting Started`</td>
+      <td>Overview, quick start, and prerequisites.</td>
     </tr>
     <tr>
-      <td>`AI Service/backend/`</td>
-      <td>Canonical AI runtime for analysis, reports, and chat workflows.</td>
+      <td>`Concepts`</td>
+      <td>EEG processing and mental state explanations.</td>
     </tr>
     <tr>
-      <td>`platform/` & `webapp/`</td>
-      <td>User-facing clients that consume backend APIs and operational workflows.</td>
+      <td>`Installation`</td>
+      <td>Setup guidance for the documented services and deployment paths.</td>
     </tr>
     <tr>
-      <td>`docs/`</td>
-      <td>This documentation application detailing the runtime and integration model.</td>
+      <td>`API Reference`</td>
+      <td>Entry points for the backend and AI service API pages.</td>
     </tr>
   </tbody>
 </table>
@@ -100,35 +95,35 @@ Select a path below to continue your journey through the NeuroLab system.
 
 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 not-prose">
   <Link href="/docs/quick-start" className="group border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors">
-    <Compass className="w-5 h-5 text-zinc-700 dark:text-zinc-300 mb-3" />
+    <ArrowRight className="w-5 h-5 text-zinc-700 dark:text-zinc-300 mb-3" />
     <div className="font-semibold text-zinc-900 dark:text-zinc-100 mb-1 flex items-center gap-1">
       Quick Start
       <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
     </div>
     <div className="text-sm text-zinc-600 dark:text-zinc-400">
-      Fast summary of the active runtime and recommended startup order.
+      Fast summary of the documented runtime and recommended reading order.
     </div>
   </Link>
 
   <Link href="/docs/architecture" className="group border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors">
-    <Lightbulb className="w-5 h-5 text-zinc-700 dark:text-zinc-300 mb-3" />
+    <Boxes className="w-5 h-5 text-zinc-700 dark:text-zinc-300 mb-3" />
     <div className="font-semibold text-zinc-900 dark:text-zinc-100 mb-1 flex items-center gap-1">
       Architecture
       <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
     </div>
     <div className="text-sm text-zinc-600 dark:text-zinc-400">
-      Deep dive into service boundaries, dependencies, and operational layers.
+      High-level system boundaries and how the docs organize them.
     </div>
   </Link>
 
-  <Link href="/docs/api/backend" className="group border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors">
+  <Link href="/docs/api" className="group border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors">
     <Code2 className="w-5 h-5 text-zinc-700 dark:text-zinc-300 mb-3" />
     <div className="font-semibold text-zinc-900 dark:text-zinc-100 mb-1 flex items-center gap-1">
-      Backend API
+      API Reference
       <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
     </div>
     <div className="text-sm text-zinc-600 dark:text-zinc-400">
-      Reference for route groups, responsibilities, and integration points.
+      Route summaries for the backend and AI service.
     </div>
   </Link>
 </div>
