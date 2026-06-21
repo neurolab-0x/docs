@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Github, Brain } from 'lucide-react'
+import { Github } from 'lucide-react'
 import { docsConfig } from '@/config/docs'
 import { MobileNav } from '@/components/mobile-nav'
 import { Search } from '@/components/search'
