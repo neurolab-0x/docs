@@ -19,12 +19,6 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-export const metadata = {
-  title: 'Prerequisites - NeuroLab Documentation',
-  description:
-    'Infrastructure, Docker, and runtime prerequisites for the current NeuroLab stack.',
-}
-
 <div className='not-prose relative overflow-hidden rounded-[2rem] border border-zinc-200 bg-[linear-gradient(135deg,#ecfeff_0%,#ffffff_42%,#fef3c7_100%)] px-6 py-8 shadow-[0_30px_90px_-50px_rgba(14,116,144,0.28)] sm:px-8 sm:py-10 dark:border-zinc-800 dark:bg-[linear-gradient(135deg,#0f172a_0%,#09090b_42%,#451a03_100%)]'>
   <div className='relative max-w-4xl'>
     <div className='text-[11px] font-black tracking-[0.22em] text-cyan-700 uppercase dark:text-cyan-300'>Prerequisites</div>
@@ -32,17 +26,16 @@ export const metadata = {
       Prepare the runtime layers before you start individual services.
     </h1>
     <div className='mt-5 max-w-3xl text-base leading-8 text-zinc-700 sm:text-lg dark:text-zinc-300'>
-      NeuroLab does not currently ship as one clean root Docker stack. The
-      reliable approach is to think in layers: host tooling, infrastructure
-      containers, application services, and then client apps.
+      The setup pages assume you have the required runtimes and can reach the
+      services they describe. This docs repository does not contain the
+      services themselves.
     </div>
   </div>
 </div>
 
 <Callout title='Current Docker Reality' icon={<Info />}>
-  The repository contains separate Compose files for `backend/` and
-  `AI Service/backend/`, but they are not fully aligned. This page reflects the
-  actual runtime dependencies in code, not an idealized single-stack deployment.
+  The setup instructions below are intentionally high level. Use them as a
+  checklist before following the service-specific pages.
 </Callout>
 
 <section className='not-prose mt-14'>
@@ -69,7 +62,7 @@ export const metadata = {
       stack='3.11 preferred'
       icon='ai'
     >
-      Required for the active AI runtime under `AI Service/backend`.
+      Required for the AI service setup page.
     </ArchitectureCard>
 
     <ArchitectureCard
@@ -244,7 +237,7 @@ export const metadata = {
     <ArchitectureCard
       eyebrow='Layer 3'
       title='Application Services'
-      stack='backend and AI Service/backend'
+      stack='backend and AI service'
       icon='backend'
     >
       Run these after the dependency layer is reachable. They each have their
@@ -275,7 +268,7 @@ export const metadata = {
     <Card className='gap-0 rounded-3xl border-zinc-200 bg-white py-0 shadow-sm dark:border-zinc-800 dark:bg-zinc-950'>
       <CardHeader className='px-6 pt-6 pb-0'>
         <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
-          backend/docker-compose.yml
+          backend stack
         </div>
         <CardTitle className='mt-2 text-2xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
           Broad dependency stack, but stale AI wiring
@@ -283,16 +276,16 @@ export const metadata = {
       </CardHeader>
       <CardContent className='px-6 pt-4 pb-6 text-sm leading-7 text-zinc-600 dark:text-zinc-300'>
         It defines MongoDB, Redis, MinIO, InfluxDB, Mosquitto, backend, and an
-        AI service. But the AI build context points to `./ai.neurolab`, which
-        does not exist in the current repository, so this file is not a
-        trustworthy full-stack source of truth as-is.
+        AI service. But the AI build context is not aligned with the docs
+        repository, so this file should not be treated as a trustworthy
+        full-stack source of truth as-is.
       </CardContent>
     </Card>
 
     <Card className='gap-0 rounded-3xl border-zinc-200 bg-white py-0 shadow-sm dark:border-zinc-800 dark:bg-zinc-950'>
       <CardHeader className='px-6 pt-6 pb-0'>
         <div className='text-[11px] font-black tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400'>
-          AI Service/backend/docker-compose.yml
+          AI service stack
         </div>
         <CardTitle className='mt-2 text-2xl font-black tracking-tight text-zinc-950 dark:text-zinc-50'>
           Better AI-specific stack, but missing MongoDB

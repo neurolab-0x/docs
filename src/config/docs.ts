@@ -28,8 +28,8 @@ export const docsConfig: DocsConfig = {
       href: '/docs/architecture',
     },
     {
-      title: 'AI/ML Services',
-      href: '/docs/api/ai-service',
+      title: 'API Reference',
+      href: '/docs/api',
     }
   ],
   sidebarNav: [
@@ -47,59 +47,33 @@ export const docsConfig: DocsConfig = {
           items: [],
         },
         {
-          title: 'Architecture',
-          defaultOpen: true,
-          items: [
-            {
-              title: 'Introduction',
-              href: '/docs/architecture',
-              items: [],
-            },
-            {
-              title: 'Data Prep',
-              href: '/docs/architecture/data-prep',
-              items: [],
-            },
-            {
-              title: 'Preprocessor',
-              href: '/docs/architecture/preprocessor',
-              items: [],
-            },
-            {
-              title: 'Training System',
-              href: '/docs/architecture/training-system',
-              items: [],
-            },
-            {
-              title: 'Model Registry',
-              href: '/docs/architecture/model-registry',
-              items: [],
-            },
-            {
-              title: 'Data Storage',
-              href: '/docs/architecture/data-storage',
-              items: []
-            },
-            {
-              title: 'Inference Backend',
-              href: '/docs/architecture/inference-backend',
-              items: []
-            },
-            {
-              title: 'Orchestration Backend',
-              href: '/docs/architecture/orchestration-backend',
-              items: []
-            },
-            {
-              title: 'Web UI',
-              href: '/docs/architecture/web-ui',
-              items: []
-            }
-          ],
-        },
-        {
           title: 'Prerequisites',
           href: '/docs/prerequisites',
+          items: [],
+        },
+      ],
+    },
+    {
+      title: 'Concepts',
+      items: [
+        {
+          title: 'EEG Signal Processing',
+          href: '/docs/concepts/eeg-processing',
+          items: [],
+        },
+        {
+          title: 'Mental States',
+          href: '/docs/concepts/mental-states',
+          items: [],
+        },
+      ],
+    },
+    {
+      title: 'Architecture',
+      items: [
+        {
+          title: 'Overview',
+          href: '/docs/architecture',
           items: [],
         },
       ],
@@ -112,39 +86,14 @@ export const docsConfig: DocsConfig = {
           defaultOpen: true,
           items: [
             {
-              title: 'Introduction',
               href: '/docs/installation/ai-service',
-              items: [],
-            },
-            {
-              title: 'Inference Backend',
-              href: '/docs/installation/ai-service/inference-backend',
-              items: [],
-            },
-            {
-              title: 'Data Prep',
-              href: '/docs/installation/ai-service/data-prep',
-              items: [],
-            },
-            {
-              title: 'Preprocessor',
-              href: '/docs/installation/ai-service/preprocessor',
-              items: [],
-            },
-            {
-              title: 'Training System',
-              href: '/docs/installation/ai-service/training-system',
-              items: [],
-            },
-            {
-              title: 'Model Registry',
-              href: '/docs/installation/ai-service/model-registry',
+              title: 'Overview',
               items: [],
             },
           ],
         },
         {
-          title: 'Backend API',
+          title: 'Backend',
           href: '/docs/installation/backend',
           items: [],
         },
@@ -164,122 +113,27 @@ export const docsConfig: DocsConfig = {
       title: 'API Reference',
       items: [
         {
-          title: 'AI Service API',
+          title: 'Overview',
           defaultOpen: true,
           items: [
             {
-              title: 'All',
-              href: '/docs/api/ai-service',
+              title: 'Overview',
+              href: '/docs/api',
               items: [],
             },
             {
-              title: 'Authentication',
-              href: '/docs/api/ai-service/authentication',
-              items: [],
-            },
-            {
-              title: 'Models',
-              href: '/docs/api/ai-service/models',
-              items: [],
-            },
-            {
-              title: 'RAG Ingestion',
-              href: '/docs/api/ai-service/rag',
-              items: [],
-            },
-            {
-              title: 'Speech & Audio',
-              href: '/docs/api/ai-service/speech',
-              items: [],
-            },
-            {
-              title: 'Content Moderation',
-              href: '/docs/api/ai-service/moderation',
-              items: [],
-            },
-            {
-              title: 'Streaming Chat',
-              href: '/docs/api/ai-service/chat',
-              items: [],
-            },
-            {
-              title: 'Error Handling',
-              href: '/docs/api/ai-service/errors',
-              items: [],
-            },
-            {
-              title: 'Rate Limits',
-              href: '/docs/api/ai-service/rate-limits',
-              items: [],
-            },
-          ],
-        },
-        {
-          title: 'Backend API',
-          defaultOpen: true,
-          items: [
-            {
-              title: 'Introduction',
+              title: 'Backend API',
               href: '/docs/api/backend',
               items: [],
             },
             {
-              title: 'Authentication',
-              href: '/docs/api/backend/authentication',
-              items: [],
-            },
-            {
-              title: 'Users & Roles',
-              href: '/docs/api/backend/users',
-              items: [],
-            },
-            {
-              title: 'Appointments',
-              href: '/docs/api/backend/appointments',
-              items: []
-            },
-            {
-              title: 'Organizations',
-              href: '/docs/api/backend/organizations',
-              items: [],
-            },
-            {
-              title: 'Devices',
-              href: '/docs/api/backend/device',
-              items: []
-            },
-            {
-              title: 'Reports',
-              href: '/docs/api/backend/reports',
-              items: []
-            },
-            {
-              title : 'Sessions',
-              href : '/docs/api/backend/sessions',
-              items : []
-            },
-            {
-              title: 'Billing & Subscriptions',
-              href: '/docs/api/backend/billing',
-              items: [],
-            },
-            {
-              title: 'Webhooks',
-              href: '/docs/api/backend/webhooks',
-              items: [],
-            },
-            {
-              title: 'Status Codes',
-              href: '/docs/api/backend/status-codes',
+              title: 'AI Service API',
+              href: '/docs/api/ai-service',
               items: [],
             },
           ],
         },
       ],
     },
-    {
-      title : 'Workflows',
-      items : []
-    }
   ],
 }

@@ -19,12 +19,6 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-export const metadata = {
-  title: 'Quick Start - NeuroLab Documentation',
-  description:
-    'Fast orientation to the active NeuroLab runtime components and setup flow.',
-}
-
 <div className='not-prose relative overflow-hidden rounded-[2rem] border border-zinc-200 bg-[linear-gradient(135deg,#fff7ed_0%,#ffffff_42%,#dbeafe_100%)] px-6 py-8 shadow-[0_30px_90px_-50px_rgba(30,64,175,0.3)] sm:px-8 sm:py-10 dark:border-zinc-800 dark:bg-[linear-gradient(135deg,#111827_0%,#09090b_42%,#172554_100%)]'>
   <div className='relative max-w-4xl'>
     <div className='text-[11px] font-black tracking-[0.22em] text-orange-700 uppercase dark:text-orange-300'>Quick Start</div>
@@ -33,16 +27,16 @@ export const metadata = {
     </h1>
     <div className='mt-5 max-w-3xl text-base leading-8 text-zinc-700 sm:text-lg dark:text-zinc-300'>
       This page is not the full installation manual. It is the compressed view
-      of the core runtime pieces, what each one does, and the order in which to
-      bring them up locally.
+      of the documented setup sequence and the order in which to read the
+      supporting pages.
     </div>
   </div>
 </div>
 
 <Callout title='Use This Page First' icon={<Rocket />}>
   Read this page before diving into service-specific setup. It gives you the
-  runtime map you need so the backend, AI service, and clients make sense in
-  relation to each other.
+  page map you need so the backend, AI service, and related concepts make
+  sense in relation to each other.
 </Callout>
 
 <section className='not-prose mt-14'>
@@ -52,8 +46,8 @@ export const metadata = {
       The pieces you should care about first
     </h2>
     <div className='mt-3 text-[15px] leading-8 text-zinc-600 dark:text-zinc-300'>
-      A local NeuroLab run usually starts with a datastore layer, then the
-      backend, then the AI service, then one of the client applications.
+      A local NeuroLab run usually starts with prerequisites, then the backend
+      or AI service pages, then the API reference and concepts.
     </div>
   </div>
 
@@ -61,43 +55,39 @@ export const metadata = {
     <ArchitectureCard
       eyebrow='Core service'
       title='Core Services'
-      stack='Orchestration workflows, client-facing API, platform services'
+      stack='Setup and runtime overview'
       icon='backend'
     >
-      This is the main application API. Most clients talk to the backend first,
-      and the backend coordinates application data, user workflows, and calls
-      into AI services when needed.
+      Start here if you want the shortest path through the documented pages.
     </ArchitectureCard>
 
     <ArchitectureCard
       eyebrow='AI service'
       title='AI Service'
-      stack='AI/ML orchestration workflows, analysis and inference engine, model serving layer'
+      stack='AI analysis, inference, and model documentation'
       icon='ai'
     >
-      The active AI runtime under `AI Service/backend` provides inference and
-      analysis functionality. It is a separate service with its own runtime,
-      environment, and optional queue-backed features.
+      The AI service pages describe the analysis and inference surface at a
+      level suitable for setup and integration.
     </ArchitectureCard>
 
     <ArchitectureCard
       eyebrow='Clients'
       title='Client Applications'
-      stack='Web applications, API consumers, operational UI/UX'
+      stack='Docs and reference pages'
       icon='network'
     >
-      Once the backend is running, you can use one of the client apps to
-      exercise the system. These clients depend on backend connectivity, not on
-      direct AI-service integration in normal flows.
+      The docs app helps you navigate the rest of the documented platform.
     </ArchitectureCard>
 
     <ArchitectureCard
       eyebrow='Data and Infrastructure'
       title='Data and Infrastructure Layer'
-      stack='Data services, Object storage services, Message Queuing Systems, Deployment Orchestration'
+      stack='Support services and deployment dependencies'
       icon='data'
     >
-     The Data and Infrastructure exposes the main datastores, object storage, queuing systems, and deployment orchestration for the system.
+     The supporting services page group covers the external systems the docs
+     refer to, such as datastores, queues, and storage.
     </ArchitectureCard>
   </ArchitectureGrid>
 </section>
@@ -137,7 +127,7 @@ export const metadata = {
             `Data and Infrastructure Layer`
           </TableCell>
           <TableCell className='px-5 py-4 text-sm text-zinc-700 dark:text-zinc-300'>
-            This is the foundation of the system, providing the necessary infrastructure to support the application.
+            This is the first step for a local or deployed environment.
           </TableCell>
         </TableRow>
         <TableRow className='border-zinc-200 dark:border-zinc-800'>
@@ -148,7 +138,7 @@ export const metadata = {
             `Core Service Layer`
           </TableCell>
           <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
-            This is the main application boundary and the orchestrator of the system.
+            This is the primary application boundary described in the docs.
           </TableCell>
         </TableRow>
         <TableRow className='border-zinc-200 dark:border-zinc-800'>
@@ -159,7 +149,7 @@ export const metadata = {
             `AI/ML Service Layer`
           </TableCell>
           <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
-            Required for AI/ML heavy tasks such as data processing, model training and other operations.
+            Required for AI-specific setup and integration work.
           </TableCell>
         </TableRow>
         <TableRow>
@@ -170,7 +160,7 @@ export const metadata = {
             `Client Applications Layer`
           </TableCell>
           <TableCell className='px-5 py-4 text-zinc-700 dark:text-zinc-300'>
-            Use a client app once the Core and/or AI/ML Service layer are available and reachable.
+            Use the docs app once you know which service page you need next.
           </TableCell>
         </TableRow>
       </TableBody>

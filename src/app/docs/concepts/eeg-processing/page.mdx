@@ -1,8 +1,3 @@
-export const metadata = {
-  title: 'EEG Signal Processing - NeuroLab Documentation',
-  description: 'Learn about the core EEG signal processing pipeline, from raw signal ingestion to feature extraction.',
-}
-
 # EEG Signal Processing
 
 NeuroLab employs a state-of-the-art EEG signal processing pipeline designed to handle noisy real-world data and extract meaningful features for mental state classification.
@@ -85,25 +80,25 @@ The extracted features are further prepared for the machine learning models:
 
 ## Next Steps
 
-Learn how these features are combined with voice data for multimodal analysis:
+Continue with the mental state model or the AI service reference:
 
 <div className='not-prose mt-6 grid gap-4 sm:grid-cols-2'>
   <a
-    href='/docs/concepts/voice-emotion'
+    href='/docs/concepts/mental-states'
     className='hover:bg-accent block rounded-lg border p-6 transition-colors'
   >
-    <h3 className='mb-2 font-bold'>Voice Emotion Detection →</h3>
+    <h3 className='mb-2 font-bold'>Mental States →</h3>
     <p className='text-muted-foreground text-sm'>
-      Analyze audio for emotional features
+      See how the processed signals map to the documented labels
     </p>
   </a>
   <a
-    href='/docs/concepts/multimodal'
+    href='/docs/api/ai-service'
     className='hover:bg-accent block rounded-lg border p-6 transition-colors'
   >
-    <h3 className='mb-2 font-bold'>Multimodal Analysis →</h3>
+    <h3 className='mb-2 font-bold'>AI Service API →</h3>
     <p className='text-muted-foreground text-sm'>
-      Combining brain and voice data
+      Review the analysis endpoints that expose the service contract
     </p>
   </a>
 </div>
